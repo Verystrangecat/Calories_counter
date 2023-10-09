@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Setup_account">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/notimportant"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto"
+                android:text="Profile setup"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                ></TextView>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:text="Age (years)"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+
+            <EditText
+                android:id="@+id/editText_age"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="0"
+                android:inputType="numberSigned"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:text="Height (cm)"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <SeekBar
+                android:id="@+id/seekBar_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="250"
+                android:min="40"
+                android:padding="10dp"
+                android:progress="0"
+                android:progressBackgroundTint="#60D098"
+                android:progressTint="#47C0BE"
+                android:thumbTint="#46BFBF" />
+
+
+
+            <EditText
+                android:id="@+id/editText_height"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned"
+                android:hint="0"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:text="Weight (kg)"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <SeekBar
+                android:id="@+id/seekBar_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="200"
+                android:min="25"
+                android:progress="0"
+                android:padding="10dp"
+                android:progressBackgroundTint="#60D098"
+                android:progressTint="#47C0BE"
+                android:thumbTint="#46BFBF"/>
+
+
+
+
+            <EditText
+                android:id="@+id/edittext_weight"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned"
+                android:hint="0"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:text="Level of activity"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+
+                >
+
+                <RadioButton
+                    android:id="@+id/radio_Sedentary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sedentary (little or no exercise)"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:textSize="20sp"
+
+
+
+
+
+                    />
+
+
+                <RadioButton
+                    android:id="@+id/radio_Lightlyactive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lightly active (light exercise or sports 1-3 days a week)"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:textSize="20sp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_Moderatelyactive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="Moderately active (moderate exercise or sports 3-5 days a week)"
+                    android:textSize="20sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_Veryactive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="Very active (hard exercise or sports 6-7 days a week)"
+                    android:textSize="20sp" />
+
+
+
+                <RadioButton
+                    android:id="@+id/radio_Superactive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="Super active (very hard exercise, physical job, or training twice a day)"
+                    android:textSize="20sp" />
+
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:text="Sex"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                >
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp"
+                    tools:context=".Setup_account">
+
+
+                    <Button
+                        android:id="@+id/btn_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:text="Female"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/guideline"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:backgroundTint="@color/black"/>
+
+
+                    <!-- Guideline for Symmetry -->
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5"/>
+
+                    <!-- Second Chip -->
+                    <Button
+                        android:id="@+id/btn_male"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+
+                        app:layout_constraintStart_toEndOf="@id/guideline"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:textSize="20sp"
+                        android:backgroundTint="@color/black"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <TextView
+                android:id="@+id/text_invisible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pregnant or lactating?"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:id="@+id/radiogroup_invisible"
+
+
+                >
+
+
+
+
+
+
+
+                <RadioButton
+                    android:id="@+id/radio_notpregnant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not pregnant or lactating"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:textSize="20sp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_firsttrimester"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="Pregnant-first trimester"
+                    android:textSize="20sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_secondtrimester"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="Pregnant-second trimester"
+                    android:textSize="20sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_thirdtrimester"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="Pregnant-third trimester"
+                    android:textSize="20sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_lactating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="Lactating"
+                    android:textSize="20sp"/>
+
+
+
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/button_submittt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:text="Submit"
+                android:textSize="20sp"
+                android:backgroundTint="@color/black"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
