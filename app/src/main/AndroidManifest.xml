@@ -12,16 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Adding_food_screen"
+            android:exported="false" />
         <activity
             android:name=".Splashscreen"
             android:exported="true"
             android:theme="@style/Theme.Design.NoActionBar">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            />
         </activity>
         <activity
             android:name=".Setup_account"
@@ -32,7 +35,6 @@
         <activity
             android:name=".Login"
             android:exported="false" />
-
     </application>
 
 </manifest>

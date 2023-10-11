@@ -300,7 +300,8 @@
                     android:text="Not pregnant or lactating"
                     android:fontFamily="@font/roboto"
                     android:padding="10dp"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:enabled="false"/>
 
                 <RadioButton
                     android:id="@+id/radio_firsttrimester"
@@ -309,7 +310,8 @@
                     android:fontFamily="@font/roboto"
                     android:padding="10dp"
                     android:text="Pregnant-first trimester"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:enabled="false"/>
 
                 <RadioButton
                     android:id="@+id/radio_secondtrimester"
@@ -318,7 +320,8 @@
                     android:fontFamily="@font/roboto"
                     android:padding="10dp"
                     android:text="Pregnant-second trimester"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:enabled="false"/>
 
                 <RadioButton
                     android:id="@+id/radio_thirdtrimester"
@@ -327,7 +330,8 @@
                     android:fontFamily="@font/roboto"
                     android:padding="10dp"
                     android:text="Pregnant-third trimester"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:enabled="false"/>
 
                 <RadioButton
                     android:id="@+id/radio_lactating"
@@ -336,7 +340,8 @@
                     android:fontFamily="@font/roboto"
                     android:padding="10dp"
                     android:text="Lactating"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:enabled="false"/>
 
 
 

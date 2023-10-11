@@ -206,7 +206,7 @@ public class Setup_account extends AppCompatActivity {
 
 
     }
-    //TOdo:change radio button colour
+
 
     private void submit_button() {
 
@@ -220,6 +220,8 @@ public class Setup_account extends AppCompatActivity {
                 check_pregnant();
                 if(nextscreen) {
                     final_result();
+                    Intent i=new Intent(Setup_account.this, Login.class);
+                    startActivity(i);
                     //Todo:go to the next screen
                 }
 
@@ -283,8 +285,7 @@ public class Setup_account extends AppCompatActivity {
 
         }
 
-//TODO:add check for the gender and then if female change the level of protein to 1,2
-        //TODO:count the gramms of fat after getting the amount of calories and carbohydrates
+
     }
-    //TOdo radio buttons for the pregnancy from the start blocked
+    //TOdo change the color of the button
 }
