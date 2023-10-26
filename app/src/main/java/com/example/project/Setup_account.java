@@ -222,7 +222,7 @@ public class Setup_account extends AppCompatActivity {
                     final_result();
                     Intent i=new Intent(Setup_account.this, Main_screen.class);
                     startActivity(i);
-                    //Todo:go to the next screen
+
                 }
 
 
