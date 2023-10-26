@@ -220,7 +220,7 @@ public class Setup_account extends AppCompatActivity {
                 check_pregnant();
                 if(nextscreen) {
                     final_result();
-                    Intent i=new Intent(Setup_account.this, Login.class);
+                    Intent i=new Intent(Setup_account.this, Main_screen.class);
                     startActivity(i);
                     //Todo:go to the next screen
                 }

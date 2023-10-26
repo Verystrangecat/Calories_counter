@@ -16,6 +16,7 @@ public class Activity_register extends AppCompatActivity {
     Button signup;
     TextView link_login;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,3 +99,4 @@ public class Activity_register extends AppCompatActivity {
         return !TextUtils.isEmpty(str)&& Patterns.EMAIL_ADDRESS.matcher(str).matches();
     }
 }
+//Todo:take care of the password and login
