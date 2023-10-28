@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
     EditText login, password;
-    Button bntlog;
+    Button bntlog, short_cut;
     TextView link;
 
     @Override
@@ -29,6 +29,8 @@ public class Login extends AppCompatActivity {
         password=findViewById(R.id.edittext_login_password);
         bntlog=findViewById(R.id.btnLogin);
         link=findViewById(R.id.text_link_signup);
+        short_cut=findViewById(R.id.btn_shortcut);
+
     }
 
     private void setupListeners(){
@@ -44,6 +46,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(Login.this, Activity_register.class);
+                startActivity(intent);
+
+            }
+        });
+        short_cut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Login.this, Setup_account.class);
                 startActivity(intent);
 
             }
