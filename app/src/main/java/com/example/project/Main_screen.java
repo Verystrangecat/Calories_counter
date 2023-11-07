@@ -44,6 +44,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         setupUI();
         resetSteps();
         loadData();
+        bottom_navigation();
 //todo:pop up asking for a users permission
 
 
@@ -54,10 +55,6 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         showsteps = findViewById(R.id.txt_steps);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         stepsensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        main = findViewById(R.id.navigation_home);
-        diary = findViewById(R.id.navigation_diary);
-        more = findViewById(R.id.navigation_more);
 
     }
 
@@ -116,7 +113,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
 
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
-        int savednum = (int) sharedPreferences.getFloat("key1", 0f);
+        int savednum = Integer.parseInt(sharedPreferences.getString("key1","0"));
         previoustotalsteps = savednum;
 
     }
@@ -125,35 +122,32 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
-
-
-       /*private void settingup_bottom_navigation(){
-        bottomNavigationView.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item==main){
-                    Toast.makeText(Main_screen.this,"Already here", Toast.LENGTH_SHORT).show();
-                    return true;
-                } else if (item==diary) {
-                    Intent i=new Intent(Main_screen.this, Adding_food_screen.class);
-                    startActivity(i);
-                    return true;
-                } else if (item==more) {
-                    Toast.makeText(Main_screen.this,"Doesn't exit", Toast.LENGTH_SHORT).show();
-                    return true;
-                    //Todo create transition to new activity
-
-
-                }
-                else
-                    return false;
-
+    private void bottom_navigation(){
+        BottomNavigationView bottomNavigationView1=findViewById(R.id.bottom_navigation);
+        bottomNavigationView1.setSelectedItemId(R.id.navigation_home);
+        bottomNavigationView1.setOnItemSelectedListener(item -> {
+            if(item.getItemId()==R.id.navigation_home)
+                return true;
+            else if (item.getItemId()==R.id.navigation_diary){
+                startActivity(new Intent(Main_screen.this, Diary_screen.class));
+                finish();
+                return true;
             }
-
-
-        });}
-
-        */
+            else if (item.getItemId()==R.id.navigation_graphs){
+                startActivity(new Intent(Main_screen.this, Login.class));
+                finish();
+                return true;
+            }
+            else if (item.getItemId()==R.id.navigation_more){
+                startActivity(new Intent(Main_screen.this, Setup_account.class));
+                finish();
+                return true;
+            }
+            return false;
+        });
+    }
+//Todo add the bottom navigation to other screens (tutorial:https://www.youtube.com/watch?v=MUl19ppdu0o&t=884s)
+    //todo find out why I dont see the number of steps
 }
 
 

@@ -53,7 +53,7 @@ public class Login extends AppCompatActivity {
         short_cut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(Login.this, Setup_account.class);
+                Intent intent=new Intent(Login.this, Main_screen.class);
                 startActivity(intent);
 
             }

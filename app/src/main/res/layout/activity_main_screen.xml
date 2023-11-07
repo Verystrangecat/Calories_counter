@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,6 +12,14 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="154dp"
         android:layout_height="135dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="179dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="78dp"
+        android:layout_marginBottom="527dp"
         android:background="@drawable/circle"
         android:foregroundGravity="center"
         android:max="10000"
@@ -27,27 +35,37 @@
         android:id="@+id/txt_steps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/progressBar"
+        android:layout_alignTop="@+id/progressBar"
+        android:layout_alignEnd="@+id/progressBar"
+        android:layout_alignBottom="@+id/progressBar"
+
+
+        android:layout_marginStart="-81dp"
+        android:layout_marginTop="204dp"
+        android:layout_marginEnd="224dp"
+        android:layout_marginBottom="-94dp"
+        android:fontFamily="@font/roboto"
         android:text="0"
         android:textSize="20sp"
-        android:fontFamily="@font/roboto"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/progressBar" />
-
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/bottom_navigation_menu" />
+        android:id="@+id/bottom_navigation"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_background"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:elevation="2dp"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/item_selector"
+        app:itemRippleColor="@android:color/transparent"
+        app:labelVisibilityMode="unlabeled"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

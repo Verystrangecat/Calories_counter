@@ -20,7 +20,7 @@ public class Setup_account extends AppCompatActivity {
     double activity_level_calorie = 0, level_protein = 0;
     int additional_calories = 0;
     int num_age, num_height, num_weight;
-    int calories, proteins, fats, carbohydrates;
+     static int calories=0, proteins=0, fats=0, carbohydrates=0;
 
     Button submit, female, male;
 
@@ -78,64 +78,73 @@ public class Setup_account extends AppCompatActivity {
             }
         });
     }
+    private void check_male_or_female(){
+        if(nextscreen){
+            if(!wasClicked){
+                nextscreen=false;
+                Toast.makeText(this,"Please choose your sex",Toast.LENGTH_SHORT).show();
 
-    private void checkactivity_level() {
-        if (ser.isChecked()) {
-            activity_level_calorie = 1.2;
-            level_protein = 0.8;
-            nextscreen = true;
-        } else if (la.isChecked()) {
-            activity_level_calorie = 1.375;
-            level_protein = 1;
-            nextscreen = true;
-        } else if (ma.isChecked()) {
-            activity_level_calorie = 1.55;
-            level_protein = 1.1;
-            nextscreen = true;
-        } else if (va.isChecked()) {
-            activity_level_calorie = 1.725;
-            level_protein = 1.2;
-            nextscreen = true;
-        } else if (sa.isChecked()) {
-            activity_level_calorie = 1.9;
-            level_protein = 1.5;
-            nextscreen = true;
-        } else {
-            Toast.makeText(Setup_account.this, "You must select the level of activity", Toast.LENGTH_SHORT).show();
-            nextscreen = false;
+            }
         }
-
 
     }
 
-    private void check_pregnant() {
-        if (notpreg.isChecked()) {
-            additional_calories = 0;
-            nextscreen = true;
-        } else if (firsttri.isChecked()) {
-            additional_calories = 0;
-            nextscreen = true;
-            if (level_protein < 1.1)
-                level_protein = 1.1;
-        } else if (secondtri.isChecked()) {
-            additional_calories = 395;
-            nextscreen = true;
-            if (level_protein < 1.2)
-                level_protein = 1.2;
-        } else if (thirdtri.isActivated()) {
-            additional_calories = 475;
-            nextscreen = true;
-            if (level_protein < 1.3)
-                level_protein = 1.3;
-        } else if (lactating.isChecked()) {
-            additional_calories = 415;
-            nextscreen = true;
-            if (level_protein < 1.2)
-                level_protein = 1.2;
-        } else {
-            Toast.makeText(Setup_account.this, "You must select if you are pregnant or not", Toast.LENGTH_SHORT).show();
+    private void checkactivity_level() {
+        if (nextscreen) {
+            if (ser.isChecked()) {
+                activity_level_calorie = 1.2;
+                level_protein = 0.8;
 
-            nextscreen = false;
+            } else if (la.isChecked()) {
+                activity_level_calorie = 1.375;
+                level_protein = 1;
+
+            } else if (ma.isChecked()) {
+                activity_level_calorie = 1.55;
+                level_protein = 1.1;
+
+            } else if (va.isChecked()) {
+                activity_level_calorie = 1.725;
+                level_protein = 1.2;
+
+            } else if (sa.isChecked()) {
+                activity_level_calorie = 1.9;
+                level_protein = 1.5;
+
+            } else {
+                Toast.makeText(Setup_account.this, "You must select the level of activity", Toast.LENGTH_SHORT).show();
+                nextscreen = false;
+            }
+        }
+    }
+
+
+    private void check_pregnant() {
+        if (nextscreen) {
+            if(isFemale) {
+                if (notpreg.isChecked()) {
+                    additional_calories = 0;
+                } else if (firsttri.isChecked()) {
+                    additional_calories = 0;
+                    if (level_protein < 1.1)
+                        level_protein = 1.1;
+                } else if (secondtri.isChecked()) {
+                    additional_calories = 395;
+                    if (level_protein < 1.2)
+                        level_protein = 1.2;
+                } else if (thirdtri.isChecked()) {
+                    additional_calories = 475;
+                    if (level_protein < 1.3)
+                        level_protein = 1.3;
+                } else if (lactating.isChecked()) {
+                    additional_calories = 415;
+                    if (level_protein < 1.2)
+                        level_protein = 1.2;}
+                 else {
+                    Toast.makeText(Setup_account.this, "You must select if you are pregnant or not", Toast.LENGTH_SHORT).show();
+                    nextscreen = false;}
+                }
+
         }
     }
 
@@ -216,7 +225,7 @@ public class Setup_account extends AppCompatActivity {
             public void onClick(View view) {
                 gettingnumbers();
                 checkactivity_level();
-                male_or_female();
+                check_male_or_female();
                 check_pregnant();
                 if(nextscreen) {
                     final_result();
@@ -238,54 +247,35 @@ public class Setup_account extends AppCompatActivity {
         str_weight = txt_weight.getText().toString();
         str_height = txt_height.getText().toString();
 
-        if (str_age.isEmpty()) {
-            Toast.makeText(Setup_account.this, "Please enter your age", Toast.LENGTH_SHORT).show();
-            nextscreen = false;
-        } else {
+        if(str_age.isEmpty() || str_height.isEmpty() || str_weight.isEmpty()){
+            if (str_age.isEmpty())
+                Toast.makeText(Setup_account.this, "Please enter your age", Toast.LENGTH_SHORT).show();
+            else if (str_height.isEmpty())
+                Toast.makeText(Setup_account.this, "Please enter your height", Toast.LENGTH_SHORT).show();
+            else  if (str_weight.isEmpty())
+                Toast.makeText(Setup_account.this, "Please enter your weight", Toast.LENGTH_SHORT).show();}
+        else{
+            nextscreen=true;
             num_age = Integer.parseInt(str_age);
-            nextscreen = true;
-        }
-        if (str_height.isEmpty()) {
-            Toast.makeText(Setup_account.this, "Please enter your height", Toast.LENGTH_SHORT).show();
-            nextscreen = false;
-        } else {
             num_height = Integer.parseInt(str_height);
-            nextscreen = true;
-        }
-        if (str_weight.isEmpty()) {
-            Toast.makeText(Setup_account.this, "Please enter your weight", Toast.LENGTH_SHORT).show();
-            nextscreen = false;
-        } else {
             num_weight = Integer.parseInt(str_weight);
-            nextscreen = true;
-            if (!wasClicked) {
-                Toast.makeText(Setup_account.this, "Please choose your gender", Toast.LENGTH_SHORT).show();
-                nextscreen = false;
+        }
+        if (nextscreen){
+            if(num_age <= 14 || num_height <= 40 || num_weight <= 25 ){
+                nextscreen=false;
+                if (num_age <= 14)
+                    Toast.makeText(Setup_account.this, "You must be fourteen or older to use this app", Toast.LENGTH_SHORT).show();
+                else  if (num_height <= 40)
+                    Toast.makeText(Setup_account.this, "Please enter valid height", Toast.LENGTH_SHORT).show();
+                else if (num_weight <= 25)
+                    Toast.makeText(Setup_account.this, "Please enter valid weight", Toast.LENGTH_SHORT).show();
+            }
 
-            } else
-                nextscreen = true;
-            //Check if information is entered at all
 
-            if (num_age <= 14) {
-                Toast.makeText(Setup_account.this, "You must be fourteen or older to use this app", Toast.LENGTH_SHORT).show();
-                nextscreen = false;
-            } else
-                nextscreen = true;
-            if (num_height <= 40) {
-                Toast.makeText(Setup_account.this, "Please enter valid height", Toast.LENGTH_SHORT).show();
-                nextscreen = false;
-            } else
-                nextscreen = true;
-            if (num_weight <= 25) {
-                Toast.makeText(Setup_account.this, "Please enter valid weight", Toast.LENGTH_SHORT).show();
-                nextscreen = false;
-            } else
-                nextscreen = true;
 
 
         }
 
 
     }
-    //TOdo change the color of the button
 }

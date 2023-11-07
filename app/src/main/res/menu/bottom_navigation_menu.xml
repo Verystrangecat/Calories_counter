@@ -2,16 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:enabled="true"
-
-        android:title="Main screen"/>
+        android:icon="@drawable/baseline_add_home_24"
+        android:title="Home"/>
     <item
         android:id="@+id/navigation_diary"
-        android:enabled="true"
-        android:title="Food diary"/>
+        android:icon="@drawable/baseline_book_24"
+        android:title="Diary"/>
+    <item
+        android:id="@+id/navigation_graphs"
+        android:icon="@drawable/baseline_analytics_24"
+        android:title="Graphs"/>
     <item
         android:id="@+id/navigation_more"
-        android:enabled="true"
+        android:icon="@drawable/baseline_account_circle_24"
         android:title="More"/>
 
 </menu>
