@@ -38,7 +38,8 @@ dependencies {
     implementation("com.google.android.material:material:<version")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
-
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.9.0")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310: 2.9.0")
 
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
