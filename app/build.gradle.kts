@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.project"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.project"
@@ -37,10 +37,11 @@ android {
 dependencies {
     implementation("com.google.android.material:material:<version")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.9.0")
+    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310: 2.9.0")
-
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("junit:junit:4.13.2")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

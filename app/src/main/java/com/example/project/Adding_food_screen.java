@@ -1,6 +1,8 @@
 package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -12,20 +14,31 @@ import com.example.project.Food_classes.Welcome;
 import com.example.project.utils.Network_utils;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 
 public class Adding_food_screen extends AppCompatActivity {
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_food_screen);
-        querydata();
+        recyclerView=findViewById(R.id.recycle_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        try {
+            querydata();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void querydata() {
-        Uri uri=Uri.parse("ksdk").buildUpon().build();
-
+    public void querydata() throws MalformedURLException {
+        Uri uri=Uri.parse("https://api.nal.usda.gov/fdc/v1/foods/search?query=cheddar%20cheese&dataType=&pageSize=25&pageNumber=1&api_key=DEMO_KEY").buildUpon().build();
+//Todo:Change the string
+        URL url=new URL(uri.toString());
+        new Dotask().execute(url);
     }
     class Dotask extends AsyncTask<URL,Void,String>{
 
@@ -41,16 +54,21 @@ public class Adding_food_screen extends AppCompatActivity {
             return data;
         }
         protected void onPostExecute(String s){
-            parseJson(s);
+          FoodData [] foodData=  parseJson(s);
+          Adapter adapter=new Adapter(Adding_food_screen.this,Arrays.asList(foodData));
+          recyclerView.setAdapter(adapter);
         }
 
-        private void parseJson(String data) {
+        private FoodData[] parseJson(String data) {
             Welcome food=null;
             try {
                 food= Converter.fromJsonString(data);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            return food.getFoods();
+
+
 
         }
         }
