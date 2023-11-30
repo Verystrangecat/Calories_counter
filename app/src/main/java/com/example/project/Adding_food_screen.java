@@ -9,14 +9,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.example.project.Food_classes.Converter;
-import com.example.project.Food_classes.FoodData;
+import com.example.project.Food_classes.Food;
 import com.example.project.Food_classes.Welcome;
 import com.example.project.utils.Network_utils;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.List;
 
 public class Adding_food_screen extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -54,12 +54,12 @@ public class Adding_food_screen extends AppCompatActivity {
             return data;
         }
         protected void onPostExecute(String s){
-          FoodData [] foodData=  parseJson(s);
-          Adapter adapter=new Adapter(Adding_food_screen.this,Arrays.asList(foodData));
+          List<Food> f=parseJson(s);
+          Adapter adapter=new Adapter(Adding_food_screen.this,f);
           recyclerView.setAdapter(adapter);
         }
 
-        private FoodData[] parseJson(String data) {
+        private List<Food> parseJson(String data) {
             Welcome food=null;
             try {
                 food= Converter.fromJsonString(data);
@@ -67,8 +67,7 @@ public class Adding_food_screen extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
             return food.getFoods();
-
-
+//Todo change all the classes and try
 
         }
         }

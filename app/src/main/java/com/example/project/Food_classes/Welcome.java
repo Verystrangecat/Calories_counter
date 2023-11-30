@@ -1,14 +1,15 @@
 package com.example.project.Food_classes;
 
 import com.fasterxml.jackson.annotation.*;
+import java.util.List;
 
 public class Welcome {
     private long totalHits;
     private long currentPage;
     private long totalPages;
-    private long[] pageList;
+    private List<Long> pageList;
     private FoodSearchCriteria foodSearchCriteria;
-    private FoodData[] foods;
+    private List<Food> foods;
     private Aggregations aggregations;
 
     @JsonProperty("totalHits")
@@ -27,9 +28,9 @@ public class Welcome {
     public void setTotalPages(long value) { this.totalPages = value; }
 
     @JsonProperty("pageList")
-    public long[] getPageList() { return pageList; }
+    public List<Long> getPageList() { return pageList; }
     @JsonProperty("pageList")
-    public void setPageList(long[] value) { this.pageList = value; }
+    public void setPageList(List<Long> value) { this.pageList = value; }
 
     @JsonProperty("foodSearchCriteria")
     public FoodSearchCriteria getFoodSearchCriteria() { return foodSearchCriteria; }
@@ -37,9 +38,9 @@ public class Welcome {
     public void setFoodSearchCriteria(FoodSearchCriteria value) { this.foodSearchCriteria = value; }
 
     @JsonProperty("foods")
-    public FoodData[] getFoods() { return foods; }
+    public List<Food> getFoods() { return foods; }
     @JsonProperty("foods")
-    public void setFoods(FoodData[] value) { this.foods = value; }
+    public void setFoods(List<Food> value) { this.foods = value; }
 
     @JsonProperty("aggregations")
     public Aggregations getAggregations() { return aggregations; }

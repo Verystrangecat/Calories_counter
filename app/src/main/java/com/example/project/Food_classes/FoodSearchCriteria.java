@@ -1,9 +1,10 @@
 package com.example.project.Food_classes;
 
 import com.fasterxml.jackson.annotation.*;
+import java.util.List;
 
 public class FoodSearchCriteria {
-    private Object[] dataType;
+    private List<Object> dataType;
     private String query;
     private String generalSearchInput;
     private long pageNumber;
@@ -12,9 +13,9 @@ public class FoodSearchCriteria {
     private boolean requireAllWords;
 
     @JsonProperty("dataType")
-    public Object[] getDataType() { return dataType; }
+    public List<Object> getDataType() { return dataType; }
     @JsonProperty("dataType")
-    public void setDataType(Object[] value) { this.dataType = value; }
+    public void setDataType(List<Object> value) { this.dataType = value; }
 
     @JsonProperty("query")
     public String getQuery() { return query; }

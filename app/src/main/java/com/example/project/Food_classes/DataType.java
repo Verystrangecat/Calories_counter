@@ -1,8 +1,8 @@
 package com.example.project.Food_classes;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
-public class DataTypeClass {
+public class DataType {
     private long branded;
     private long surveyFNDDS;
     private long srLegacy;

@@ -9,15 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project.Food_classes.FoodData;
+import com.example.project.Food_classes.Food;
 
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     Context context;
-    List<FoodData> foods;
+    List<Food> foods;
 
-    public Adapter(Context context, List<FoodData> foods) {
+    public Adapter(Context context, List<Food> foods) {
         this.context = context;
         this.foods = foods;
     }
@@ -31,11 +31,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        FoodData foodData=foods.get(position);
-        holder.food_name.setText(foodData.getDescription());
+        Food food=foods.get(position);
+        holder.food_name.setText(food.getDescription());
+        holder.calorie.setText(String.valueOf(food.getFoodNutrients().get(3).getValue()));
+
+
+        //holder.calorie.setText(String.valueOf(foodData.getFoodNutrients().get(0).getID()));
         //Todo check if it's the way to get the calorie
-        if(foodData.getBrandName()!=null){
-            holder.brand.setText(foodData.getBrandName());
+        if(food.getBrandName()!=null){
+            holder.brand.setText(food.getBrandName());
         }
         else
             holder.brand.setText("Generic");
