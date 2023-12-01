@@ -35,9 +35,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         holder.food_name.setText(food.getDescription());
         holder.calorie.setText(String.valueOf(food.getFoodNutrients().get(3).getValue()));
 
-
-        //holder.calorie.setText(String.valueOf(foodData.getFoodNutrients().get(0).getID()));
-        //Todo check if it's the way to get the calorie
         if(food.getBrandName()!=null){
             holder.brand.setText(food.getBrandName());
         }

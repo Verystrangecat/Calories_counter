@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.project.Food_classes.Converter;
 import com.example.project.Food_classes.Food;
@@ -18,28 +22,49 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class Adding_food_screen extends AppCompatActivity {
+public class Adding_food_screen extends AppCompatActivity implements View.OnClickListener {
     RecyclerView recyclerView;
+    Button search;
+    EditText query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_food_screen);
         recyclerView=findViewById(R.id.recycle_view);
+        search=findViewById(R.id.button_search);
+        query=findViewById(R.id.editText_query);
+        search.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        try {
-            querydata();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
-    public void querydata() throws MalformedURLException {
-        Uri uri=Uri.parse("https://api.nal.usda.gov/fdc/v1/foods/search?query=cheddar%20cheese&dataType=&pageSize=25&pageNumber=1&api_key=DEMO_KEY").buildUpon().build();
-//Todo:Change the string
+    public void querydata(String s) throws MalformedURLException {
+        String ur="https://api.nal.usda.gov/fdc/v1/foods/search?query=";
+        s=s.trim();
+        s=s.replace(" ","%20");
+        s=ur+s+"&dataType=&pageSize=25&pageNumber=1&requireAllWords=true&api_key=IDReNNKpRHGD1el7mIQXJkqklYtzVV0ZaWOJCAuf";
+        Uri uri=Uri.parse(s).buildUpon().build();
         URL url=new URL(uri.toString());
         new Dotask().execute(url);
     }
+
+    @Override
+    public void onClick(View v) {
+        String s=query.getText().toString();
+        if (s.equals(""))
+            Toast.makeText(this, "Can't search for the product", Toast.LENGTH_SHORT).show();
+        else
+            try {
+                querydata(s);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+
+
+
+    }
+
     class Dotask extends AsyncTask<URL,Void,String>{
 
         @Override
@@ -53,10 +78,14 @@ public class Adding_food_screen extends AppCompatActivity {
             }
             return data;
         }
-        protected void onPostExecute(String s){
-          List<Food> f=parseJson(s);
-          Adapter adapter=new Adapter(Adding_food_screen.this,f);
-          recyclerView.setAdapter(adapter);
+        protected void onPostExecute(String s) {
+            List<Food> f = parseJson(s);
+            if (f == null)
+                Toast.makeText(Adding_food_screen.this, "Please check the spelling", Toast.LENGTH_SHORT).show();
+            else {
+                Adapter adapter = new Adapter(Adding_food_screen.this, f);
+                recyclerView.setAdapter(adapter);
+            }
         }
 
         private List<Food> parseJson(String data) {
@@ -67,7 +96,7 @@ public class Adding_food_screen extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
             return food.getFoods();
-//Todo change all the classes and try
+//Todo check why i dont get the toast about bad spelling
 
         }
         }

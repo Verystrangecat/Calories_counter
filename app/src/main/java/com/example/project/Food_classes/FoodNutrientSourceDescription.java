@@ -11,13 +11,14 @@ public enum FoodNutrientSourceDescription {
         switch (this) {
             case MANUFACTURER_S_ANALYTICAL_PARTIAL_DOCUMENTATION: return "Manufacturer's analytical; partial documentation";
         }
-        return null;
+        return "Manufacturer's analytical; partial documentation";
     }
 
     @JsonCreator
     public static FoodNutrientSourceDescription forValue(String value) throws IOException {
         if (value.equals("Manufacturer's analytical; partial documentation")) return MANUFACTURER_S_ANALYTICAL_PARTIAL_DOCUMENTATION;
-        throw new IOException("Cannot deserialize FoodNutrientSourceDescription");
+        return MANUFACTURER_S_ANALYTICAL_PARTIAL_DOCUMENTATION;
+
     }
 }
 
