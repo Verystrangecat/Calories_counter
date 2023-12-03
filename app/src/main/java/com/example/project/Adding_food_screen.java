@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class Adding_food_screen extends AppCompatActivity implements View.OnClickListener {
+public class Adding_food_screen extends AppCompatActivity implements View.OnClickListener, Adapter.onFoodListener {
     RecyclerView recyclerView;
     Button search;
     EditText query;
@@ -65,6 +67,13 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
 
     }
 
+    @Override
+    public void OnfoodClick(int position) {
+        Log.d("HERE","Got to foodl=click");
+        startActivity(new Intent(this, Food_details.class));
+
+    }
+
     class Dotask extends AsyncTask<URL,Void,String>{
 
         @Override
@@ -83,7 +92,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
             if (f == null)
                 Toast.makeText(Adding_food_screen.this, "Please check the spelling", Toast.LENGTH_SHORT).show();
             else {
-                Adapter adapter = new Adapter(Adding_food_screen.this, f);
+                Adapter adapter = new Adapter(Adding_food_screen.this, f,Adding_food_screen.this::OnfoodClick);
                 recyclerView.setAdapter(adapter);
             }
         }

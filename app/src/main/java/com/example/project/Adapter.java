@@ -16,8 +16,10 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     Context context;
     List<Food> foods;
+    onFoodListener monFoodListener;
 
-    public Adapter(Context context, List<Food> foods) {
+    public Adapter(Context context, List<Food> foods, onFoodListener monFoodListener) {
+        this.monFoodListener=monFoodListener;
         this.context = context;
         this.foods = foods;
     }
@@ -26,7 +28,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.item_view, parent,false);
-        return new Holder(view);
+        return new Holder(view,monFoodListener);
     }
 
     @Override
@@ -48,13 +50,26 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         return foods.size();
     }
 
-    public class Holder extends RecyclerView.ViewHolder{
+    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView food_name, calorie, brand;
-        public Holder(@NonNull View itemView) {
+        onFoodListener onFoodListener;
+        public Holder(@NonNull View itemView, onFoodListener onFoodListener) {
             super(itemView);
             food_name=itemView.findViewById(R.id.textView_foodname);
             calorie=itemView.findViewById(R.id.textView_calories);
             brand=itemView.findViewById(R.id.textView_brand);
+            this.onFoodListener=onFoodListener;
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onFoodListener.OnfoodClick(getAdapterPosition());
+
+        }
+    }
+    public interface onFoodListener{
+        void OnfoodClick(int position);
+
     }
 }
