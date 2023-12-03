@@ -1,10 +1,12 @@
 package com.example.project.Food_classes;
 
 import com.fasterxml.jackson.annotation.*;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Food {
+public class Food implements Serializable {
     private long fdcID;
     private String description;
     private String dataType;

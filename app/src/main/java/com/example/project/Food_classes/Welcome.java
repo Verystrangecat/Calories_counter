@@ -1,9 +1,11 @@
 package com.example.project.Food_classes;
 
 import com.fasterxml.jackson.annotation.*;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Welcome {
+public class Welcome implements Serializable {
     private long totalHits;
     private long currentPage;
     private long totalPages;

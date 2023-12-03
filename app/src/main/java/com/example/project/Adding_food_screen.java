@@ -20,14 +20,16 @@ import com.example.project.Food_classes.Welcome;
 import com.example.project.utils.Network_utils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class Adding_food_screen extends AppCompatActivity implements View.OnClickListener, Adapter.onFoodListener {
+public class Adding_food_screen extends AppCompatActivity implements View.OnClickListener, Adapter.onFoodListener, Serializable {
     RecyclerView recyclerView;
     Button search;
     EditText query;
+    List<Food> f=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +71,10 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
 
     @Override
     public void OnfoodClick(int position) {
-        Log.d("HERE","Got to foodl=click");
-        startActivity(new Intent(this, Food_details.class));
+        Intent intent=new Intent(Adding_food_screen.this, Food_details.class);
+        intent.putExtra("KEY_NAME",f.get(position) );
+        startActivity(intent);
+
 
     }
 
@@ -88,7 +92,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
             return data;
         }
         protected void onPostExecute(String s) {
-            List<Food> f = parseJson(s);
+            f = parseJson(s);
             if (f == null)
                 Toast.makeText(Adding_food_screen.this, "Please check the spelling", Toast.LENGTH_SHORT).show();
             else {
@@ -110,3 +114,4 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
         }
         }
     }
+    //Todo add finish to activities like login and dign up and so on

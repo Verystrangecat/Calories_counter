@@ -2,7 +2,9 @@ package com.example.project.Food_classes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class FoodNutrient {
+import java.io.Serializable;
+
+public class FoodNutrient implements Serializable {
     private long nutrientID;
     private String nutrientName;
     private String nutrientNumber;

@@ -2,7 +2,9 @@ package com.example.project.Food_classes;
 
 import com.fasterxml.jackson.annotation.*;
 
-public class DataType {
+import java.io.Serializable;
+
+public class DataType implements Serializable {
     private long branded;
     private long surveyFNDDS;
     private long srLegacy;

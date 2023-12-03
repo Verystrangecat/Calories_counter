@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.io.Serializable;
 import java.util.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -15,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
-public class Converter {
+public class Converter implements Serializable {
     // Date-time helpers
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = new DateTimeFormatterBuilder()

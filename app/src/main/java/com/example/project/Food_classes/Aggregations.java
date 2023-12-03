@@ -2,7 +2,9 @@ package com.example.project.Food_classes;
 
 import com.fasterxml.jackson.annotation.*;
 
-public class Aggregations {
+import java.io.Serializable;
+
+public class Aggregations implements Serializable {
     private DataType dataType;
     private Nutrients nutrients;
 
