@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ public class Login extends AppCompatActivity {
     EditText login, password;
     Button bntlog, short_cut;
     TextView link;
+    Animation anim_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class Login extends AppCompatActivity {
         bntlog=findViewById(R.id.btnLogin);
         link=findViewById(R.id.text_link_signup);
         short_cut=findViewById(R.id.btn_shortcut);
+        anim_button= AnimationUtils.loadAnimation(this,R.anim.login_button);
 
     }
 
@@ -77,6 +81,7 @@ public class Login extends AppCompatActivity {
             String logtext=login.getText().toString();
             String pastext=password.getText().toString();
             if (logtext.equals("example@gmail.com") && pastext.equals("12345")){
+                bntlog.startAnimation(anim_button);
                 //TODO:add activity and check that the login and password changed
                 // forgot password
 

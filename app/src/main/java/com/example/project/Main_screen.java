@@ -139,7 +139,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
                 return true;
             }
             else if (item.getItemId()==R.id.navigation_more){
-                startActivity(new Intent(Main_screen.this, Setup_account.class));
+                startActivity(new Intent(Main_screen.this, More_activity.class));
                 finish();
                 return true;
             }

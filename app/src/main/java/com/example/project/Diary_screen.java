@@ -44,7 +44,7 @@ public class Diary_screen extends AppCompatActivity {
                 return true;
             }
             else if (item.getItemId()==R.id.navigation_more){
-                startActivity(new Intent(Diary_screen.this, Setup_account.class));
+                startActivity(new Intent(Diary_screen.this, More_activity.class));
                 finish();
                 return true;
             }
