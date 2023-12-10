@@ -35,6 +35,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Food food=foods.get(position);
         holder.food_name.setText(food.getDescription());
+      //  for (int i=0; i<food.)
         holder.calorie.setText(String.valueOf(food.getFoodNutrients().get(3).getValue()));
 
         if(food.getBrandName()!=null){

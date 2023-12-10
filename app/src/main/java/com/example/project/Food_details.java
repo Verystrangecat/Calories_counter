@@ -15,11 +15,12 @@ import com.example.project.Food_classes.Food;
 import java.io.Serializable;
 
 public class Food_details extends AppCompatActivity implements Serializable, View.OnClickListener {
-    TextView title,brand, amount_portion;
+    TextView title,brand, amount_portion, txt_cal, txt_carb, txt_fat, txt_pro;
     Food f;
     Dialog d;
     Button cancel, save;
     EditText portion;
+
 
 
     @Override
@@ -32,6 +33,10 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         f=(Food) getIntent().getSerializableExtra("KEY_NAME");
         title=findViewById(R.id.textView_title);
         brand=findViewById(R.id.textView_brand);
+        txt_cal=findViewById(R.id.textView_calorie);
+        txt_carb=findViewById(R.id.textView_carbs);
+        txt_fat=findViewById(R.id.textView_fats);
+        txt_pro=findViewById(R.id.textView_pro);
         amount_portion=findViewById(R.id.textView_size_of_the_por);
         amount_portion.setOnClickListener(this);
         assert f != null;
