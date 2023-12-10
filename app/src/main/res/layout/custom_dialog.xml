@@ -22,12 +22,13 @@
         <EditText
             android:id="@+id/editText_portion"
             android:layout_width="120dp"
+            android:inputType="numberDecimal"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:textSize="18sp"
             android:ems="10"
-            android:inputType="number"/>
+            />
 
         <TextView
             android:id="@+id/textView24"

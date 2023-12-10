@@ -28,7 +28,11 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_details);
         setup();
+        gettingdetails();
+
     }
+
+
     private void setup(){
         f=(Food) getIntent().getSerializableExtra("KEY_NAME");
         title=findViewById(R.id.textView_title);
@@ -73,4 +77,27 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         save.setOnClickListener(this);
         d.show();
     }
-}
+    private void gettingdetails() {
+        for (int i = 0; i < f.getFoodNutrients().size() ; i++) {
+            if (f.getFoodNutrients().get(i).getNutrientID() == 1008) {
+                txt_cal.setText(String.valueOf(f.getFoodNutrients().get(i).getValue()));
+            } else if (f.getFoodNutrients().get(i).getNutrientID() == 1003) {
+                txt_pro.setText(String.valueOf(f.getFoodNutrients().get(i).getValue()));
+
+            }   else if (f.getFoodNutrients().get(i).getNutrientID() == 1005) {
+            txt_carb.setText(String.valueOf(f.getFoodNutrients().get(i).getValue()));
+            } else if (f.getFoodNutrients().get(i).getNutrientID() == 1004) {
+            txt_fat.setText(String.valueOf(f.getFoodNutrients().get(i).getValue()));
+            }
+        }
+        if (txt_cal.getText().toString().equals("TextView"))
+            txt_cal.setText("No information");
+        if (txt_carb.getText().toString().equals("TextView"))
+            txt_carb.setText("No information");
+        if (txt_pro.getText().toString().equals("TextView"))
+            txt_pro.setText("No information");
+        if (txt_fat.getText().toString().equals("TextView"))
+            txt_fat.setText("No information");
+
+        }
+    }
