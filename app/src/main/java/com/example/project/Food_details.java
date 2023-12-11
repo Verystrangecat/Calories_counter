@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.project.Food_classes.Food;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 public class Food_details extends AppCompatActivity implements Serializable, View.OnClickListener {
     TextView title,brand, amount_portion, txt_cal, txt_carb, txt_fat, txt_pro;
@@ -20,7 +21,7 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
     Dialog d;
     Button cancel, save;
     EditText portion;
-
+    double cal=0, pro=0, carb=0, fat=0;
 
 
     @Override
@@ -29,6 +30,7 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         setContentView(R.layout.activity_food_details);
         setup();
         gettingdetails();
+        gettngnumbers();
 
     }
 
@@ -56,9 +58,17 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         else if(v==cancel)
             d.dismiss();
         else if(v==save){
-        amount_portion.setText(portion.getText());
+            if(portion.getText().equals(""))
+                amount_portion.setText("1");
+            else
+             amount_portion.setText(portion.getText());
+        double damount=Double.valueOf(amount_portion.getText().toString());
+        txt_cal.setText(new DecimalFormat("##.##").format(cal*damount));
+        txt_carb.setText(new DecimalFormat("##.##").format(carb*damount));
+        txt_pro.setText(new DecimalFormat("##.##").format(pro*damount));
+        txt_fat.setText(new DecimalFormat("##.##").format(fat*damount));
         d.dismiss();
-        //Todo affect the amount of everything in the food_details
+        //Todo the field wth all the infromaton
 
         }
 
@@ -100,4 +110,21 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             txt_fat.setText("No information");
 
         }
+        public void gettngnumbers(){
+            for (int i=0; i<f.getFoodNutrients().size(); i++){
+                if(f.getFoodNutrients().get(i).getNutrientID()==1008){
+                    cal=f.getFoodNutrients().get(i).getValue();
+                } else if (f.getFoodNutrients().get(i).getNutrientID()==1003) {
+                    pro=f.getFoodNutrients().get(i).getValue();
+                }
+                else if (f.getFoodNutrients().get(i).getNutrientID()==1005) {
+                    carb=f.getFoodNutrients().get(i).getValue();
+                }
+                else if (f.getFoodNutrients().get(i).getNutrientID()==1004) {
+                    fat=f.getFoodNutrients().get(i).getValue();
+                }
+
+                }
+
+            }
     }
