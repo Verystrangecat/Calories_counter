@@ -146,8 +146,9 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
             return false;
         });
     }
-//Todo add the bottom navigation to other screens (tutorial:https://www.youtube.com/watch?v=MUl19ppdu0o&t=884s)
-    //todo find out why I dont see the number of steps
+
+    //todo make everything reset at midnight
+
 }
 
 
