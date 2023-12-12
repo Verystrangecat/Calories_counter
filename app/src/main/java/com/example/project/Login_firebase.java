@@ -44,6 +44,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         mAuth=FirebaseAuth.getInstance();
         bntlog.setOnClickListener(this);
         link.setOnClickListener(this);
+        short_cut.setOnClickListener(this);
     }
 
     @Override
@@ -58,13 +59,14 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
             if(TextUtils.isEmpty(passwords)){
                 password.setError("Please enter your password");
                 return;}
+            bntlog.startAnimation(anim_button);
 
             mAuth.signInWithEmailAndPassword(emails, passwords)
                     .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
+
                                 Toast.makeText(Login_firebase.this, "Login successful.",
                                         Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(Login_firebase.this, Main_screen.class));
@@ -83,5 +85,11 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(Login_firebase.this,Register_firebase.class));
 
         }
+        else if (view==short_cut){
+            startActivity(new Intent(Login_firebase.this, Diary_screen.class));
+            finish();
+        }
     }
+
+    //Todo add the forgot password thing
 }

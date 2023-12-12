@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,21 +42,27 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
         signup = findViewById(R.id.btncreateaccountf);
         signup.setOnClickListener(this);
         link_login = findViewById(R.id.text_link_loginf);
-        mAuth=FirebaseAuth.getInstance();
+        link_login.setOnClickListener(this);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
     public void onClick(View view) {
         String emails, passwords;
         if (view == signup) {
-            emails=email.getText().toString();
-            passwords=password.getText().toString();
-            if(TextUtils.isEmpty(emails)){
+
+            emails = email.getText().toString();
+            passwords = password.getText().toString();
+            if (TextUtils.isEmpty(emails)) {
                 email.setError("Please enter your email");
-                return;}
-            if(TextUtils.isEmpty(passwords)){
+                return;
+            }
+            if (TextUtils.isEmpty(passwords)) {
                 password.setError("Please enter your password");
-                return;}
+                return;
+            }
+            if(!checkDataEntered())
+                return;
 
             mAuth.createUserWithEmailAndPassword(emails, passwords)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -76,11 +83,53 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
 
 
                     });
-            }
+        } else if (view == link_login) {
+            startActivity(new Intent(Register_firebase.this, Login_firebase.class));
+
+        }
+
+
+    }
+
+    private boolean checkDataEntered() {
+        if (isEmpty(name)) {
+            name.setError("You must enter your name to sign up");
+         return false;
+        }
+        if (isEmpty(checkpassword)) {
+            checkpassword.setError("You must confirm the password to sign up");
+            return false;
+
+        }
+        if(!isEmail(email)) {
+            email.setError("You must enter valid email to sign up");
+        return false;}
+        String passtext=password.getText().toString();
+        String checkpasstext=checkpassword.getText().toString();
+        if(passtext.length()<6){
+            password.setError("Password should consist of minimum 6 characters");
+            return false;
+        }
+        if(passtext.equals(checkpasstext))
+            return true;
+        checkpassword.setError("Is not the same as the password");
+        return false;
+
 
 
         }
+
+
+    public boolean isEmpty(EditText text) {
+        CharSequence str = text.getText().toString();
+        return TextUtils.isEmpty(str);
     }
+    public boolean isEmail(EditText text){
+        CharSequence str=text.getText().toString();
+        return !TextUtils.isEmpty(str)&& Patterns.EMAIL_ADDRESS.matcher(str).matches();
+    }
+}
+
 
 
 
