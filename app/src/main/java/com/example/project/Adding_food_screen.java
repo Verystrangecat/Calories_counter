@@ -114,4 +114,5 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
         }
         }
     }
+    //todo fix the gvulot of recycler view
     //Todo add finish to activities like login and dign up and so on

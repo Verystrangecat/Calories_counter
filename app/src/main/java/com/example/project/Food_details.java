@@ -63,10 +63,10 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             else
              amount_portion.setText(portion.getText());
         double damount=Double.valueOf(amount_portion.getText().toString());
-        txt_cal.setText(new DecimalFormat("##.##").format(cal*damount));
-        txt_carb.setText(new DecimalFormat("##.##").format(carb*damount));
-        txt_pro.setText(new DecimalFormat("##.##").format(pro*damount));
-        txt_fat.setText(new DecimalFormat("##.##").format(fat*damount));
+        txt_cal.setText(new DecimalFormat("##.#").format(cal*damount));
+        txt_carb.setText(new DecimalFormat("##.#").format(carb*damount));
+        txt_pro.setText(new DecimalFormat("##.#").format(pro*damount));
+        txt_fat.setText(new DecimalFormat("##.#").format(fat*damount));
         d.dismiss();
         //Todo the field wth all the infromaton
 

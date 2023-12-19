@@ -11,6 +11,8 @@ import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class Setup_account extends AppCompatActivity {
     EditText txt_height, txt_weight, txt_age;
     SeekBar bar_height, bar_weight;
@@ -20,7 +22,7 @@ public class Setup_account extends AppCompatActivity {
     double activity_level_calorie = 0, level_protein = 0;
     int additional_calories = 0;
     int num_age, num_height, num_weight;
-     static int calories=0, proteins=0, fats=0, carbohydrates=0;
+     static double calories=0, proteins=0, fats=0, carbohydrates=0;
 
     Button submit, female, male;
 
@@ -42,9 +44,13 @@ public class Setup_account extends AppCompatActivity {
             calories=(int) Math.round((447.593 + (9.247 *num_weight) + (3.098 * num_height) - (4.330*num_age))*activity_level_calorie+additional_calories);
         else
             calories=(int) Math.round((88.362 + (13.397 *num_weight) + (4.799 * num_height) - (5.677 *num_age))*activity_level_calorie);
-        proteins=(int) Math.round(num_weight*level_protein);
-        fats=(int) Math.round((calories*0.27)/9);
-        carbohydrates=(int) Math.round(calories*0.55/4);
+        proteins= Math.round(num_weight*level_protein);
+        fats=Math.round((calories*0.27)/9);
+        carbohydrates=Math.round(calories*0.55/4);
+        proteins=Onedigit(proteins);
+        fats=Onedigit(fats);
+        carbohydrates=Onedigit(carbohydrates);
+        My_information save=new My_information(calories,proteins,fats,carbohydrates);
     }
 
 
@@ -277,5 +283,11 @@ public class Setup_account extends AppCompatActivity {
         }
 
 
+    }
+    public double Onedigit(double val){
+        String vals=String.valueOf(val);
+        vals=new DecimalFormat("##.#").format(val);
+        val=Double.valueOf(vals);
+        return val;
     }
 }
