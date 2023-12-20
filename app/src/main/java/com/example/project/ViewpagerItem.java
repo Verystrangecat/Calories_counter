@@ -1,17 +1,18 @@
 package com.example.project;
 
 public class ViewpagerItem {
-    String heading;
-    double numtotal, numleft;
+    String heading, numtotal, numleft;
+
     int image;
 
 
-    public ViewpagerItem(String heading, double numtotal, double numleft, int image) {
+    public ViewpagerItem(String heading, String numtotal, String numleft, int image) {
         this.heading = heading;
         this.numtotal = numtotal;
         this.numleft = numleft;
         this.image = image;
     }
+
     public String getHeading() {
         return heading;
     }
@@ -20,19 +21,19 @@ public class ViewpagerItem {
         this.heading = heading;
     }
 
-    public double getNumtotal() {
+    public String getNumtotal() {
         return numtotal;
     }
 
-    public void setNumtotal(double numtotal) {
+    public void setNumtotal(String numtotal) {
         this.numtotal = numtotal;
     }
 
-    public double getNumleft() {
+    public String getNumleft() {
         return numleft;
     }
 
-    public void setNumleft(double numleft) {
+    public void setNumleft(String numleft) {
         this.numleft = numleft;
     }
 

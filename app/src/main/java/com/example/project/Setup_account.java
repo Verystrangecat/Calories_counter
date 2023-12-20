@@ -2,7 +2,9 @@ package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +52,19 @@ public class Setup_account extends AppCompatActivity {
         proteins=Onedigit(proteins);
         fats=Onedigit(fats);
         carbohydrates=Onedigit(carbohydrates);
-        My_information save=new My_information(calories,proteins,fats,carbohydrates);
+        SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("amount_calories",String.valueOf(calories));
+        editor.putString("amount_proteins",String.valueOf(proteins));
+        editor.putString("amount_carbs",String.valueOf(carbohydrates));
+        editor.putString("amount_fats",String.valueOf(fats));
+        editor.putString("amount_calories_left",String.valueOf(calories));
+        editor.putString("amount_proteins_left",String.valueOf(proteins));
+        editor.putString("amount_carbs_left",String.valueOf(carbohydrates));
+        editor.putString("amount_fats_left",String.valueOf(fats));
+
+        editor.apply();
+
     }
 
 

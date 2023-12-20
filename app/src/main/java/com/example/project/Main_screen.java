@@ -51,6 +51,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         resetSteps();
         loadData();
         bottom_navigation();
+        setViewPager2();
 //todo:pop up asking for a users permission
 
 
@@ -62,23 +63,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         stepsensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         viewPager2=findViewById(R.id.viewpager);
-        arrayList=new ArrayList<>();
-        //My_information myInformation=(My_information) getApplication();
-//        arrayList.add(new ViewpagerItem("Calories",myInformation.getCalories(),myInformation.getCal_left(),R.drawable.circle_calorie));
-//        arrayList.add(new ViewpagerItem("Carbs",myInformation.getCarbs(),myInformation.getCarb_left(),R.drawable.circle_carbs));
-//        arrayList.add(new ViewpagerItem("Fats",myInformation.getFats(),myInformation.getFats_left(),R.drawable.circle_fats));
-//        arrayList.add(new ViewpagerItem("Proteins",myInformation.getProteins(),myInformation.getProtein_left(),R.drawable.circle_proteins));
-        arrayList.add(new ViewpagerItem("Calories",1200,200,R.drawable.circle_calorie));
-        arrayList.add(new ViewpagerItem("Carbs",12,10,R.drawable.circle_carbs));
-        arrayList.add(new ViewpagerItem("Fats",23,23,R.drawable.circle_fats));
-        arrayList.add(new ViewpagerItem("Proteins",15,13,R.drawable.circle_proteins));
-        //Todo figure out the way to get and pass the information, preferebaly without sharedpreference
-        Vp_adapter vp_adapter=new Vp_adapter(arrayList);
-        viewPager2.setAdapter(vp_adapter);
-        viewPager2.setClipToPadding(false);
-        viewPager2.setClipChildren(false);
-        viewPager2.setOffscreenPageLimit(2);
-        viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+
 
     }
 
@@ -170,6 +155,27 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
             return false;
         });
     }
+
+    public void setViewPager2(){
+        arrayList=new ArrayList<>();
+        SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
+        arrayList.add(new ViewpagerItem("Calories",sharedPreferences.getString("amount_calories","0"),
+                sharedPreferences.getString("amount_calories_left",sharedPreferences.getString("amount_calories","0")),R.drawable.circle_calorie));
+        arrayList.add(new ViewpagerItem("Carbs",sharedPreferences.getString("amount_carbs","0"),
+                sharedPreferences.getString("amount_carbs_left",sharedPreferences.getString("amount_carbs","0")),R.drawable.circle_carbs));
+        arrayList.add(new ViewpagerItem("Fats",sharedPreferences.getString("amount_fats","0"),
+                sharedPreferences.getString("amount_fats_left",sharedPreferences.getString("amount_fats","0")),R.drawable.circle_fats));
+        arrayList.add(new ViewpagerItem("Proteins",sharedPreferences.getString("amount_proteins","0"),
+                sharedPreferences.getString("amount_proteins_left",sharedPreferences.getString("amount_proteins","0")),R.drawable.circle_proteins));
+        //Todo figure out the way to get and pass the information, preferebaly without sharedpreference
+        Vp_adapter vp_adapter=new Vp_adapter(arrayList);
+        viewPager2.setAdapter(vp_adapter);
+        viewPager2.setClipToPadding(false);
+        viewPager2.setClipChildren(false);
+        viewPager2.setOffscreenPageLimit(2);
+        viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+    }
+
 
     //todo make everything reset at midnight
 

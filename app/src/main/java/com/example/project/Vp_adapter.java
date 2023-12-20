@@ -34,8 +34,10 @@ public class Vp_adapter extends RecyclerView.Adapter<Vp_adapter.ViewHolder> {
         ViewpagerItem viewpagerItem=viewpagerItemArrayList.get(position);
         holder.imageView.setImageResource(viewpagerItem.getImage());
         holder.heading.setText(viewpagerItem.getHeading());
-        holder.numleft.setText(new DecimalFormat("##.#").format(viewpagerItem.getNumleft()));
-        holder.numtotal.setText(new DecimalFormat("##.#").format(viewpagerItem.getNumtotal()));
+        holder.numleft.setText(viewpagerItem.getNumleft());
+        holder.numtotal.setText(viewpagerItem.getNumtotal());
+//        holder.numleft.setText(new DecimalFormat("##.#").format(viewpagerItem.getNumleft()));
+//        holder.numtotal.setText(new DecimalFormat("##.#").format(viewpagerItem.getNumtotal()));
 
 
     }
