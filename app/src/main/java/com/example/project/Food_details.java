@@ -3,6 +3,9 @@ package com.example.project;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +22,11 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
     TextView title,brand, amount_portion, txt_cal, txt_carb, txt_fat, txt_pro;
     Food f;
     Dialog d;
-    Button cancel, save;
+    Button cancel, save, add;
     EditText portion;
     double cal=0, pro=0, carb=0, fat=0;
+    double cal_here=0,pro_here=0, carb_here=0, fat_here=0
+            ;
 
 
     @Override
@@ -43,6 +48,8 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         txt_carb=findViewById(R.id.textView_carbs);
         txt_fat=findViewById(R.id.textView_fats);
         txt_pro=findViewById(R.id.textView_pro);
+        add=findViewById(R.id.button_add);
+        add.setOnClickListener(this);
         amount_portion=findViewById(R.id.textView_size_of_the_por);
         amount_portion.setOnClickListener(this);
         assert f != null;
@@ -63,12 +70,39 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             else
              amount_portion.setText(portion.getText());
         double damount=Double.valueOf(amount_portion.getText().toString());
+        cal_here=cal*damount;
+        pro_here=pro*damount;
+        carb_here=carb*damount;
+        fat_here=fat*damount;
         txt_cal.setText(new DecimalFormat("##.#").format(cal*damount));
         txt_carb.setText(new DecimalFormat("##.#").format(carb*damount));
         txt_pro.setText(new DecimalFormat("##.#").format(pro*damount));
         txt_fat.setText(new DecimalFormat("##.#").format(fat*damount));
         d.dismiss();
-        //Todo the field wth all the infromaton
+
+
+        } else if (v==add)
+        {
+            SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            //todo get the calories left then to number - cal_here and back to sharedpreference
+            double calori=Double.parseDouble(sharedPreferences.getString("amount_calories_left","0"));
+            double protein=Double.parseDouble(sharedPreferences.getString("amount_proteins_left","0"));
+            double fats=Double.parseDouble(sharedPreferences.getString("amount_fats_left","0"));
+            double carbs=Double.parseDouble(sharedPreferences.getString("amount_carbs_left","0"));
+            calori=calori-cal_here;
+            protein=protein-pro_here;
+            fats=fats-fat_here;
+            carbs=carbs-carb_here;
+            editor.putString("amount_calories_left",new DecimalFormat("##.#").format(calori));
+            editor.putString("amount_proteins_left",new DecimalFormat("##.#").format(protein));
+            editor.putString("amount_fats_left",new DecimalFormat("##.#").format(fats));
+            editor.putString("amount_carbs_left",new DecimalFormat("##.#").format(carbs));
+            editor.apply();
+            startActivity(new Intent(Food_details.this, Diary_screen.class));
+            finish();
+
+
 
         }
 

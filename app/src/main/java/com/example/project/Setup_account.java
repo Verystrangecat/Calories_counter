@@ -62,7 +62,6 @@ public class Setup_account extends AppCompatActivity {
         editor.putString("amount_proteins_left",String.valueOf(proteins));
         editor.putString("amount_carbs_left",String.valueOf(carbohydrates));
         editor.putString("amount_fats_left",String.valueOf(fats));
-
         editor.apply();
 
     }
