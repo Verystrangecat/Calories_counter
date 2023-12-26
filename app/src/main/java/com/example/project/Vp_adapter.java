@@ -25,13 +25,13 @@ public class Vp_adapter extends RecyclerView.Adapter<Vp_adapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.viewpager_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewpager_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ViewpagerItem viewpagerItem=viewpagerItemArrayList.get(position);
+        ViewpagerItem viewpagerItem = viewpagerItemArrayList.get(position);
         holder.imageView.setImageResource(viewpagerItem.getImage());
         holder.heading.setText(viewpagerItem.getHeading());
         holder.numleft.setText(viewpagerItem.getNumleft());
@@ -50,14 +50,15 @@ public class Vp_adapter extends RecyclerView.Adapter<Vp_adapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView heading, numtotal, numleft;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
 
-            imageView=itemView.findViewById(R.id.imageView_viewpager);
-            heading=itemView.findViewById(R.id.textView_heading);
-            numtotal=itemView.findViewById(R.id.textView_numtotal);
-            numleft=itemView.findViewById(R.id.textView_numleft);
+            imageView = itemView.findViewById(R.id.imageView_viewpager);
+            heading = itemView.findViewById(R.id.textView_heading);
+            numtotal = itemView.findViewById(R.id.textView_numtotal);
+            numleft = itemView.findViewById(R.id.textView_numleft);
 
         }
     }

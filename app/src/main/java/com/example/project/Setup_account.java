@@ -43,9 +43,9 @@ public class Setup_account extends AppCompatActivity {
 
     private void final_result() {
         if(isFemale)
-            calories=(int) Math.round((447.593 + (9.247 *num_weight) + (3.098 * num_height) - (4.330*num_age))*activity_level_calorie+additional_calories);
+            calories=Math.round((447.593 + (9.247 *num_weight) + (3.098 * num_height) - (4.330*num_age))*activity_level_calorie+additional_calories);
         else
-            calories=(int) Math.round((88.362 + (13.397 *num_weight) + (4.799 * num_height) - (5.677 *num_age))*activity_level_calorie);
+            calories= Math.round((88.362 + (13.397 *num_weight) + (4.799 * num_height) - (5.677 *num_age))*activity_level_calorie);
         proteins= Math.round(num_weight*level_protein);
         fats=Math.round((calories*0.27)/9);
         carbohydrates=Math.round(calories*0.55/4);
