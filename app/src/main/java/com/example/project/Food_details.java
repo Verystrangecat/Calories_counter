@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.Food_classes.Food;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -79,9 +80,7 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             carb_here=carb*damount;
             pro_here=pro*damount;
             fat_here=fat*damount;
-
-
-        txt_cal.setText(new DecimalFormat("##.#").format(cal*damount));
+            txt_cal.setText(new DecimalFormat("##.#").format(cal*damount));
         txt_carb.setText(new DecimalFormat("##.#").format(carb*damount));
         txt_pro.setText(new DecimalFormat("##.#").format(pro*damount));
         txt_fat.setText(new DecimalFormat("##.#").format(fat*damount));
@@ -108,6 +107,7 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             editor.putString("amount_fats_left",new DecimalFormat("##.#").format(fats));
             editor.putString("amount_carbs_left",new DecimalFormat("##.#").format(carbs));
             editor.apply();
+
               startActivity(new Intent(Food_details.this, Diary_screen.class));
             finish();
 
@@ -175,6 +175,22 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
                 pro_here=Double.parseDouble(txt_pro.getText().toString());
                 fat_here=Double.parseDouble(txt_fat.getText().toString());
                 carb_here=Double.parseDouble(txt_carb.getText().toString());
+
+            }
+            public void saving_object(String portion){
+                Food_class_meals food_class_meals=new Food_class_meals(txt_cal.getText().toString(), txt_pro.getText().toString(),
+                        txt_fat.getText().toString(),txt_carb.getText().toString(),amount_portion.getText().toString(),brand.getText().toString(),title.getText().toString());
+                SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson2 = new Gson();
+                String json2 = sharedPreferences.getString("MyObject", "");
+                Array_class obj = gson2.fromJson(json2, Array_class.class);
+                obj.arrayList.add(food_class_meals);
+                Gson gson = new Gson();
+                String json = gson.toJson(obj);
+                editor.putString("MyObject", json);
+                editor.commit();
+
 
             }
     }

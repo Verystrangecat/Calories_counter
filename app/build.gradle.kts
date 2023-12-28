@@ -38,6 +38,7 @@ android {
 dependencies {
     implementation("com.google.android.material:material:<version")
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation ("com.google.code.gson:gson:2.8.8")
     implementation("com.google.android.material:material:1.10.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310: 2.9.0")

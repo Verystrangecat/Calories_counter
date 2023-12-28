@@ -3,7 +3,9 @@ package com.example.project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 
 public class Register_firebase extends AppCompatActivity implements View.OnClickListener {
     EditText name, password, checkpassword, email;
@@ -71,6 +74,13 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
                             if (task.isSuccessful()) {
                                 Toast.makeText(Register_firebase.this, "Account created.",
                                         Toast.LENGTH_SHORT).show();
+                                Array_class arrayClass=new Array_class();
+                                SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                Gson gson = new Gson();
+                                String json = gson.toJson(arrayClass);
+                                editor.putString("MyObject", json);
+                                editor.commit();
                                 startActivity(new Intent(Register_firebase.this, Setup_account.class));
                                 finish();
                             } else {

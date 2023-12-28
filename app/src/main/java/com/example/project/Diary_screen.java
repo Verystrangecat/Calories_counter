@@ -24,6 +24,7 @@ public class Diary_screen extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new Fragment_diary()).commit();
         bottomNavigationView=findViewById(R.id.bottom_navigation);
         bottom_navigation();
+        replace_fragment(new Fragment_breakfast());
 
     }
     private void bottom_navigation(){
@@ -56,6 +57,8 @@ public class Diary_screen extends AppCompatActivity {
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
-
+        //Todo add the history of foods
+        //use this https://stackoverflow.com/questions/7145606/how-do-you-save-store-objects-in-sharedpreferences-on-android
+//Todo fix the problem with 2 dairy screens
     }
 }
