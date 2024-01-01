@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Viewp_tabs_Adapter extends FragmentPagerAdapter {
     private final ArrayList<Fragment> fragmentArrayList=new ArrayList<>();
+    private final ArrayList<String> fragmentTitles = new ArrayList<>(); // Add this line
 
     public Viewp_tabs_Adapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -24,7 +25,13 @@ public class Viewp_tabs_Adapter extends FragmentPagerAdapter {
     public int getCount() {
         return fragmentArrayList.size();
     }
-    public void addFragment(Fragment fragment){
+    public void addFragment(Fragment fragment, String title){
         fragmentArrayList.add(fragment);
+        fragmentTitles.add(title);
     }
+    public CharSequence getPageTitle(int position) {
+        return fragmentTitles.get(position); // Modify this line
+    }
+
+
 }

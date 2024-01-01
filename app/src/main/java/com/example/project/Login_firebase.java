@@ -86,7 +86,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
 
         }
         else if (view==short_cut){
-            startActivity(new Intent(Login_firebase.this, Diary_screen.class));
+            startActivity(new Intent(Login_firebase.this, Main_screen.class));
             finish();
         }
     }

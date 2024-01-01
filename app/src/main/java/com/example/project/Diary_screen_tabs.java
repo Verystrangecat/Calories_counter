@@ -29,10 +29,11 @@ public class Diary_screen_tabs extends AppCompatActivity {
         viewPager=findViewById(R.id.viewpager_tabs);
         tabLayout.setupWithViewPager(viewPager);
         Viewp_tabs_Adapter viewpTabsAdapter=new Viewp_tabs_Adapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        viewpTabsAdapter.addFragment(new Fragment_breakfast());
-        viewpTabsAdapter.addFragment(new Fragment_lunch());
-        viewpTabsAdapter.addFragment(new Fragment_dinner());
-        viewpTabsAdapter.addFragment(new Fragment_snaks());
+        viewpTabsAdapter.addFragment(new Fragment_breakfast(),"Breakfast");
+        viewpTabsAdapter.addFragment(new Fragment_lunch(),"Lunch");
+        viewpTabsAdapter.addFragment(new Fragment_dinner(),"Dinner");
+        viewpTabsAdapter.addFragment(new Fragment_snaks(),"Snakes");
+        bottomNavigationView=findViewById(R.id.bottom_navigation);
         viewPager.setAdapter(viewpTabsAdapter);
     }
     private void bottom_navigation(){

@@ -138,7 +138,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
             if(item.getItemId()==R.id.navigation_home)
                 return true;
             else if (item.getItemId()==R.id.navigation_diary){
-                startActivity(new Intent(Main_screen.this, Diary_screen.class));
+                startActivity(new Intent(Main_screen.this, Diary_screen_tabs.class));
                 finish();
                 return true;
             }

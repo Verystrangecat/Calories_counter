@@ -12,7 +12,7 @@
 
 
         <TextView
-            android:id="@+id/textView29"
+            android:id="@+id/textView_food_breakfast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
@@ -29,12 +29,21 @@
             android:id="@+id/recycle_view_breakfast"
             android:layout_width="409dp"
             android:layout_height="686dp"
-            android:layout_marginTop="1dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView29"
+            tools:layout_editor_absoluteY="186dp"
             tools:listitem="@layout/item_recylcle_meals" />
+
+        <Button
+            android:id="@+id/button_add_breakfast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            app:layout_constraintBottom_toTopOf="@+id/recycle_view_breakfast"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_food_breakfast"
+            app:layout_constraintVertical_bias="0.263" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

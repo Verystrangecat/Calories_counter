@@ -1,6 +1,8 @@
 package com.example.project;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -76,10 +80,18 @@ public class Fragment_breakfast extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getdata();
         RecyclerView recyclerView=view.findViewById(R.id.recycle_view_breakfast);
+        Button button=view.findViewById(R.id.button_add_breakfast);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view==button)
+                    startActivity(new Intent(getActivity(), Adding_food_screen.class));
+            }
+        });
+
         getdata();
         if(arrayList!=null){
         Adapter_meals adapterMeals=new Adapter_meals(getContext(),arrayList);

@@ -107,8 +107,8 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             editor.putString("amount_fats_left",new DecimalFormat("##.#").format(fats));
             editor.putString("amount_carbs_left",new DecimalFormat("##.#").format(carbs));
             editor.apply();
-
-              startActivity(new Intent(Food_details.this, Diary_screen.class));
+            saving_object();
+              startActivity(new Intent(Food_details.this,Main_screen.class));
             finish();
 
 
@@ -177,7 +177,7 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
                 carb_here=Double.parseDouble(txt_carb.getText().toString());
 
             }
-            public void saving_object(String portion){
+            public void saving_object(){
                 Food_class_meals food_class_meals=new Food_class_meals(txt_cal.getText().toString(), txt_pro.getText().toString(),
                         txt_fat.getText().toString(),txt_carb.getText().toString(),amount_portion.getText().toString(),brand.getText().toString(),title.getText().toString());
                 SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
