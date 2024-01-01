@@ -180,6 +180,7 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             public void saving_object(){
                 Food_class_meals food_class_meals=new Food_class_meals(txt_cal.getText().toString(), txt_pro.getText().toString(),
                         txt_fat.getText().toString(),txt_carb.getText().toString(),amount_portion.getText().toString(),brand.getText().toString(),title.getText().toString());
+                //
                 SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson2 = new Gson();
