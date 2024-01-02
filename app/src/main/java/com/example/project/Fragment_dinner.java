@@ -1,12 +1,24 @@
 package com.example.project;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +35,7 @@ public class Fragment_dinner extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ArrayList<Food_class_meals> arrayList;
 
     public Fragment_dinner() {
         // Required empty public constructor
@@ -60,5 +73,38 @@ public class Fragment_dinner extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dinner, container, false);
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        RecyclerView recyclerView = view.findViewById(R.id.recycle_view_dinner);
+        Button button = view.findViewById(R.id.button_add_dinner);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view == button)
+                    startActivity(new Intent(getActivity(), Adding_food_screen.class));
+            }
+        });
+
+        getdata();
+        if (arrayList != null) {
+            Adapter_meals adapterMeals = new Adapter_meals(getContext(), arrayList);
+            recyclerView.setAdapter(adapterMeals);
+            adapterMeals.notifyDataSetChanged();
+        }
+    }
+
+    private void getdata() {
+
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson2 = new Gson();
+        String json2 = sharedPreferences.getString("MyObject", "");
+        Array_class obj = gson2.fromJson(json2, Array_class.class);
+        arrayList = obj.arrayList;
+        // TODO: 28/12/2023 get from shared preference an array
     }
 }

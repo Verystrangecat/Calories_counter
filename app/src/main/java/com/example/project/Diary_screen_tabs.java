@@ -32,7 +32,7 @@ public class Diary_screen_tabs extends AppCompatActivity {
         viewpTabsAdapter.addFragment(new Fragment_breakfast(),"Breakfast");
         viewpTabsAdapter.addFragment(new Fragment_lunch(),"Lunch");
         viewpTabsAdapter.addFragment(new Fragment_dinner(),"Dinner");
-        viewpTabsAdapter.addFragment(new Fragment_snaks(),"Snakes");
+        viewpTabsAdapter.addFragment(new Fragment_snaks(),"Snacks");
         bottomNavigationView=findViewById(R.id.bottom_navigation);
         viewPager.setAdapter(viewpTabsAdapter);
     }
