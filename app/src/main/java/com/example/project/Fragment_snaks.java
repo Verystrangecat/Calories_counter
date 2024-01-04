@@ -96,7 +96,7 @@ public class Fragment_snaks extends Fragment {
 
         getdata();
         if (arrayList != null) {
-            Adapter_meals adapterMeals = new Adapter_meals(getContext(), arrayList);
+            Adapter_meals adapterMeals = new Adapter_meals(getContext(), arraynew);
             recyclerView.setAdapter(adapterMeals);
             adapterMeals.notifyDataSetChanged();
         }
