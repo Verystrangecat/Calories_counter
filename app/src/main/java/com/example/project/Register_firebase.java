@@ -80,6 +80,7 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
                                 Gson gson = new Gson();
                                 String json = gson.toJson(arrayClass);
                                 editor.putString("MyObject", json);
+
                                 editor.commit();
                                 startActivity(new Intent(Register_firebase.this, Setup_account.class));
                                 finish();

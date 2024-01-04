@@ -1,9 +1,9 @@
 package com.example.project;
 
 public class Food_class_meals {
-    String calories, proteins, fats, carbs, portion, brand, name;
+    String calories, proteins, fats, carbs, portion, brand, name, meal;
 
-    public Food_class_meals(String calories, String proteins, String fats, String carbs, String portion, String brand, String name) {
+    public Food_class_meals(String calories, String proteins, String fats, String carbs, String portion, String brand, String name,String meal) {
         this.calories = calories;
         this.proteins = proteins;
         this.fats = fats;
@@ -11,6 +11,7 @@ public class Food_class_meals {
         this.portion = portion;
         this.brand = brand;
         this.name = name;
+        this.meal=meal;
     }
 
     public String getCalories() {
@@ -67,5 +68,13 @@ public class Food_class_meals {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMeal() {
+        return meal;
+    }
+
+    public void setMeal(String meal) {
+        this.meal = meal;
     }
 }

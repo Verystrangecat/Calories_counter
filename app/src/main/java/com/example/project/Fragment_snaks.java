@@ -36,6 +36,7 @@ public class Fragment_snaks extends Fragment {
     private String mParam1;
     private String mParam2;
     private ArrayList<Food_class_meals> arrayList;
+    private ArrayList<Food_class_meals> arraynew;
 
     public Fragment_snaks() {
         // Required empty public constructor
@@ -83,9 +84,14 @@ public class Fragment_snaks extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view == button)
-                    startActivity(new Intent(getActivity(), Adding_food_screen.class));
-            }
+                if (view == button){
+                    Intent i=new Intent(getActivity(),Adding_food_screen.class);
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("Meal","s");
+                    editor.apply();
+                    startActivity(i);
+            }}
         });
 
         getdata();
@@ -103,6 +109,13 @@ public class Fragment_snaks extends Fragment {
         Gson gson2 = new Gson();
         String json2 = sharedPreferences.getString("MyObject", "");
         Array_class obj = gson2.fromJson(json2, Array_class.class);
-        arrayList = obj.arrayList;
+        arrayList=obj.arrayList;
+        arraynew=new ArrayList<>();
+        if(arrayList!=null){
+            for(int i=0; i<arrayList.size();i++){
+                if(arrayList.get(i).meal.equals("s"))
+                    arraynew.add(arrayList.get(i));
+            }
+        }
     }
 }

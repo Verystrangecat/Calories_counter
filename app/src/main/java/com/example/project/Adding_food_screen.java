@@ -30,6 +30,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
     Button search;
     EditText query;
     List<Food> f=null;
+    String meal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
         query=findViewById(R.id.editText_query);
         search.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        meal=getIntent().getStringExtra("Meal");
 
     }
 
@@ -73,6 +75,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
     public void OnfoodClick(int position) {
         Intent intent=new Intent(Adding_food_screen.this, Food_details.class);
         intent.putExtra("KEY_NAME",f.get(position) );
+        intent.putExtra("Meal",meal);
         startActivity(intent);
 
 
