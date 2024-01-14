@@ -40,7 +40,7 @@ public class More_activity extends AppCompatActivity implements View.OnClickList
                 return true;
             }
             else if (item.getItemId()==R.id.navigation_diary){
-                startActivity(new Intent(More_activity.this,Diary_screen.class));
+                startActivity(new Intent(More_activity.this,Diary_screen_tabs.class));
                 finish();
                 return true;
             }
