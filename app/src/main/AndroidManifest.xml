@@ -37,9 +37,6 @@
             android:name=".Food_details"
             android:exported="false" />
         <activity
-            android:name=".Diary_screen"
-            android:exported="false" />
-        <activity
             android:name=".Main_screen"
             android:exported="false" />
         <activity
@@ -64,6 +61,7 @@
         <activity
             android:name=".Login"
             android:exported="false" />
+        <receiver android:name=".utils.Broadcast_reciever"/>
     </application>
 
 </manifest>

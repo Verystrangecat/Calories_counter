@@ -181,48 +181,13 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
-    public void notification() {
-    create_notification_channel();
-        Intent intent=new Intent(Main_screen.this, Broadcast_reciever.class);
-        PendingIntent pendingIntentmorning=PendingIntent.getBroadcast(Main_screen.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
-        Calendar calendarmorning = Calendar.getInstance();
-        calendarmorning.set(Calendar.HOUR_OF_DAY, 8); // Set the hour (24-hour format)
-        calendarmorning.set(Calendar.MINUTE, 0);// Set the minute
-        alarmManager.set(AlarmManager.RTC_WAKEUP,calendarmorning.getTimeInMillis(),
-                pendingIntentmorning);
-        PendingIntent pendingIntentday=PendingIntent.getBroadcast(Main_screen.this, 1, intent, PendingIntent.FLAG_IMMUTABLE);
-        Calendar calendarday = Calendar.getInstance();
-        calendarday.set(Calendar.HOUR_OF_DAY, 14); // Set the hour (24-hour format)
-        calendarday.set(Calendar.MINUTE, 0);// Set the minute
-        alarmManager.set(AlarmManager.RTC_WAKEUP,calendarday.getTimeInMillis(),
-                pendingIntentday);
-        PendingIntent pendingIntentevening=PendingIntent.getBroadcast(Main_screen.this, 2, intent, PendingIntent.FLAG_IMMUTABLE);
-        Calendar calendarevening = Calendar.getInstance();
-        calendarevening.set(Calendar.HOUR_OF_DAY, 19); // Set the hour (24-hour format)
-        calendarevening.set(Calendar.MINUTE, 0);// Set the minute
-        alarmManager.set(AlarmManager.RTC_WAKEUP,calendarevening.getTimeInMillis(),
-                pendingIntentevening);
 
-
-    }
-
-
-    public void create_notification_channel() {
-        CharSequence name = "Reminder_channel";
-        String description = "Channel for notifications about meals";
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel("notifyme", name, importance);
-        channel.setDescription(description);
-
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(channel);
 
 
         //todo make everything reset at midnight
 
     }
-}
+
 //todo circular_menu
 
 
