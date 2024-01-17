@@ -1,12 +1,16 @@
 package com.example.project.utils;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -32,6 +36,17 @@ public class Broadcast_reciever extends BroadcastReceiver {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
+            AlertDialog.Builder builderdialog=new AlertDialog.Builder(context);
+            builderdialog.setMessage("Do you want to allow notifications?")
+                    .setTitle("Notification permission")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(context,new String[]{Manifest.permission.POST_NOTIFICATIONS},);
+                        }
+                    })
+
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
@@ -40,5 +55,6 @@ public class Broadcast_reciever extends BroadcastReceiver {
             return;
         }
         notificationManagerCompat.notify(200, builder.build());
+        //https://www.youtube.com/watch?v=OJpceQqXIjY
     }
 }

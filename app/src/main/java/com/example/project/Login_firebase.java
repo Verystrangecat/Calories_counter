@@ -123,6 +123,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         calendarevening.set(Calendar.MINUTE, 0);// Set the minute
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendarevening.getTimeInMillis(),AlarmManager.INTERVAL_DAY,
                 pendingIntentevening);
+        //todo check that the number is 19
 
 
     }
