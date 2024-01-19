@@ -33,27 +33,6 @@ public class Broadcast_reciever extends BroadcastReceiver {
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            AlertDialog.Builder builderdialog=new AlertDialog.Builder(context);
-            builderdialog.setMessage("Do you want to allow notifications?")
-                    .setTitle("Notification permission")
-                    .setCancelable(false)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(context,new String[]{Manifest.permission.POST_NOTIFICATIONS},);
-                        }
-                    })
-
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
         notificationManagerCompat.notify(200, builder.build());
         //https://www.youtube.com/watch?v=OJpceQqXIjY
     }

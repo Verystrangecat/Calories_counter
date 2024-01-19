@@ -1,14 +1,21 @@
 package com.example.project;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.service.autofill.SaveRequest;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,8 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
+import android.Manifest;
 import java.util.Calendar;
 
 public class Login_firebase extends AppCompatActivity implements View.OnClickListener {
@@ -33,13 +39,15 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
     TextView link;
     Animation anim_button;
     FirebaseAuth mAuth;
+    private static final String string_permission= Manifest.permission.POST_NOTIFICATIONS;
+    private static final int pesmission_code=100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_firebase);
         setupUi();
-        notification();
+        check_the_permission();
     }
 
     private void setupUi() {
@@ -102,6 +110,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
     }
 
     public void notification() {
+
         create_notification_channel();
         Intent intent = new Intent(Login_firebase.this, Broadcast_reciever.class);
         PendingIntent pendingIntentmorning = PendingIntent.getBroadcast(Login_firebase.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
@@ -123,7 +132,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         calendarevening.set(Calendar.MINUTE, 0);// Set the minute
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendarevening.getTimeInMillis(),AlarmManager.INTERVAL_DAY,
                 pendingIntentevening);
-        //todo check that the number is 19
+
 
 
     }
@@ -138,5 +147,60 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
         //Todo add the forgot password thing
+    }
+    private void check_the_permission(){
+        if(ActivityCompat.checkSelfPermission(this,string_permission)== PackageManager.PERMISSION_GRANTED){
+            notification();
+        }
+        else if (ActivityCompat.shouldShowRequestPermissionRationale(this, string_permission)){
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setMessage("Allow us to send messages so this will be easier for you").
+                    setTitle("Permission required")
+                    .setCancelable(false)
+                    .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ActivityCompat.requestPermissions(Login_firebase.this, new String[]{string_permission}, pesmission_code );
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .setNegativeButton("Forbid", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+            builder.show();
+
+        }
+        else
+            ActivityCompat.requestPermissions(this, new String[]{string_permission}, pesmission_code);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (ActivityCompat.checkSelfPermission(this,string_permission)==PackageManager.PERMISSION_GRANTED){
+            notification();
+
+        }else if (shouldShowRequestPermissionRationale(string_permission)){
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setMessage("Notifications will help you to stay tuned")
+                    .setTitle("Permission nedeed")
+                    .setCancelable(false)
+                    .setNegativeButton("Cancel",(((dialogInterface, i) -> dialogInterface.dismiss())))
+                    .setPositiveButton("Settings",(dialogInterface, i) -> {
+                        Intent intent=new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri=Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivity(intent);
+                        dialogInterface.dismiss();
+                    });
+            builder.show();
+
+
+
+        }
     }
 }
