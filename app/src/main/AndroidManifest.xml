@@ -60,7 +60,9 @@
         <activity
             android:name=".Login"
             android:exported="false" />
-        <receiver android:name=".utils.Broadcast_reciever"/>
+        <receiver android:name=".utils.Broadcast_reciever">
+        </receiver>
+
     </application>
 
 </manifest>

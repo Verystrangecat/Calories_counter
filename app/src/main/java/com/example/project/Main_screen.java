@@ -2,6 +2,7 @@ package com.example.project;
 
 import static com.google.android.material.bottomnavigation.BottomNavigationView.*;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,11 +12,14 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -24,7 +28,9 @@ import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.project.utils.Broadcast_reciever;
@@ -47,6 +53,8 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
     private NavigationBarView bottomNavigationView;
     ViewPager2 viewPager2;
     ArrayList<ViewpagerItem> arrayList;
+    private static final String string_permission= Manifest.permission.ACTIVITY_RECOGNITION;
+    private static final int permission_code=200;
 
 
     @Override
@@ -75,10 +83,55 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
 
     protected void onResume() {
         super.onResume();
-        if (stepsensor == null) {
-            Toast.makeText(this, "NO SENSOR", Toast.LENGTH_SHORT).show();
-        } else {
-            sensorManager.registerListener(this, stepsensor, SensorManager.SENSOR_DELAY_NORMAL);
+        if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED) {
+            if (stepsensor == null) {
+                Toast.makeText(this, "NO SENSOR", Toast.LENGTH_SHORT).show();
+            } else {
+                sensorManager.registerListener(this, stepsensor, SensorManager.SENSOR_DELAY_NORMAL);
+            }
+        }
+    else if (ActivityCompat.shouldShowRequestPermissionRationale(this, string_permission)) {
+        // Show rationale if permission was denied before
+        // This is the case where the user denied the permission previously, but did not check "Don't ask again."
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Let the app count your steps, it will help you on your journey")
+                .setTitle("Permission required")
+                .setCancelable(false)
+                .setPositiveButton("Allow", (dialogInterface, i) -> {
+                    ActivityCompat.requestPermissions(Main_screen.this, new String[]{string_permission}, permission_code);
+                    dialogInterface.dismiss();
+                })
+                .setNegativeButton("Forbid", (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.show();
+    } else {
+        // Request the permission for the first time
+        ActivityCompat.requestPermissions(this, new String[]{string_permission}, permission_code);
+    }
+    }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == permission_code) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (stepsensor == null) {
+                    Toast.makeText(this, "NO SENSOR", Toast.LENGTH_SHORT).show();
+                } else {
+                    sensorManager.registerListener(this, stepsensor, SensorManager.SENSOR_DELAY_NORMAL);
+                }
+            } else if (shouldShowRequestPermissionRationale(string_permission)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Notifications will help to improve yourself")
+                        .setTitle("Permission needed")
+                        .setCancelable(false)
+                        .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
+                        .setPositiveButton("Settings", (dialogInterface, i) -> {
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+                            intent.setData(uri);
+                            startActivity(intent);
+                            dialogInterface.dismiss();
+                        });
+                builder.show();
+            }
         }
     }
 
@@ -185,6 +238,9 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
 
 
         //todo make everything reset at midnight
+
+
+
 
     }
 
