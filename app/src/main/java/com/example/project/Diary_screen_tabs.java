@@ -49,7 +49,7 @@ public class Diary_screen_tabs extends AppCompatActivity {
                 return true;
             }
             else if (item.getItemId()==R.id.navigation_graphs){
-                startActivity(new Intent(Diary_screen_tabs.this, Login.class));
+                startActivity(new Intent(Diary_screen_tabs.this, Graphs.class));
                 finish();
                 return true;
             }

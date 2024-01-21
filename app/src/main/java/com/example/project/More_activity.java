@@ -35,7 +35,7 @@ public class More_activity extends AppCompatActivity implements View.OnClickList
                 return true;
             }
             else if (item.getItemId()==R.id.navigation_graphs){
-                startActivity(new Intent(More_activity.this, Login.class));
+                startActivity(new Intent(More_activity.this, Graphs.class));
                 finish();
                 return true;
             }

@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
+            android:name=".Graphs"
+            android:exported="false" />
+        <activity
             android:name=".Diary_screen_tabs"
             android:exported="false" />
         <activity
@@ -60,9 +63,9 @@
         <activity
             android:name=".Login"
             android:exported="false" />
-        <receiver android:name=".utils.Broadcast_reciever">
-        </receiver>
 
+        <receiver android:name=".utils.Broadcast_reciever"/>
+        <receiver android:name=".utils.UpdateInfoReceiver" />
     </application>
 
 </manifest>

@@ -34,6 +34,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.project.utils.Broadcast_reciever;
+import com.example.project.utils.UpdateInfoReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -66,6 +67,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         loadData();
         bottom_navigation();
         setViewPager2();
+        reset_at_midnight();
 //todo:pop up asking for a users permission
 
 
@@ -202,7 +204,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
                 finish();
                 return true;
             } else if (item.getItemId() == R.id.navigation_graphs) {
-                startActivity(new Intent(Main_screen.this, Login.class));
+                startActivity(new Intent(Main_screen.this, Graphs.class));
                 finish();
                 return true;
             } else if (item.getItemId() == R.id.navigation_more) {
@@ -233,11 +235,26 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         viewPager2.setOffscreenPageLimit(2);
         viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
+    private void reset_at_midnight(){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, UpdateInfoReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        // Use setRepeating for daily update
+        alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+        );
+    }
 
 
 
 
-        //todo make everything reset at midnight
+        //todo make everything reset at midnight if works with calories do with steps
 
 
 
