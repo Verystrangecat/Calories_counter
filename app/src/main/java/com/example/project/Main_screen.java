@@ -1,13 +1,8 @@
 package com.example.project;
 
-import static com.google.android.material.bottomnavigation.BottomNavigationView.*;
-
 import android.Manifest;
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ClipData;
 import android.content.Context;
 
 import android.content.Intent;
@@ -33,8 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.project.utils.Broadcast_reciever;
-import com.example.project.utils.UpdateInfoReceiver;
+import com.example.project.utils.ScheduleWork;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -67,7 +61,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         loadData();
         bottom_navigation();
         setViewPager2();
-        reset_at_midnight();
+        ScheduleWork.scheduleAlarm(this);
 //todo:pop up asking for a users permission
 
 
@@ -235,21 +229,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         viewPager2.setOffscreenPageLimit(2);
         viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
-    private void reset_at_midnight(){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, UpdateInfoReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        // Use setRepeating for daily update
-        alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY,
-                pendingIntent
-        );
-    }
+
 
 
 
