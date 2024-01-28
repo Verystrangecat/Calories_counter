@@ -76,15 +76,15 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
 //        pro_here=Double.valueOf(new DecimalFormat("##.#").format(pro*damount));
 //        carb_here=Double.valueOf(new DecimalFormat("##.#").format(carb*damount));
 //        fat_here=Double.valueOf(new DecimalFormat("##.#").format(fat*damount));
-            cal_here=cal*damount;
-            carb_here=carb*damount;
-            pro_here=pro*damount;
-            fat_here=fat*damount;
+            cal_here=Onedigit(cal*damount);
+            carb_here=Onedigit(carb*damount);
+            pro_here=Onedigit(pro*damount);
+            fat_here=Onedigit(fat*damount);
             txt_cal.setText(new DecimalFormat("##.#").format(cal*damount));
         txt_carb.setText(new DecimalFormat("##.#").format(carb*damount));
         txt_pro.setText(new DecimalFormat("##.#").format(pro*damount));
         txt_fat.setText(new DecimalFormat("##.#").format(fat*damount));
-        String s=new DecimalFormat("##.#").format(23.555);
+
         d.dismiss();
 
         } else if (v==add)
@@ -101,11 +101,10 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             protein=protein-pro_here;
             fats=fats-fat_here;
             carbs=carbs-carb_here;
-            Toast.makeText(this, String.valueOf(calori), Toast.LENGTH_SHORT);
-            editor.putString("amount_calories_left",new DecimalFormat("##.#").format(calori));
-            editor.putString("amount_proteins_left",new DecimalFormat("##.#").format(protein));
-            editor.putString("amount_fats_left",new DecimalFormat("##.#").format(fats));
-            editor.putString("amount_carbs_left",new DecimalFormat("##.#").format(carbs));
+            editor.putString("amount_calories_left",String.valueOf(Onedigit(calori)));
+            editor.putString("amount_proteins_left",String.valueOf(Onedigit(protein)));
+            editor.putString("amount_fats_left",String.valueOf(Onedigit(fats)));
+            editor.putString("amount_carbs_left",String.valueOf(Onedigit(carbs)));
             editor.apply();
             saving_object();
               startActivity(new Intent(Food_details.this,Main_screen.class));
@@ -195,4 +194,17 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
 
 
             }
+    public double Onedigit(double val){
+        String vals=String.valueOf(val);
+       // vals=new DecimalFormat("##.#").format(val);
+        String n="";
+        while(vals.charAt(0)!='.'){
+            n=n+vals.charAt(0);
+            vals= vals.substring(1);
+        }
+        n=n+vals.substring(0,2);
+        val=Double.parseDouble(n);
+        Log.e("I", n);
+        return val;
+    }
     }

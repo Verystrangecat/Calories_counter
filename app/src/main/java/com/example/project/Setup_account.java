@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,12 +47,12 @@ public class Setup_account extends AppCompatActivity {
             calories=Math.round((447.593 + (9.247 *num_weight) + (3.098 * num_height) - (4.330*num_age))*activity_level_calorie+additional_calories);
         else
             calories= Math.round((88.362 + (13.397 *num_weight) + (4.799 * num_height) - (5.677 *num_age))*activity_level_calorie);
-        proteins= Math.round(num_weight*level_protein);
-        fats=Math.round((calories*0.27)/9);
-        carbohydrates=Math.round(calories*0.55/4);
-        proteins=Onedigit(proteins);
-        fats=Onedigit(fats);
-        carbohydrates=Onedigit(carbohydrates);
+
+
+
+        proteins=Onedigit(num_weight*level_protein);
+        fats=Onedigit((calories*0.27)/9);
+        carbohydrates=Onedigit(calories*0.55/4);
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("amount_calories",String.valueOf(calories));
@@ -299,8 +300,15 @@ public class Setup_account extends AppCompatActivity {
     }
     public double Onedigit(double val){
         String vals=String.valueOf(val);
-        vals=new DecimalFormat("##.#").format(val);
-        val=Double.valueOf(vals);
+       vals=new DecimalFormat("##.#").format(val);
+        String n="";
+        while(vals.charAt(0)!='.'){
+            n=n+vals.charAt(0);
+           vals= vals.substring(1);
+        }
+        n=n+vals.substring(0,2);
+        val=Double.parseDouble(n);
+        Log.e("I", n);
         return val;
     }
 }
