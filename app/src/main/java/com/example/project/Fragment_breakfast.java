@@ -109,17 +109,17 @@ public class Fragment_breakfast extends Fragment {
     private void getdata() {
 
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson2 = new Gson();
         String json2 = sharedPreferences.getString("MyObject", "");
         Array_class obj = gson2.fromJson(json2, Array_class.class);
+        if(obj!=null){
         arrayList=obj.arrayList;
         arraynew=new ArrayList<>();
         if(arrayList!=null){
             for(int i=0; i<arrayList.size();i++){
                 if(arrayList.get(i).meal.equals("b"))
                     arraynew.add(arrayList.get(i));
-            }
+            }}
         }
         // TODO: 28/12/2023 get from shared preference an array
 

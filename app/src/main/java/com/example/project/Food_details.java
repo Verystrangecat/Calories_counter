@@ -191,7 +191,7 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
                     Gson gson = new Gson();
                     String json = gson.toJson(obj);
                     editor.putString("MyObject", json);
-                    editor.commit();
+                    editor.apply();
 
 
             }

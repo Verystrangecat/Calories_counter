@@ -280,7 +280,7 @@ public class Setup_account extends AppCompatActivity {
             num_weight = Integer.parseInt(str_weight);
         }
         if (nextscreen){
-            if(num_age <= 14 || num_height <= 40 || num_weight <= 25 ){
+            if(num_age < 18 || num_height <= 40 || num_weight < 25 ){
                 nextscreen=false;
                 if (num_age <= 14)
                     Toast.makeText(Setup_account.this, "You must be fourteen or older to use this app", Toast.LENGTH_SHORT).show();

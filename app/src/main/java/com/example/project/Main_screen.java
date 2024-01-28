@@ -43,9 +43,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
     private int previoustotalsteps = 0;
     private ProgressBar progressBar;
     private TextView showsteps;
-    private MenuItem main, diary, more;
 
-    private NavigationBarView bottomNavigationView;
     ViewPager2 viewPager2;
     ArrayList<ViewpagerItem> arrayList;
     private static final String string_permission= Manifest.permission.ACTIVITY_RECOGNITION;
@@ -61,7 +59,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         loadData();
         bottom_navigation();
         setViewPager2();
-        ScheduleWork.scheduleAlarm(this);
+
 //todo:pop up asking for a users permission
 
 

@@ -9,6 +9,7 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.utils.Broadcast_reciever;
+import com.example.project.utils.ScheduleWork;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,15 +41,14 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
     TextView link;
     Animation anim_button;
     FirebaseAuth mAuth;
-    private static final String string_permission= Manifest.permission.POST_NOTIFICATIONS;
-    private static final int permission_code=100;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_firebase);
         setupUi();
-        check_the_permission();
+        ScheduleWork.scheduleAlarm(this);
     }
 
     private void setupUi() {
@@ -109,90 +110,8 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public void notification() {
-
-        create_notification_channel();
-        Intent intent = new Intent(Login_firebase.this, Broadcast_reciever.class);
-        PendingIntent pendingIntentmorning = PendingIntent.getBroadcast(Login_firebase.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Calendar calendarmorning = Calendar.getInstance();
-        calendarmorning.set(Calendar.HOUR_OF_DAY, 8); // Set the hour (24-hour format)
-        calendarmorning.set(Calendar.MINUTE, 0);// Set the minute
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendarmorning.getTimeInMillis(),AlarmManager.INTERVAL_DAY,
-                pendingIntentmorning);
-        PendingIntent pendingIntentday = PendingIntent.getBroadcast(Login_firebase.this, 1, intent, PendingIntent.FLAG_IMMUTABLE);
-        Calendar calendarday = Calendar.getInstance();
-        calendarday.set(Calendar.HOUR_OF_DAY, 14); // Set the hour (24-hour format)
-        calendarday.set(Calendar.MINUTE, 0);// Set the minute
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendarday.getTimeInMillis(),AlarmManager.INTERVAL_DAY,
-                pendingIntentday);
-        PendingIntent pendingIntentevening = PendingIntent.getBroadcast(Login_firebase.this, 2, intent, PendingIntent.FLAG_IMMUTABLE);
-        Calendar calendarevening = Calendar.getInstance();
-        calendarevening.set(Calendar.HOUR_OF_DAY, 19); // Set the hour (24-hour format)
-        calendarevening.set(Calendar.MINUTE, 0);// Set the minute
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendarevening.getTimeInMillis(),AlarmManager.INTERVAL_DAY,
-                pendingIntentevening);
-
 
 
     }
 
-
-    public void create_notification_channel() {
-        CharSequence name = "Reminder_channel";
-        String description = "Channel for notifications about meals";
-        int importance = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel channel = new NotificationChannel("notifyme", name, importance);
-        channel.setDescription(description);
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(channel);
-        //Todo add the forgot password thing
-    }
-
-private void check_the_permission() {
-    if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED) {
-        notification();
-    } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, string_permission)) {
-        // Show rationale if permission was denied before
-        // This is the case where the user denied the permission previously, but did not check "Don't ask again."
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Allow us to send messages so this will be easier for you")
-                .setTitle("Permission required")
-                .setCancelable(false)
-                .setPositiveButton("Allow", (dialogInterface, i) -> {
-                    ActivityCompat.requestPermissions(Login_firebase.this, new String[]{string_permission}, permission_code);
-                    dialogInterface.dismiss();
-                })
-                .setNegativeButton("Forbid", (dialogInterface, i) -> dialogInterface.dismiss());
-        builder.show();
-    } else {
-        // Request the permission for the first time
-        ActivityCompat.requestPermissions(this, new String[]{string_permission}, permission_code);
-    }
-}
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == permission_code) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                notification();
-            } else if (shouldShowRequestPermissionRationale(string_permission)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Notifications will help you to stay tuned")
-                        .setTitle("Permission needed")
-                        .setCancelable(false)
-                        .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
-                        .setPositiveButton("Settings", (dialogInterface, i) -> {
-                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", getPackageName(), null);
-                            intent.setData(uri);
-                            startActivity(intent);
-                            dialogInterface.dismiss();
-                        });
-                builder.show();
-            }
-        }
-    }
-
-}
+    //todo see if i can escape the alarm manager working twice
