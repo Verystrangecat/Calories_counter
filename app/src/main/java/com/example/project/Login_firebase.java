@@ -48,7 +48,8 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_firebase);
         setupUi();
-        ScheduleWork.scheduleAlarm(this);
+        // ScheduleWork.scheduleAlarm(this);
+        //todo fix the schedule work
     }
 
     private void setupUi() {
@@ -109,9 +110,6 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         }
 
     }
+}
 
 
-
-    }
-
-    //todo see if i can escape the alarm manager working twice

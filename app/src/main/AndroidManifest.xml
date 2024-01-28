@@ -57,12 +57,7 @@
         <activity
             android:name=".Setup_account"
             android:exported="false" />
-        <activity
-            android:name=".Activity_register"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:exported="false" />
+
 
         <receiver android:name=".utils.Broadcast_reciever"/>
         <receiver android:name=".utils.Alarm_Receiver"/>

@@ -29,7 +29,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
     RecyclerView recyclerView;
     Button search;
     EditText query;
-    List<Food> f=null;
+    List<Food> food_list=null;
     String meal;
 
     @Override
@@ -41,7 +41,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
         query=findViewById(R.id.editText_query);
         search.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        meal=getIntent().getStringExtra("Meal");
+
 
     }
 
@@ -74,8 +74,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
     @Override
     public void OnfoodClick(int position) {
         Intent intent=new Intent(Adding_food_screen.this, Food_details.class);
-        intent.putExtra("KEY_NAME",f.get(position) );
-        intent.putExtra("Meal",meal);
+        intent.putExtra("KEY_NAME",food_list.get(position) );
         startActivity(intent);
 
 
@@ -95,11 +94,11 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
             return data;
         }
         protected void onPostExecute(String s) {
-            f = parseJson(s);
-            if (f == null)
+            food_list = parseJson(s); //calls the function
+            if (food_list == null)
                 Toast.makeText(Adding_food_screen.this, "Please check the spelling", Toast.LENGTH_SHORT).show();
             else {
-                Adapter adapter = new Adapter(Adding_food_screen.this, f,Adding_food_screen.this::OnfoodClick);
+                Adapter adapter = new Adapter(Adding_food_screen.this, food_list,Adding_food_screen.this::OnfoodClick);
                 recyclerView.setAdapter(adapter);
             }
         }
@@ -107,12 +106,12 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
         private List<Food> parseJson(String data) {
             Welcome food=null;
             try {
-                food= Converter.fromJsonString(data);
+                food= Converter.fromJsonString(data); //special class
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return food.getFoods();
-//Todo check why i dont get the toast about bad spelling
+
 
         }
         }

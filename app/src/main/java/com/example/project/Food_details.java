@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.project.Food_classes.Food;
 import com.google.gson.Gson;
@@ -26,8 +26,9 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
     Dialog d;
     Button cancel, save, add;
     EditText portion;
-    double cal=0, pro=0, carb=0, fat=0;
+    double cal=0, pro=0, carb=0, fat=0; //the amount for 100 gramms, doesnt change
     double cal_here=0,pro_here=0, carb_here=0, fat_here=0;
+
 
 
     @Override
@@ -35,9 +36,7 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_details);
         setup();
-        gettingdetails();
-        gettngnumbers();
-        settingdeafultfor_left();
+        gettingdetails(); //values for calories proteins etc
 
     }
 
@@ -67,36 +66,31 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         else if(v==cancel)
             d.dismiss();
         else if(v==save){
-            if(portion.getText().equals(""))
+            if(portion.getText().toString().equals(""))
                 amount_portion.setText("1");
             else
              amount_portion.setText(portion.getText());
-        double damount=Double.valueOf(amount_portion.getText().toString());
-//        cal_here=Double.valueOf(new DecimalFormat("##.#").format(cal*damount));
-//        pro_here=Double.valueOf(new DecimalFormat("##.#").format(pro*damount));
-//        carb_here=Double.valueOf(new DecimalFormat("##.#").format(carb*damount));
-//        fat_here=Double.valueOf(new DecimalFormat("##.#").format(fat*damount));
+        double damount=Double.parseDouble(amount_portion.getText().toString());
             cal_here=Onedigit(cal*damount);
             carb_here=Onedigit(carb*damount);
             pro_here=Onedigit(pro*damount);
             fat_here=Onedigit(fat*damount);
-            txt_cal.setText(new DecimalFormat("##.#").format(cal*damount));
-        txt_carb.setText(new DecimalFormat("##.#").format(carb*damount));
-        txt_pro.setText(new DecimalFormat("##.#").format(pro*damount));
-        txt_fat.setText(new DecimalFormat("##.#").format(fat*damount));
+            txt_cal.setText(String.valueOf(cal_here));
+        txt_carb.setText(String.valueOf(carb_here));
+        txt_pro.setText(String.valueOf(pro_here));
+        txt_fat.setText(String.valueOf(fat_here));
 
         d.dismiss();
 
         } else if (v==add)
-        {
+        {//changes in amount of elements left
             SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             //todo get the calories left then to number - cal_here and back to sharedpreference
-
-            double calori = Double.valueOf(sharedPreferences.getString("amount_calories_left", "0"));//Скорее всего неправильный стринг
-            double protein=Double.valueOf(sharedPreferences.getString("amount_proteins_left","0"));
-            double fats=Double.valueOf(sharedPreferences.getString("amount_fats_left","0"));
-            double carbs=Double.valueOf(sharedPreferences.getString("amount_carbs_left","0"));
+            double calori = Double.parseDouble(sharedPreferences.getString("amount_calories_left", "0"));//Скорее всего неправильный стринг
+            double protein=Double.parseDouble(sharedPreferences.getString("amount_proteins_left","0"));
+            double fats=Double.parseDouble(sharedPreferences.getString("amount_fats_left","0"));
+            double carbs=Double.parseDouble(sharedPreferences.getString("amount_carbs_left","0"));
             calori=calori-cal_here;
             protein=protein-pro_here;
             fats=fats-fat_here;
@@ -133,15 +127,22 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         for (int i = 0; i < f.getFoodNutrients().size() ; i++) {
             if (f.getFoodNutrients().get(i).getNutrientID() == 1008) {
                 txt_cal.setText(String.valueOf(f.getFoodNutrients().get(i).getValue()));
+                cal=f.getFoodNutrients().get(i).getValue();
             } else if (f.getFoodNutrients().get(i).getNutrientID() == 1003) {
                 txt_pro.setText(String.valueOf(f.getFoodNutrients().get(i).getValue()));
-
+                pro=f.getFoodNutrients().get(i).getValue();
             }   else if (f.getFoodNutrients().get(i).getNutrientID() == 1005) {
-            txt_carb.setText(String.valueOf(f.getFoodNutrients().get(i).getValue()));
+                txt_carb.setText(String.valueOf(f.getFoodNutrients().get(i).getValue()));
+                carb=f.getFoodNutrients().get(i).getValue();
             } else if (f.getFoodNutrients().get(i).getNutrientID() == 1004) {
             txt_fat.setText(String.valueOf(f.getFoodNutrients().get(i).getValue()));
+                fat=f.getFoodNutrients().get(i).getValue();
             }
         }
+        cal_here=cal;
+        pro_here=pro;
+        fat_here=fat;
+        carb_here=carb;
         if (txt_cal.getText().toString().equals("TextView"))
             txt_cal.setText("No information");
         if (txt_carb.getText().toString().equals("TextView"))
@@ -152,30 +153,10 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             txt_fat.setText("No information");
 
         }
-        public void gettngnumbers(){
-            for (int i=0; i<f.getFoodNutrients().size(); i++){
-                if(f.getFoodNutrients().get(i).getNutrientID()==1008){
-                    cal=f.getFoodNutrients().get(i).getValue();
-                } else if (f.getFoodNutrients().get(i).getNutrientID()==1003) {
-                    pro=f.getFoodNutrients().get(i).getValue();
-                }
-                else if (f.getFoodNutrients().get(i).getNutrientID()==1005) {
-                    carb=f.getFoodNutrients().get(i).getValue();
-                }
-                else if (f.getFoodNutrients().get(i).getNutrientID()==1004) {
-                    fat=f.getFoodNutrients().get(i).getValue();
-                }
 
-                }
 
-            }
-            public void settingdeafultfor_left(){
-        cal_here=Double.parseDouble(txt_cal.getText().toString());
-                pro_here=Double.parseDouble(txt_pro.getText().toString());
-                fat_here=Double.parseDouble(txt_fat.getText().toString());
-                carb_here=Double.parseDouble(txt_carb.getText().toString());
 
-            }
+
             public void saving_object(){
                 SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -196,7 +177,6 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
             }
     public double Onedigit(double val){
         String vals=String.valueOf(val);
-       // vals=new DecimalFormat("##.#").format(val);
         String n="";
         while(vals.charAt(0)!='.'){
             n=n+vals.charAt(0);

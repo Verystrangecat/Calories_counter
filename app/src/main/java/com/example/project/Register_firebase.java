@@ -91,7 +91,7 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(Register_firebase.this, "Account created.",
+                                Toast.makeText(Register_firebase.this, "Continue creating account",
                                         Toast.LENGTH_SHORT).show();
                                 Array_class arrayClass=new Array_class();
                                 SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
@@ -99,8 +99,9 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
                                 Gson gson = new Gson();
                                 String json = gson.toJson(arrayClass);
                                 editor.putString("MyObject", json);
+                                //creating an array for future use
 
-                                editor.commit();
+                                editor.apply();
                                 startActivity(new Intent(Register_firebase.this, Setup_account.class));
                                 finish();
                             } else {
@@ -120,7 +121,7 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
 
 
     }
-
+//Checks if data is entered and if it's correct
     private boolean checkDataEntered() {
         if (isEmpty(name)) {
             name.setError("You must enter your name to sign up");

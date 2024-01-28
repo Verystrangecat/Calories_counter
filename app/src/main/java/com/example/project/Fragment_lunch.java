@@ -27,12 +27,11 @@ import java.util.ArrayList;
  */
 public class Fragment_lunch extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
     private ArrayList<Food_class_meals> arrayList;
@@ -50,7 +49,7 @@ public class Fragment_lunch extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment Fragment_lunch.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static Fragment_lunch newInstance(String param1, String param2) {
         Fragment_lunch fragment = new Fragment_lunch();
         Bundle args = new Bundle();
@@ -89,6 +88,7 @@ public class Fragment_lunch extends Fragment {
             public void onClick(View view) {
                 if(view==button){
                     Intent i=new Intent(getActivity(),Adding_food_screen.class);
+                    //so the app will know from which fragment the user came
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("Meal","l");
