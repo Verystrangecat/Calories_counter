@@ -1,8 +1,6 @@
 package com.example.project;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 
 import android.content.Intent;
@@ -15,7 +13,7 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.MenuItem;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,12 +26,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.project.utils.ScheduleWork;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 public class Main_screen extends AppCompatActivity implements SensorEventListener {
@@ -58,11 +56,38 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         resetSteps();
         loadData();
         bottom_navigation();
+        informationchanged();//changes the amount of ecerything left if the day changed
         setViewPager2();
 
 //todo:pop up asking for a users permission
 
 
+    }
+
+    private void informationchanged() {
+        long time=System.currentTimeMillis();
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String datenow = DateFormat.format("dd-MM-yyyy", cal).toString();
+        SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        String dateprev=sharedPreferences.getString("date", datenow);
+        if(!dateprev.equals(datenow)){
+            editor.putString("date", datenow);
+            editor.putString("amount_calories_left", sharedPreferences.getString("amount_calories","0"));
+            editor.putString("amount_proteins_left",sharedPreferences.getString("amount_proteins","0"));
+            editor.putString("amount_fats_left",sharedPreferences.getString("amount_fats","0"));
+            editor.putString("amount_carbs_left",sharedPreferences.getString("amount_carbs","0"));
+            Gson gson2 = new Gson();
+            String json2 = sharedPreferences.getString("MyObject", "");
+            Array_class obj = gson2.fromJson(json2, Array_class.class);
+            if(obj!=null){
+            obj.arrayList.clear();
+            Gson gson = new Gson();
+            String json = gson.toJson(obj);
+            editor.putString("MyObject", json);}
+            editor.apply();
+        }
     }
 
     private void setupUI() {
@@ -226,6 +251,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         viewPager2.setOffscreenPageLimit(2);
         viewPager2.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
+
 
 
 

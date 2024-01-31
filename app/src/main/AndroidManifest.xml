@@ -60,7 +60,7 @@
 
 
         <receiver android:name=".utils.Broadcast_reciever"/>
-        <receiver android:name=".utils.Alarm_Receiver"/>
+
 
     </application>
 

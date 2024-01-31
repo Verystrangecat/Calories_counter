@@ -1,22 +1,10 @@
 package com.example.project;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.service.autofill.SaveRequest;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -26,14 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.project.utils.Broadcast_reciever;
-import com.example.project.utils.ScheduleWork;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import android.Manifest;
-import java.util.Calendar;
 
 public class Login_firebase extends AppCompatActivity implements View.OnClickListener {
     EditText login, password;
@@ -110,6 +94,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         }
 
     }
+    //todo change the screen of notification
 }
 
 

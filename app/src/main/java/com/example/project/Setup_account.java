@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class Setup_account extends AppCompatActivity implements View.OnClickListener {
     EditText txt_height, txt_weight, txt_age;
@@ -52,6 +55,8 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         proteins=Onedigit(num_weight*level_protein);
         fats=Onedigit((calories*0.27)/9);
         carbohydrates=Onedigit(calories*0.55/4);
+        String date=getDate(System.currentTimeMillis());
+
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("amount_calories",String.valueOf(calories));
@@ -62,6 +67,8 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         editor.putString("amount_proteins_left",String.valueOf(proteins));
         editor.putString("amount_carbs_left",String.valueOf(carbohydrates));
         editor.putString("amount_fats_left",String.valueOf(fats));
+        editor.putString("date", date);
+
         editor.apply();
 
     }
@@ -295,4 +302,10 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         }
 
         }
+    private String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+        return date;
+    }
     }
