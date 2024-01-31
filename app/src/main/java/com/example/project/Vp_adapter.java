@@ -36,8 +36,6 @@ public class Vp_adapter extends RecyclerView.Adapter<Vp_adapter.ViewHolder> {
         holder.heading.setText(viewpagerItem.getHeading());
         holder.numleft.setText(viewpagerItem.getNumleft());
         holder.numtotal.setText(viewpagerItem.getNumtotal());
-//        holder.numleft.setText(new DecimalFormat("##.#").format(viewpagerItem.getNumleft()));
-//        holder.numtotal.setText(new DecimalFormat("##.#").format(viewpagerItem.getNumtotal()));
 
 
     }

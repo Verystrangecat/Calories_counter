@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
-public class Setup_account extends AppCompatActivity {
+public class Setup_account extends AppCompatActivity implements View.OnClickListener {
     EditText txt_height, txt_weight, txt_age;
     SeekBar bar_height, bar_weight;
     RadioButton ser, la, ma, va, sa, notpreg, firsttri, secondtri, thirdtri, lactating;
@@ -34,24 +35,23 @@ public class Setup_account extends AppCompatActivity {
         setContentView(R.layout.activity_setup_account);
         setupUi();
         Seekbars();
-        male_or_female();
-        submit_button();
 
 
 
         }
-
+//counting the numbers for calories etc after getting all the data
+    //saving the results to shared preference
     private void final_result() {
         if(isFemale)
             calories=Math.round((447.593 + (9.247 *num_weight) + (3.098 * num_height) - (4.330*num_age))*activity_level_calorie+additional_calories);
         else
             calories= Math.round((88.362 + (13.397 *num_weight) + (4.799 * num_height) - (5.677 *num_age))*activity_level_calorie);
-        proteins= Math.round(num_weight*level_protein);
-        fats=Math.round((calories*0.27)/9);
-        carbohydrates=Math.round(calories*0.55/4);
-        proteins=Onedigit(proteins);
-        fats=Onedigit(fats);
-        carbohydrates=Onedigit(carbohydrates);
+
+
+
+        proteins=Onedigit(num_weight*level_protein);
+        fats=Onedigit((calories*0.27)/9);
+        carbohydrates=Onedigit(calories*0.55/4);
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("amount_calories",String.valueOf(calories));
@@ -67,36 +67,7 @@ public class Setup_account extends AppCompatActivity {
     }
 
 
-    private void male_or_female() {
-        female.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                notpreg.setEnabled(true);
-                firsttri.setEnabled(true);
-                secondtri.setEnabled(true);
-                thirdtri.setEnabled(true);
-                lactating.setEnabled(true);
-                isFemale = true;
-                wasClicked = true;
 
-
-            }
-        });
-        male.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                notpreg.setEnabled(false);
-                firsttri.setEnabled(false);
-                secondtri.setEnabled(false);
-                thirdtri.setEnabled(false);
-                lactating.setEnabled(false);
-                isFemale = false;
-                wasClicked = true;
-
-
-            }
-        });
-    }
     private void check_male_or_female(){
         if(nextscreen){
             if(!wasClicked){
@@ -174,6 +145,7 @@ public class Setup_account extends AppCompatActivity {
         txt_age = findViewById(R.id.editText_age);
         bar_height = findViewById(R.id.seekBar_height);
         bar_weight = findViewById(R.id.seekBar_weight);
+        //activity levels
         ser = findViewById(R.id.radio_Sedentary);
         la = findViewById(R.id.radio_Lightlyactive);
         ma = findViewById(R.id.radio_Moderatelyactive);
@@ -187,6 +159,9 @@ public class Setup_account extends AppCompatActivity {
         thirdtri = findViewById(R.id.radio_thirdtrimester);
         lactating = findViewById(R.id.radio_lactating);
         submit = findViewById(R.id.button_submittt);
+        female.setOnClickListener(this);
+        male.setOnClickListener(this);
+        submit.setOnClickListener(this);
 
     }
 
@@ -236,30 +211,7 @@ public class Setup_account extends AppCompatActivity {
     }
 
 
-    private void submit_button() {
-
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gettingnumbers();
-                checkactivity_level();
-                check_male_or_female();
-                check_pregnant();
-                if(nextscreen) {
-                    final_result();
-                    Intent i=new Intent(Setup_account.this, Main_screen.class);
-                    startActivity(i);
-
-                }
-
-
-            }
-        });
-
-
-    }
-
+//height, weight and age of the user, does the check if they are good or not
     private void gettingnumbers() {
         String str_age, str_height, str_weight;
         str_age = txt_age.getText().toString();
@@ -280,13 +232,13 @@ public class Setup_account extends AppCompatActivity {
             num_weight = Integer.parseInt(str_weight);
         }
         if (nextscreen){
-            if(num_age <= 14 || num_height <= 40 || num_weight <= 25 ){
+            if(num_age < 18 || num_height <= 40 || num_weight < 25 ){
                 nextscreen=false;
-                if (num_age <= 14)
-                    Toast.makeText(Setup_account.this, "You must be fourteen or older to use this app", Toast.LENGTH_SHORT).show();
+                if (num_age <18)
+                    Toast.makeText(Setup_account.this, "You must be eighteen or older to use this app", Toast.LENGTH_SHORT).show();
                 else  if (num_height <= 40)
                     Toast.makeText(Setup_account.this, "Please enter valid height", Toast.LENGTH_SHORT).show();
-                else if (num_weight <= 25)
+                else if (num_weight <25)
                     Toast.makeText(Setup_account.this, "Please enter valid weight", Toast.LENGTH_SHORT).show();
             }
 
@@ -299,8 +251,48 @@ public class Setup_account extends AppCompatActivity {
     }
     public double Onedigit(double val){
         String vals=String.valueOf(val);
-        vals=new DecimalFormat("##.#").format(val);
-        val=Double.valueOf(vals);
+        String n="";
+        while(vals.charAt(0)!='.'){
+            n=n+vals.charAt(0);
+           vals= vals.substring(1);
+        }
+        n=n+vals.substring(0,2);
+        val=Double.parseDouble(n);
+        Log.e("I", n);
         return val;
     }
-}
+
+    @Override
+    public void onClick(View v) {
+        if (v==female){
+            notpreg.setEnabled(true);
+            firsttri.setEnabled(true);
+            secondtri.setEnabled(true);
+            thirdtri.setEnabled(true);
+            lactating.setEnabled(true);
+            isFemale = true;
+            wasClicked = true;
+        }
+        else if(v==male){
+            notpreg.setEnabled(false);
+            firsttri.setEnabled(false);
+            secondtri.setEnabled(false);
+            thirdtri.setEnabled(false);
+            lactating.setEnabled(false);
+            isFemale = false;
+            wasClicked = true;
+        }
+        else if(v==submit){
+            gettingnumbers();
+            checkactivity_level();
+            check_male_or_female();
+            check_pregnant();
+            if(nextscreen) {
+                final_result();
+                Intent i=new Intent(Setup_account.this, Main_screen.class);
+                startActivity(i);
+            }
+        }
+
+        }
+    }

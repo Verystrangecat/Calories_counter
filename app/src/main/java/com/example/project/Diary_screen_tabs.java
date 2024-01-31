@@ -59,7 +59,6 @@ public class Diary_screen_tabs extends AppCompatActivity {
                 return true;
             }
             return false;
-            //Todo change in other bottom navigation to the right dairy screen
              });
     }
 }

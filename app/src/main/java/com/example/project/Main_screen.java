@@ -43,9 +43,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
     private int previoustotalsteps = 0;
     private ProgressBar progressBar;
     private TextView showsteps;
-    private MenuItem main, diary, more;
 
-    private NavigationBarView bottomNavigationView;
     ViewPager2 viewPager2;
     ArrayList<ViewpagerItem> arrayList;
     private static final String string_permission= Manifest.permission.ACTIVITY_RECOGNITION;
@@ -61,7 +59,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         loadData();
         bottom_navigation();
         setViewPager2();
-        ScheduleWork.scheduleAlarm(this);
+
 //todo:pop up asking for a users permission
 
 
@@ -76,7 +74,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
 
 
     }
-
+//checking the permission for activity and asking for it as well as activating the sensor
     protected void onResume() {
         super.onResume();
         if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED) {
@@ -136,7 +134,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         sensorManager.unregisterListener(this);
 
     }
-
+//todo deal with the step counter
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
@@ -186,7 +184,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
-
+//items are in the menu
     private void bottom_navigation() {
         BottomNavigationView bottomNavigationView1 = findViewById(R.id.bottom_navigation);
         bottomNavigationView1.setSelectedItemId(R.id.navigation_home);
@@ -221,7 +219,6 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
                 sharedPreferences.getString("amount_fats_left", sharedPreferences.getString("amount_fats", "0")), R.drawable.circle_fats));
         arrayList.add(new ViewpagerItem("Proteins", sharedPreferences.getString("amount_proteins", "0"),
                 sharedPreferences.getString("amount_proteins_left", sharedPreferences.getString("amount_proteins", "0")), R.drawable.circle_proteins));
-        //Todo figure out the way to get and pass the information, preferebaly without sharedpreference
         Vp_adapter vp_adapter = new Vp_adapter(arrayList);
         viewPager2.setAdapter(vp_adapter);
         viewPager2.setClipToPadding(false);

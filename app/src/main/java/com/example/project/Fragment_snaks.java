@@ -27,12 +27,12 @@ import java.util.ArrayList;
  */
 public class Fragment_snaks extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
     private ArrayList<Food_class_meals> arrayList;
@@ -86,6 +86,7 @@ public class Fragment_snaks extends Fragment {
             public void onClick(View view) {
                 if (view == button){
                     Intent i=new Intent(getActivity(),Adding_food_screen.class);
+                    //so the app will know from which fragment the user came
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("Meal","s");
