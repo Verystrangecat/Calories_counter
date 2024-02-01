@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.project.utils.Step_Counter_Service;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
@@ -34,7 +36,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
-public class Main_screen extends AppCompatActivity implements SensorEventListener {
+public class Main_screen extends AppCompatActivity implements SensorEventListener{
     private SensorManager sensorManager = null;
     private Sensor stepsensor;
     private int totalsteps = 0;
@@ -58,6 +60,8 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         bottom_navigation();
         informationchanged();//changes the amount of ecerything left if the day changed
         setViewPager2();
+        Intent serviceIntent = new Intent(this, Step_Counter_Service.class);
+        startService(serviceIntent);
 
 //todo:pop up asking for a users permission
 
@@ -105,15 +109,12 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED) {
             if (stepsensor == null) {
                 Toast.makeText(this, "NO SENSOR", Toast.LENGTH_SHORT).show();
-            } else {
-                sensorManager.registerListener(this, stepsensor, SensorManager.SENSOR_DELAY_NORMAL);
-            }
-        }
-    else if (ActivityCompat.shouldShowRequestPermissionRationale(this, string_permission)) {
-        // Show rationale if permission was denied before
-        // This is the case where the user denied the permission previously, but did not check "Don't ask again."
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Let the app count your steps, it will help you on your journey")
+            } else {sensorManager.registerListener(this, stepsensor, SensorManager.SENSOR_DELAY_NORMAL);
+           }
+       }
+    else if (ActivityCompat.shouldShowRequestPermissionRationale(this, string_permission)) {// Show rationale if permission was denied before// This is the case where the user denied the permission previously, but did not check "Don't ask again."
+       AlertDialog.Builder builder = new AlertDialog.Builder(this);
+       builder.setMessage("Let the app count your steps, it will help you on your journey")
                 .setTitle("Permission required")
                 .setCancelable(false)
                 .setPositiveButton("Allow", (dialogInterface, i) -> {
@@ -122,7 +123,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
                 })
                 .setNegativeButton("Forbid", (dialogInterface, i) -> dialogInterface.dismiss());
         builder.show();
-    } else {
+      } else {
         // Request the permission for the first time
         ActivityCompat.requestPermissions(this, new String[]{string_permission}, permission_code);
     }
@@ -138,19 +139,17 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
                 }
             } else if (shouldShowRequestPermissionRationale(string_permission)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Notifications will help to improve yourself")
-                        .setTitle("Permission needed")
-                        .setCancelable(false)
-                        .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
+               builder.setMessage("Notifications will help to improve yourself")
+                      .setTitle("Permission needed")     .setCancelable(false)     .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
                         .setPositiveButton("Settings", (dialogInterface, i) -> {
-                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                           Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                             Uri uri = Uri.fromParts("package", getPackageName(), null);
                             intent.setData(uri);
                             startActivity(intent);
                             dialogInterface.dismiss();
                         });
                 builder.show();
-            }
+           }
         }
     }
 
@@ -159,7 +158,7 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         sensorManager.unregisterListener(this);
 
     }
-//todo deal with the step counter
+// todo deal with the step counter
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
@@ -169,6 +168,10 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
             progressBar.setProgress(currentsteps);
 
         }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
 
@@ -205,10 +208,10 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
 
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
+   // @Override
+   // public void onAccuracyChanged(Sensor sensor, int i) {
 
-    }
+   // }
 //items are in the menu
     private void bottom_navigation() {
         BottomNavigationView bottomNavigationView1 = findViewById(R.id.bottom_navigation);
