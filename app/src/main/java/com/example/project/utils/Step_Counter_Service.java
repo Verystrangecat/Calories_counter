@@ -14,15 +14,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.IBinder;
-import android.os.TokenWatcher;
-import android.util.Log;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.project.R;
 
@@ -110,7 +109,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
 
     private void createNotification() {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Step Counting Service")
+                .setContentTitle("Step counter ")
                 .setContentText("Counting steps...")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .build();
@@ -137,6 +136,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         }
         NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notification);
     }
+
 
 }
 

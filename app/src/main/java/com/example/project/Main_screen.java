@@ -1,14 +1,15 @@
 package com.example.project;
 
 import android.Manifest;
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
+
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -36,7 +36,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
-public class Main_screen extends AppCompatActivity implements SensorEventListener{
+public class Main_screen extends AppCompatActivity {
     private SensorManager sensorManager = null;
     private Sensor stepsensor;
     private int totalsteps = 0;
@@ -50,18 +50,19 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
     private static final int permission_code=200;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         setupUI();
-        resetSteps();
-        loadData();
+
+        getpermissionforcativity();// if gets the pemission then starts the service
         bottom_navigation();
         informationchanged();//changes the amount of ecerything left if the day changed
         setViewPager2();
-        Intent serviceIntent = new Intent(this, Step_Counter_Service.class);
-        startService(serviceIntent);
+
 
 //todo:pop up asking for a users permission
 
@@ -104,39 +105,36 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
 
     }
 //checking the permission for activity and asking for it as well as activating the sensor
-    protected void onResume() {
-        super.onResume();
-        if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED) {
-            if (stepsensor == null) {
-                Toast.makeText(this, "NO SENSOR", Toast.LENGTH_SHORT).show();
-            } else {sensorManager.registerListener(this, stepsensor, SensorManager.SENSOR_DELAY_NORMAL);
-           }
-       }
-    else if (ActivityCompat.shouldShowRequestPermissionRationale(this, string_permission)) {// Show rationale if permission was denied before// This is the case where the user denied the permission previously, but did not check "Don't ask again."
-       AlertDialog.Builder builder = new AlertDialog.Builder(this);
-       builder.setMessage("Let the app count your steps, it will help you on your journey")
-                .setTitle("Permission required")
-                .setCancelable(false)
-                .setPositiveButton("Allow", (dialogInterface, i) -> {
-                    ActivityCompat.requestPermissions(Main_screen.this, new String[]{string_permission}, permission_code);
-                    dialogInterface.dismiss();
-                })
-                .setNegativeButton("Forbid", (dialogInterface, i) -> dialogInterface.dismiss());
-        builder.show();
-      } else {
+    public void getpermissionforcativity(){
+        if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED){
+            if(!isServiceRunning(Step_Counter_Service.class)){
+            Intent serviceIntent = new Intent(this, Step_Counter_Service.class);
+            startService(serviceIntent);}
+        }
+        else if (ActivityCompat.shouldShowRequestPermissionRationale(this, string_permission)) {// Show rationale if permission was denied before// This is the case where the user denied the permission previously, but did not check "Don't ask again."
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Let the app count your steps, it will help you on your journey")
+                    .setTitle("Permission required")
+                    .setCancelable(false)
+                    .setPositiveButton("Allow", (dialogInterface, i) -> {
+                        ActivityCompat.requestPermissions(Main_screen.this, new String[]{string_permission}, permission_code);
+                        dialogInterface.dismiss();
+                    })
+                    .setNegativeButton("Forbid", (dialogInterface, i) -> dialogInterface.dismiss());
+            builder.show();}
+        else
         // Request the permission for the first time
-        ActivityCompat.requestPermissions(this, new String[]{string_permission}, permission_code);
+         ActivityCompat.requestPermissions(this, new String[]{string_permission}, permission_code);
+
     }
-    }
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == permission_code) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (stepsensor == null) {
-                    Toast.makeText(this, "NO SENSOR", Toast.LENGTH_SHORT).show();
-                } else {
-                    sensorManager.registerListener(this, stepsensor, SensorManager.SENSOR_DELAY_NORMAL);
-                }
+                if(!isServiceRunning(Step_Counter_Service.class)){
+                    Intent serviceIntent = new Intent(this, Step_Counter_Service.class);
+                    startService(serviceIntent);}
             } else if (shouldShowRequestPermissionRationale(string_permission)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                builder.setMessage("Notifications will help to improve yourself")
@@ -153,65 +151,17 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
         }
     }
 
-    protected void onPause() {
-        super.onPause();
-        sensorManager.unregisterListener(this);
 
-    }
+
+
 // todo deal with the step counter
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
-            totalsteps = (int) sensorEvent.values[0];
-            int currentsteps = totalsteps - previoustotalsteps;
-            showsteps.setText(String.valueOf(currentsteps));
-            progressBar.setProgress(currentsteps);
 
-        }
-    }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
 
-    }
 
-    protected void resetSteps() {
-        showsteps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Main_screen.this, "Long press to resert", Toast.LENGTH_SHORT).show();
-            }
-        });
-        showsteps.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                previoustotalsteps = totalsteps;
-                showsteps.setText("0");
-                progressBar.setProgress(0);
-                saveData();
-                return true;
-            }
-        });
-    }
 
-    private void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("key1", String.valueOf(previoustotalsteps));
-        editor.apply();
-    }
 
-    private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
-        int savednum = Integer.parseInt(sharedPreferences.getString("key1", "0"));
-        previoustotalsteps = savednum;
 
-    }
-
-   // @Override
-   // public void onAccuracyChanged(Sensor sensor, int i) {
-
-   // }
 //items are in the menu
     private void bottom_navigation() {
         BottomNavigationView bottomNavigationView1 = findViewById(R.id.bottom_navigation);
@@ -262,7 +212,15 @@ public class Main_screen extends AppCompatActivity implements SensorEventListene
 
         //todo make everything reset at midnight if works with calories do with steps
 
-
+    public boolean isServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     }
