@@ -57,7 +57,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
             int currentsteps = totalsteps - previoustotalsteps;
             // Update your UI or perform any necessary action
             // ...
-
+            broadcastStepCount(currentsteps);
             // For demonstration, updating the notification text
             updateNotificationText(String.valueOf(currentsteps));
         }
@@ -77,6 +77,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("key1", String.valueOf(previoustotalsteps));
+        editor.putString("totalsteps", String.valueOf(totalsteps));
         editor.apply();
         //todo deal with shared preference
     }
@@ -135,6 +136,11 @@ public class Step_Counter_Service extends Service implements SensorEventListener
             return;
         }
         NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notification);
+    }
+    private void broadcastStepCount(int currentSteps) {
+        Intent intent = new Intent("StepCountUpdate");
+        intent.putExtra("currentSteps", currentSteps);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
 

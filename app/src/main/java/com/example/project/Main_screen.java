@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -24,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.project.utils.Step_Counter_Service;
@@ -48,6 +50,23 @@ public class Main_screen extends AppCompatActivity {
     ArrayList<ViewpagerItem> arrayList;
     private static final String string_permission= Manifest.permission.ACTIVITY_RECOGNITION;
     private static final int permission_code=200;
+    private BroadcastReceiver stepCountReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() != null && intent.getAction().equals("StepCountUpdate")) {
+                int currentSteps = intent.getIntExtra("currentSteps", 0);
+                showsteps.setText(String.valueOf(currentSteps));
+                progressBar.setProgress(currentSteps);
+            } else {
+                SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
+                int savednum = Integer.parseInt(sharedPreferences.getString("key1", "0"));
+                previoustotalsteps = savednum;
+                totalsteps = Integer.parseInt(sharedPreferences.getString("totalsteps", "0"));
+                showsteps.setText(String.valueOf(totalsteps - previoustotalsteps));
+                progressBar.setProgress(totalsteps - previoustotalsteps);
+            }
+        }
+    };
 
 
 
@@ -57,7 +76,6 @@ public class Main_screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         setupUI();
-
         getpermissionforcativity();// if gets the pemission then starts the service
         bottom_navigation();
         informationchanged();//changes the amount of ecerything left if the day changed
@@ -101,10 +119,19 @@ public class Main_screen extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         stepsensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         viewPager2 = findViewById(R.id.viewpager);
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(stepCountReceiver, new IntentFilter("StepCountUpdate"));
 
 
     }
-//checking the permission for activity and asking for it as well as activating the sensor
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(stepCountReceiver);
+    }
+
+    //checking the permission for activity and asking for it as well as activating the sensor
     public void getpermissionforcativity(){
         if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED){
             if(!isServiceRunning(Step_Counter_Service.class)){
