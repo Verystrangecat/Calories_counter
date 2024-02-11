@@ -8,14 +8,9 @@ public class FoodNutrient implements Serializable {
     private long nutrientID;
     private String nutrientName;
     private String nutrientNumber;
-    private UnitName unitName;
-    private DerivationCode derivationCode;
-    private String derivationDescription;
-    private long derivationID;
     private double value;
     private long foodNutrientSourceID;
     private String foodNutrientSourceCode;
-    private FoodNutrientSourceDescription foodNutrientSourceDescription;
     private long rank;
     private long indentLevel;
     private long foodNutrientID;
@@ -36,25 +31,7 @@ public class FoodNutrient implements Serializable {
     @JsonProperty("nutrientNumber")
     public void setNutrientNumber(String value) { this.nutrientNumber = value; }
 
-    @JsonProperty("unitName")
-    public UnitName getUnitName() { return unitName; }
-    @JsonProperty("unitName")
-    public void setUnitName(UnitName value) { this.unitName = value; }
 
-    @JsonProperty("derivationCode")
-    public DerivationCode getDerivationCode() { return derivationCode; }
-    @JsonProperty("derivationCode")
-    public void setDerivationCode(DerivationCode value) { this.derivationCode = value; }
-
-    @JsonProperty("derivationDescription")
-    public String getDerivationDescription() { return derivationDescription; }
-    @JsonProperty("derivationDescription")
-    public void setDerivationDescription(String value) { this.derivationDescription = value; }
-
-    @JsonProperty("derivationId")
-    public long getDerivationID() { return derivationID; }
-    @JsonProperty("derivationId")
-    public void setDerivationID(long value) { this.derivationID = value; }
 
     @JsonProperty("value")
     public double getValue() { return value; }
@@ -70,11 +47,6 @@ public class FoodNutrient implements Serializable {
     public String getFoodNutrientSourceCode() { return foodNutrientSourceCode; }
     @JsonProperty("foodNutrientSourceCode")
     public void setFoodNutrientSourceCode(String value) { this.foodNutrientSourceCode = value; }
-
-    @JsonProperty("foodNutrientSourceDescription")
-    public FoodNutrientSourceDescription getFoodNutrientSourceDescription() { return foodNutrientSourceDescription; }
-    @JsonProperty("foodNutrientSourceDescription")
-    public void setFoodNutrientSourceDescription(FoodNutrientSourceDescription value) { this.foodNutrientSourceDescription = value; }
 
     @JsonProperty("rank")
     public long getRank() { return rank; }
