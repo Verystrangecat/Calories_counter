@@ -36,7 +36,7 @@ public class Converter implements Serializable {
     private static void instantiateMapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); //ignores the information that doesnt have the fields for
 
         // You can add more configurations if needed
 

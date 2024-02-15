@@ -2,6 +2,8 @@ package com.example.project;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 
@@ -16,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,8 +42,7 @@ import java.util.Locale;
 
 
 public class Main_screen extends AppCompatActivity {
-    private SensorManager sensorManager = null;
-    private Sensor stepsensor;
+
     private int totalsteps = 0;
     private int previoustotalsteps = 0;
     private ProgressBar progressBar;
@@ -80,6 +82,7 @@ public class Main_screen extends AppCompatActivity {
         bottom_navigation();
         informationchanged();//changes the amount of ecerything left if the day changed
         setViewPager2();
+        scheduleMidnightAlarm();
 
 
 //todo:pop up asking for a users permission
@@ -116,8 +119,8 @@ public class Main_screen extends AppCompatActivity {
     private void setupUI() {
         progressBar = findViewById(R.id.progressBar);
         showsteps = findViewById(R.id.txt_steps);
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        stepsensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+
+
         viewPager2 = findViewById(R.id.viewpager);
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(stepCountReceiver, new IntentFilter("StepCountUpdate"));
@@ -137,6 +140,7 @@ public class Main_screen extends AppCompatActivity {
             if(!isServiceRunning(Step_Counter_Service.class)){
             Intent serviceIntent = new Intent(this, Step_Counter_Service.class);
             startService(serviceIntent);}
+
         }
         else if (ActivityCompat.shouldShowRequestPermissionRationale(this, string_permission)) {// Show rationale if permission was denied before// This is the case where the user denied the permission previously, but did not check "Don't ask again."
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -248,11 +252,60 @@ public class Main_screen extends AppCompatActivity {
         }
         return false;
     }
+    private void scheduleMidnightAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent alarmIntent = new Intent(this, MidnightAlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                123456,
+                alarmIntent,
+                PendingIntent.FLAG_IMMUTABLE
+        );
+
+        // Set the alarm to trigger at midnight and repeat every 24 hours
+        alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                getMidnight().getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+        );
+    }
+
+    private void cancelMidnightAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent alarmIntent = new Intent(this, MidnightAlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                88,
+                alarmIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        // Cancel the alarm
+        alarmManager.cancel(pendingIntent);
+    }
+
+    private Calendar getMidnight() {
+        Calendar midnight = Calendar.getInstance();
+        midnight.setTimeInMillis(System.currentTimeMillis());
+        midnight.set(Calendar.HOUR_OF_DAY, 0);
+        midnight.set(Calendar.MINUTE, 0);
+        midnight.set(Calendar.SECOND, 0);
+        midnight.set(Calendar.MILLISECOND, 0);
+
+        // If the current time is already past midnight, schedule for the next day
+        if (midnight.before(Calendar.getInstance())) {
+            midnight.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return midnight;
+    }
 
 
     }
-
+//Todo add the check if alarm is already set
 //todo circular_menu
+//Todo add the new class to tik proect and show the changes at step_counter_service
 
 
 

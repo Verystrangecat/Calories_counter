@@ -65,6 +65,8 @@
             android:name=".utils.Step_Counter_Service"
             android:enabled="true"
             android:exported="false" />
+        <receiver
+            android:name=".MidnightAlarmReceiver" />
 
 
     </application>

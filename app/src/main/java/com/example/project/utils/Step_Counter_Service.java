@@ -1,5 +1,7 @@
 package com.example.project.utils;
 
+import android.app.ActivityManager;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,6 +17,7 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.IBinder;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -28,21 +31,29 @@ import com.example.project.R;
 public class Step_Counter_Service extends Service implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor stepsensor;
-    private int totalsteps = 0;
-    private int previoustotalsteps = 0;
+    private static int totalsteps = 0;
+    private  static int previoustotalsteps = 0;
+    public static int currentsteps=0;
+
 
     private static final int NOTIFICATION_ID = 987;
+    public static boolean isRunning=false;
 
     private static final String CHANNEL_ID = "StepCountingChannel";
 
     @Override
     public void onCreate() {
+        Log.e("C","Oncreate");
+        isRunning=true;
         super.onCreate();
         createNotificationChannel();
         createNotification();
         setupSensors();
     }
     //todo think how i can update the ui
+
+
+
 
     @Nullable
     @Override
@@ -54,7 +65,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             totalsteps = (int) sensorEvent.values[0];
-            int currentsteps = totalsteps - previoustotalsteps;
+            currentsteps = totalsteps - previoustotalsteps;
             // Update your UI or perform any necessary action
             // ...
             broadcastStepCount(currentsteps);
@@ -79,6 +90,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         editor.putString("key1", String.valueOf(previoustotalsteps));
         editor.putString("totalsteps", String.valueOf(totalsteps));
         editor.apply();
+        isRunning=false;
         //todo deal with shared preference
     }
     private void setupSensors() {
@@ -87,7 +99,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
 
         if (stepsensor == null) {
             stopSelf();
-            Toast.makeText(getApplicationContext(), "No sensor available", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), "No sensor available", Toast.LENGTH_SHORT).show();
         } else {
             sensorManager.registerListener(this, stepsensor, SensorManager.SENSOR_DELAY_NORMAL);
             SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
@@ -104,6 +116,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
                     NotificationManager.IMPORTANCE_DEFAULT
             );
             NotificationManager manager = getSystemService(NotificationManager.class);
+            channel.setSound(null, null);
             manager.createNotificationChannel(channel);
         }
     }
@@ -142,7 +155,15 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         intent.putExtra("currentSteps", currentSteps);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+    public static void change_the_steps(){
+        previoustotalsteps=totalsteps;
+        currentsteps = totalsteps - previoustotalsteps;
 
+
+    }
 
 }
+
+
+
 
