@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Login_firebase extends AppCompatActivity implements View.OnClickListener {
     EditText login, password;
-    Button bntlog, short_cut;
+    Button bntlog;
     TextView link;
     Animation anim_button;
     FirebaseAuth mAuth;
@@ -41,12 +41,11 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         password = findViewById(R.id.edittext_login_passwordf);
         bntlog = findViewById(R.id.btnLoginf);
         link = findViewById(R.id.text_link_signupf);
-        short_cut = findViewById(R.id.btn_shortcutf);
         anim_button = AnimationUtils.loadAnimation(this, R.anim.login_button);
         mAuth = FirebaseAuth.getInstance();
         bntlog.setOnClickListener(this);
         link.setOnClickListener(this);
-        short_cut.setOnClickListener(this);
+
     }
 
     @Override
@@ -88,9 +87,6 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         } else if (view == link) {
             startActivity(new Intent(Login_firebase.this, Register_firebase.class));
 
-        } else if (view == short_cut) {
-            startActivity(new Intent(Login_firebase.this, Main_screen.class));
-            finish();
         }
 
     }
