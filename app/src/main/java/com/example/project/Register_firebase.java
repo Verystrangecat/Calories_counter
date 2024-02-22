@@ -94,13 +94,15 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
                                 Toast.makeText(Register_firebase.this, "Continue creating account",
                                         Toast.LENGTH_SHORT).show();
                                 Array_class arrayClass=new Array_class();
+                                Array_class_steps steps=new Array_class_steps();
                                 SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 Gson gson = new Gson();
                                 String json = gson.toJson(arrayClass);
                                 editor.putString("MyObject", json);
                                 //creating an array for future use
-
+                                String array=gson.toJson(steps);
+                                editor.putString("Array_steps",array);
                                 editor.apply();
                                 startActivity(new Intent(Register_firebase.this, Setup_account.class));
                                 finish();

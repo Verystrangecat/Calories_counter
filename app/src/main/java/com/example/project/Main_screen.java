@@ -304,6 +304,7 @@ public class Main_screen extends AppCompatActivity {
 
     }
 //Todo add the check if alarm is already set
+//todo start the alarm inside the service
 //todo circular_menu
 //Todo add the new class to tik proect and show the changes at step_counter_service
 
