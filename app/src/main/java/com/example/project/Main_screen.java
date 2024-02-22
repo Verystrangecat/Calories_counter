@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Sensor;
 
 import android.hardware.SensorManager;
@@ -33,9 +34,15 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.project.utils.Step_Counter_Service;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -47,6 +54,7 @@ public class Main_screen extends AppCompatActivity {
     private int previoustotalsteps = 0;
     private ProgressBar progressBar;
     private TextView showsteps;
+    BarChart barChart;
 
     ViewPager2 viewPager2;
     ArrayList<ViewpagerItem> arrayList;
@@ -82,6 +90,7 @@ public class Main_screen extends AppCompatActivity {
         bottom_navigation();
         informationchanged();//changes the amount of ecerything left if the day changed
         setViewPager2();
+        setBar_Chart();
         scheduleMidnightAlarm();
 
 
@@ -119,6 +128,7 @@ public class Main_screen extends AppCompatActivity {
     private void setupUI() {
         progressBar = findViewById(R.id.progressBar);
         showsteps = findViewById(R.id.txt_steps);
+        barChart=findViewById(R.id.barchart);
 
 
         viewPager2 = findViewById(R.id.viewpager);
@@ -300,14 +310,39 @@ public class Main_screen extends AppCompatActivity {
 
         return midnight;
     }
+    public void setBar_Chart(){
+        SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        Gson gson2 = new Gson();
+        String json2 = sharedPreferences.getString("Array_steps", "");
+        Array_class_steps obj = gson2.fromJson(json2, Array_class_steps.class);
 
+        if(obj!=null){
+            ArrayList<Step> steps=obj.getArrayList();
+            ArrayList<BarEntry> steps_per_day=new ArrayList<>();
+            for(int i=0; i<steps.size(); i++){
+                steps_per_day.add(new BarEntry(i,steps.get(i).getAmount_steps()));
+            }
+            BarDataSet dataSet=new BarDataSet(steps_per_day, "Your steps");
+            dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+            dataSet.setValueTextColor(Color.BLACK);
+            dataSet.setValueTextSize(16f);
+            BarData barData=new BarData(dataSet);
+            barChart.setFitBars(true);
+            barChart.setData(barData);
+            barChart.getDescription().setText("Empty space");
+            barChart.animateY(2000);
+        }
+
+
+    }
 
     }
 //Todo add the check if alarm is already set
 //todo start the alarm inside the service
 //todo circular_menu
 //Todo add the new class to tik proect and show the changes at step_counter_service
-
+//Todo change the splashscreen
 
 
 

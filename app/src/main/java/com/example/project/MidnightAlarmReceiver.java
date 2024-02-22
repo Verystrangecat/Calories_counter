@@ -37,10 +37,11 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
         SharedPreferences sharedPreferences = context.getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor= sharedPreferences.edit();
         String date=sharedPreferences.getString("date", "");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M");
         Gson gson2 = new Gson();
         String json2 = sharedPreferences.getString("Array_steps", "");
         Array_class_steps obj = gson2.fromJson(json2, Array_class_steps.class);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M");
+
         if(obj!=null){
             obj.addday(Step_Counter_Service.currentsteps,sdf.toString());
             String json = gson2.toJson(obj);

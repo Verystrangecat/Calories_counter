@@ -16,5 +16,9 @@ public class Array_class_steps {
         else
             arrayList.add(new Step(steps, date));
     }
+
+    public ArrayList<Step> getArrayList() {
+        return arrayList;
+    }
 }
 //todo new classes to tik project
