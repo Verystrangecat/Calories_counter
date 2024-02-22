@@ -65,6 +65,12 @@ public class Step_Counter_Service extends Service implements SensorEventListener
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             totalsteps = (int) sensorEvent.values[0];
+            if(previoustotalsteps==0 || previoustotalsteps>totalsteps){
+                previoustotalsteps=totalsteps;
+                Log.e("F",Integer.toString(totalsteps));
+                //solves the problem of the first run of the programm
+                //and the problem if the phone does the reboot
+            }
             currentsteps = totalsteps - previoustotalsteps;
             // Update your UI or perform any necessary action
             // ...
@@ -94,6 +100,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         //todo deal with shared preference
     }
     private void setupSensors() {
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         stepsensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
@@ -101,10 +108,13 @@ public class Step_Counter_Service extends Service implements SensorEventListener
             stopSelf();
             Toast.makeText(getApplicationContext(), "No sensor available", Toast.LENGTH_SHORT).show();
         } else {
+
             sensorManager.registerListener(this, stepsensor, SensorManager.SENSOR_DELAY_NORMAL);
             SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
-            int savednum = Integer.parseInt(sharedPreferences.getString("key1", "0"));
+            int savednum = Integer.parseInt(sharedPreferences.getString("totalsteps", "0"));
             previoustotalsteps = savednum;
+
+
 
         }
     }
