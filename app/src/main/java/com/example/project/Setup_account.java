@@ -16,7 +16,9 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class Setup_account extends AppCompatActivity implements View.OnClickListener {
@@ -38,11 +40,27 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_setup_account);
         setupUi();
         Seekbars();
+        savethedate();
 
 
 
         }
-//counting the numbers for calories etc after getting all the data
+
+    private void savethedate() {
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        String datenow = df.format(c);
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedPreferences.edit();
+        editor.putString("date", datenow);
+        editor.apply();
+    }
+
+    //counting the numbers for calories etc after getting all the data
     //saving the results to shared preference
     private void final_result() {
         if(isFemale)

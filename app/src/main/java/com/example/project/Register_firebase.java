@@ -54,6 +54,7 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_register_firebase);
         setupUi();
         check_the_permission();
+
     }
 
     private void setupUi() {

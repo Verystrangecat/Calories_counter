@@ -45,6 +45,7 @@ import com.google.gson.Gson;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -99,14 +100,16 @@ public class Main_screen extends AppCompatActivity {
     }
 
     private void informationchanged() {
-        long time=System.currentTimeMillis();
-        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(time * 1000);
-        String datenow = DateFormat.format("dd-MM-yyyy", cal).toString();
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        String datenow = df.format(c);
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor= sharedPreferences.edit();
         String dateprev=sharedPreferences.getString("date", datenow);
         if(!dateprev.equals(datenow)){
+            Log.e("I","for some reason this part of the code worked");
+            Log.e("Reset info",dateprev);
+            Log.e("Reset info",datenow);
             editor.putString("date", datenow);
             editor.putString("amount_calories_left", sharedPreferences.getString("amount_calories","0"));
             editor.putString("amount_proteins_left",sharedPreferences.getString("amount_proteins","0"));
