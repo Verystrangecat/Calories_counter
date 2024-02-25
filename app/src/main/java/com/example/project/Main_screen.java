@@ -94,7 +94,6 @@ public class Main_screen extends AppCompatActivity {
         scheduleMidnightAlarm();
 
 
-//todo:pop up asking for a users permission
 
 
     }
@@ -321,7 +320,7 @@ public class Main_screen extends AppCompatActivity {
             ArrayList<Step> steps=obj.getArrayList();
             ArrayList<BarEntry> steps_per_day=new ArrayList<>();
             for(int i=0; i<steps.size(); i++){
-                steps_per_day.add(new BarEntry(i,steps.get(i).getAmount_steps()));
+                steps_per_day.add(new BarEntry((float) steps.get(i).getDate(),steps.get(i).getAmount_steps()));
             }
             BarDataSet dataSet=new BarDataSet(steps_per_day, "Your steps");
             dataSet.setColors(ColorTemplate.MATERIAL_COLORS);

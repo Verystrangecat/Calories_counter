@@ -135,7 +135,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Step counter ")
                 .setContentText("Counting steps...")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .build();
 
         startForeground(NOTIFICATION_ID, notification);

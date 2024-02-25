@@ -2,9 +2,9 @@ package com.example.project;
 
 public class Step {
     int amount_steps;
-    String date;
+    double date;
 
-    public Step(int amount_steps, String date) {
+    public Step(int amount_steps, double date) {
         this.amount_steps = amount_steps;
         this.date = date;
     }
@@ -17,11 +17,11 @@ public class Step {
         this.amount_steps = amount_steps;
     }
 
-    public String getDate() {
+    public double getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(double date) {
         this.date = date;
     }
 }

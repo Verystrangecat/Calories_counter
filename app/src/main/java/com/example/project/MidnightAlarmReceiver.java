@@ -12,6 +12,7 @@ import com.example.project.utils.Step_Counter_Service;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MidnightAlarmReceiver extends BroadcastReceiver {
     @Override
@@ -35,20 +36,27 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
     }
     public void save_steps(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("my pref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor= sharedPreferences.edit();
-        String date=sharedPreferences.getString("date", "");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M");
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String date = sharedPreferences.getString("date", "");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM");
         Gson gson2 = new Gson();
         String json2 = sharedPreferences.getString("Array_steps", "");
         Array_class_steps obj = gson2.fromJson(json2, Array_class_steps.class);
 
-        if(obj!=null){
-            obj.addday(Step_Counter_Service.currentsteps,sdf.toString());
-            String json = gson2.toJson(obj);
-            editor.putString("Array_steps", json);
-            //creating an array for future use
-            editor.apply();
+        if (obj == null) {
+            obj = new Array_class_steps(); // Create a new object if it doesn't exist
         }
+
+        // Add the current date to the date variable
+        date = sdf.format(new Date());
+        double result=Double.parseDouble(date);
+        obj.addday(Step_Counter_Service.currentsteps, result);
+        String json = gson2.toJson(obj);
+        editor.putString("Array_steps", json);
+        // Update the date in shared preferences
+        editor.putString("date", date);
+        editor.apply();
     }
     //the date from shared preference
-}
+    //todo check that the date is right
+}//String datenow = DateFormat.format("dd-MM-yyyy", cal).toString();
