@@ -7,6 +7,9 @@ public class Array_class_steps {
 
     public Array_class_steps(){
         arrayList=new ArrayList<>();
+        arrayList.add(new Step(1000, 29.02));
+        arrayList.add(new Step(2000, 1.03));
+        //todo do not forget to delete the line above
     }
     public void addday(int steps, double date){
         if(arrayList.size()>=7){

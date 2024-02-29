@@ -22,3 +22,4 @@ public class Splashscreen extends AppCompatActivity {
         }, 1000);
     }
     }
+//todo do not forget that new decimal was done heker and i decided to do it myself

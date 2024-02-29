@@ -35,17 +35,21 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.project.utils.Step_Counter_Service;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -101,7 +105,7 @@ public class Main_screen extends AppCompatActivity {
 
     private void informationchanged() {
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM");
         String datenow = df.format(c);
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor= sharedPreferences.edit();
@@ -297,6 +301,8 @@ public class Main_screen extends AppCompatActivity {
         alarmManager.cancel(pendingIntent);
     }
 
+
+
     private Calendar getMidnight() {
         Calendar midnight = Calendar.getInstance();
         midnight.setTimeInMillis(System.currentTimeMillis());
@@ -323,17 +329,24 @@ public class Main_screen extends AppCompatActivity {
             ArrayList<Step> steps=obj.getArrayList();
             ArrayList<BarEntry> steps_per_day=new ArrayList<>();
             for(int i=0; i<steps.size(); i++){
-                steps_per_day.add(new BarEntry((float) steps.get(i).getDate(),steps.get(i).getAmount_steps()));
+                steps_per_day.add(new BarEntry((float) i+1,steps.get(i).getAmount_steps()));
+//todo remember that i use not the date here
             }
+
+
+
+            XAxis xAxis = barChart.getXAxis();
+            xAxis.setGranularity(1f);
             BarDataSet dataSet=new BarDataSet(steps_per_day, "Your steps");
-            dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+            dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
             dataSet.setValueTextColor(Color.BLACK);
             dataSet.setValueTextSize(16f);
             BarData barData=new BarData(dataSet);
             barChart.setFitBars(true);
             barChart.setData(barData);
-            barChart.getDescription().setText("Empty space");
+            barChart.getDescription().setEnabled(false);
             barChart.animateY(2000);
+
         }
 
 

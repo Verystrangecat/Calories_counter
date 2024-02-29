@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -64,13 +65,17 @@ public class Graphs extends AppCompatActivity {
            calories.add(new PieEntry((int)d,"Dinner"));
            calories.add(new PieEntry((int)s,"Snacks"));
            PieDataSet pieDataSet=new PieDataSet(calories,"Calories per meal");
-           pieDataSet.setColors(ColorTemplate.PASTEL_COLORS);
+           pieDataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+           pieDataSet.setValueTextColor(Color.BLACK);
 // todo:play with colors
            PieData pieData=new PieData(pieDataSet);
            pieChart.setData(pieData);
-           pieChart.getDescription().setEnabled(false);
+          // pieChart.getDescription().setEnabled(false);
            pieChart.setCenterText("Calories per meal");
+           pieChart.setCenterTextColor(Color.BLACK);
+           pieChart.setEntryLabelColor(Color.BLACK);
            pieChart.animate();
+
 
 
 
