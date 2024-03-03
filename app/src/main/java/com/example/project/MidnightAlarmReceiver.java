@@ -38,7 +38,6 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
     public void save_steps(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        String dateprevious = sharedPreferences.getString("date", "");
         Gson gson2 = new Gson();
         String json2 = sharedPreferences.getString("Array_steps", "");
         Array_class_steps obj = gson2.fromJson(json2, Array_class_steps.class);
@@ -46,13 +45,12 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
         if (obj == null) {
             obj = new Array_class_steps(); // Create a new object if it doesn't exist
         }
-
         // Add the current date to the date variable
-        double result=Double.parseDouble(dateprevious);
-        obj.addday(Step_Counter_Service.currentsteps, result);
+        obj.addday(Step_Counter_Service.currentsteps);
         String json = gson2.toJson(obj);
         editor.putString("Array_steps", json);
         editor.apply();
+
     }
     //the date from shared preference
     //todo check that the date is right

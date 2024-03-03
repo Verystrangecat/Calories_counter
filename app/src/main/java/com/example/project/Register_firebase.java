@@ -105,6 +105,7 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
                                 String array=gson.toJson(steps);
                                 editor.putString("Array_steps",array);
                                 editor.apply();
+                                editor.putString("name", name.getText().toString());
                                 startActivity(new Intent(Register_firebase.this, Setup_account.class));
                                 finish();
                             } else {

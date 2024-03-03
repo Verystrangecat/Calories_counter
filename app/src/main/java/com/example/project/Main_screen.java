@@ -12,13 +12,11 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.hardware.Sensor;
 
-import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.text.format.DateFormat;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -39,18 +37,17 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+
 
 
 public class Main_screen extends AppCompatActivity {
@@ -211,6 +208,7 @@ public class Main_screen extends AppCompatActivity {
 
 //items are in the menu
     private void bottom_navigation() {
+        //find view by id gets id that is int and gives the general view
         BottomNavigationView bottomNavigationView1 = findViewById(R.id.bottom_navigation);
         bottomNavigationView1.setSelectedItemId(R.id.navigation_home);
         bottomNavigationView1.setOnItemSelectedListener(item -> {
@@ -326,10 +324,10 @@ public class Main_screen extends AppCompatActivity {
         Array_class_steps obj = gson2.fromJson(json2, Array_class_steps.class);
 
         if(obj!=null){
-            ArrayList<Step> steps=obj.getArrayList();
+            ArrayList<Integer> steps=obj.getArrayList();
             ArrayList<BarEntry> steps_per_day=new ArrayList<>();
             for(int i=0; i<steps.size(); i++){
-                steps_per_day.add(new BarEntry((float) i+1,steps.get(i).getAmount_steps()));
+                steps_per_day.add(new BarEntry((float) i+1,steps.get(i)));
 //todo remember that i use not the date here
             }
 
