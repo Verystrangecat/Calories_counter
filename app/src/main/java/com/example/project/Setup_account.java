@@ -31,6 +31,7 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
     int additional_calories = 0;
     int num_age, num_height, num_weight;
      static double calories=0, proteins=0, fats=0, carbohydrates=0;
+     private User user;
 
     Button submit, female, male;
 
@@ -41,6 +42,7 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         setupUi();
         Seekbars();
         savethedate();
+        user = new User();
 
 
 
@@ -62,10 +64,13 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
     //counting the numbers for calories etc after getting all the data
     //saving the results to shared preference
     private void final_result() {
-        if(isFemale)
-            calories=Math.round((447.593 + (9.247 *num_weight) + (3.098 * num_height) - (4.330*num_age))*activity_level_calorie+additional_calories);
-        else
-            calories= Math.round((88.362 + (13.397 *num_weight) + (4.799 * num_height) - (5.677 *num_age))*activity_level_calorie);
+        if(isFemale) {
+            user.setGender("Female");
+            calories = Math.round((447.593 + (9.247 * num_weight) + (3.098 * num_height) - (4.330 * num_age)) * activity_level_calorie + additional_calories);
+        } else{
+            user.setGender("Male");
+            user.setPregnant(0);
+            calories= Math.round((88.362 + (13.397 *num_weight) + (4.799 * num_height) - (5.677 *num_age))*activity_level_calorie);}
 
 
 
@@ -74,6 +79,15 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         carbohydrates=Onedigit(calories*0.55/4);
         String date=getDate(System.currentTimeMillis());
 
+
+        WriteUserData writeUserData = new WriteUserData();
+        Bundle extras = getIntent().getExtras();
+        user.setName(extras.getString("Name"));
+        user.setAge(num_age);
+        user.setHeight(num_height);
+        user.setWeiht(num_weight);
+        user.setEmail(extras.getString("Email"));
+        writeUserData.addUser(user);
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("amount_calories",String.valueOf(calories));
@@ -108,22 +122,27 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
             if (ser.isChecked()) {
                 activity_level_calorie = 1.2;
                 level_protein = 0.8;
+                user.setActivity(1);
 
             } else if (la.isChecked()) {
                 activity_level_calorie = 1.375;
                 level_protein = 1;
+                user.setActivity(2);
 
             } else if (ma.isChecked()) {
                 activity_level_calorie = 1.55;
                 level_protein = 1.1;
+                user.setActivity(3);
 
             } else if (va.isChecked()) {
                 activity_level_calorie = 1.725;
                 level_protein = 1.2;
+                user.setActivity(4);
 
             } else if (sa.isChecked()) {
                 activity_level_calorie = 1.9;
                 level_protein = 1.5;
+                user.setActivity(5);
 
             } else {
                 Toast.makeText(Setup_account.this, "You must select the level of activity", Toast.LENGTH_SHORT).show();
@@ -138,19 +157,24 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
             if(isFemale) {
                 if (notpreg.isChecked()) {
                     additional_calories = 0;
+                    user.setPregnant(0);
                 } else if (firsttri.isChecked()) {
                     additional_calories = 0;
+                    user.setPregnant(1);
                     if (level_protein < 1.1)
                         level_protein = 1.1;
                 } else if (secondtri.isChecked()) {
                     additional_calories = 395;
+                    user.setPregnant(2);
                     if (level_protein < 1.2)
                         level_protein = 1.2;
                 } else if (thirdtri.isChecked()) {
                     additional_calories = 475;
+                    user.setPregnant(3);
                     if (level_protein < 1.3)
                         level_protein = 1.3;
                 } else if (lactating.isChecked()) {
+                    user.setPregnant(4);
                     additional_calories = 415;
                     if (level_protein < 1.2)
                         level_protein = 1.2;}

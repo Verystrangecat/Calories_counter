@@ -34,6 +34,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.util.Calendar;
@@ -67,6 +69,7 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
         link_login = findViewById(R.id.text_link_loginf);
         link_login.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -105,8 +108,12 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
                                 String array=gson.toJson(steps);
                                 editor.putString("Array_steps",array);
                                 editor.apply();
-                                editor.putString("name", name.getText().toString());
-                                startActivity(new Intent(Register_firebase.this, Setup_account.class));
+                                Intent i=new Intent(Register_firebase.this, Setup_account.class);
+                                i.putExtra("Name", name.getText().toString());
+                                i.putExtra("Email", email.getText().toString());
+                                startActivity(i);
+
+
                                 finish();
                             } else {
                                 // If sign in fails, display a message to the user.
