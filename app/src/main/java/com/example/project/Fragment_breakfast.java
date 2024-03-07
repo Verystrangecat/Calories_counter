@@ -38,8 +38,11 @@ public class Fragment_breakfast extends Fragment {
     private ArrayList<Food_class_meals> arrayList;
     private ArrayList<Food_class_meals> arraynew;
 
+    /**
+     *   Required empty public constructor
+     */
     public Fragment_breakfast() {
-        // Required empty public constructor
+
     }
 
     /**
@@ -59,6 +62,11 @@ public class Fragment_breakfast extends Fragment {
         return fragment;
     }
 
+    /**
+     *
+     * @param savedInstanceState If the fragment is being re-created from
+     * a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +76,18 @@ public class Fragment_breakfast extends Fragment {
         }
     }
 
+    /**
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,6 +95,12 @@ public class Fragment_breakfast extends Fragment {
         return inflater.inflate(R.layout.fragment_breakfast2, container, false);
     }
 
+    /**
+     * deals with logic of a fragment such as sets the recycle view
+     * @param view The View returned by {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -83,6 +109,10 @@ public class Fragment_breakfast extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         button.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view The view that was clicked.
+             */
             @Override
             public void onClick(View view) {
                 if(view==button){
@@ -104,6 +134,10 @@ public class Fragment_breakfast extends Fragment {
         adapterMeals.notifyDataSetChanged();}
     }
 
+    /**
+     * gets the array list of meals from the shared preferences and saves the food from breakfast to
+     * array list
+     */
     private void getdata() {
 
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);

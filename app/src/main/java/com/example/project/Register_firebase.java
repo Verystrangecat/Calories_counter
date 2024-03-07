@@ -49,6 +49,13 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
     private static final String string_permission= Manifest.permission.POST_NOTIFICATIONS;
     private static final int permission_code=100;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,9 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+     * connects ui to the class
+     */
     private void setupUi() {
         name = findViewById(R.id.editTextnamef);
         password = findViewById(R.id.editText_signup_passwordf);
@@ -72,6 +82,11 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+     *
+     * @param view The view that was clicked.
+     *             click for all the buttons
+     */
     @Override
     public void onClick(View view) {
         String emails, passwords;
@@ -92,6 +107,12 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
 
             mAuth.createUserWithEmailAndPassword(emails, passwords)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        /**
+                         *
+                         * @param task
+                         * adds the eamil and password to authefication
+                         * creates the arryas and passes name and email to setup account
+                         */
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
@@ -133,6 +154,11 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
 
     }
 //Checks if data is entered and if it's correct
+
+    /**
+     *
+     * @return boolean if data is entered and correct
+     */
     private boolean checkDataEntered() {
         if (isEmpty(name)) {
             name.setError("You must enter your name to sign up");
@@ -161,15 +187,29 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
 
         }
 
-
+    /**
+     *
+     * @param  text
+     * @return boolean if edit text is empty
+     */
     public boolean isEmpty(EditText text) {
         CharSequence str = text.getText().toString();
         return TextUtils.isEmpty(str);
     }
+
+    /**
+     *
+     * @param text
+     * @return boolean if edit text is email
+     */
     public boolean isEmail(EditText text){
         CharSequence str=text.getText().toString();
         return !TextUtils.isEmpty(str)&& Patterns.EMAIL_ADDRESS.matcher(str).matches();
     }
+
+    /**
+     * creates the notifiaction for the meals
+     */
     public void notification() {
         create_notification_channel();
         Intent intent = new Intent(Register_firebase.this, Broadcast_reciever.class);
@@ -198,7 +238,9 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
 
     }
 
-
+    /**
+     * creates the notification channel
+     */
     public void create_notification_channel() {
         CharSequence name = "Reminder_channel";
         String description = "Channel for notifications about meals";
@@ -210,6 +252,10 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
         //Todo add the forgot password thing
     }
 
+    /**
+     * check if the permission for notification is granted if no asks for permission
+     * else builds the notification
+     */
     private void check_the_permission() {
         if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED) {
             notification();
@@ -232,6 +278,15 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
         }
     }
 
+    /**
+     *
+     * @param requestCode The request code passed in
+     * @param permissions The requested permissions. Never null.
+     * @param grantResults The grant results for the corresponding permissions
+     *     which is either {@link android.content.pm.PackageManager#PERMISSION_GRANTED}
+     *     or {@link android.content.pm.PackageManager#PERMISSION_DENIED}. Never null.
+     *deals with the result of the answer
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -256,6 +311,13 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
         }
 
     }
+
+    /**
+     *
+     * @param context
+     * @param requestCode
+     * @return boolean if the alarm is set
+     */
     public boolean isAlarmSet(Context context, int requestCode) {
         Intent intent = new Intent(context, Broadcast_reciever.class);
 

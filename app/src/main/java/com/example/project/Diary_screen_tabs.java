@@ -16,6 +16,14 @@ public class Diary_screen_tabs extends AppCompatActivity {
     private ViewPager viewPager;
     BottomNavigationView bottomNavigationView;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +32,10 @@ public class Diary_screen_tabs extends AppCompatActivity {
         bottom_navigation();
     }
 
+    /**
+     * connects ui to the class
+     * and creates fragments
+     */
     private void setupUI() {
         tabLayout=findViewById(R.id.tablayout);
         viewPager=findViewById(R.id.viewpager_tabs);
@@ -36,6 +48,10 @@ public class Diary_screen_tabs extends AppCompatActivity {
         bottomNavigationView=findViewById(R.id.bottom_navigation);
         viewPager.setAdapter(viewpTabsAdapter);
     }
+
+    /**
+     * sets up a bottom menu
+     */
     private void bottom_navigation(){
 
         bottomNavigationView.setSelectedItemId(R.id.navigation_diary);

@@ -32,6 +32,14 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
     List<Food> food_list=null;
     String meal;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +53,12 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
 
     }
 
+    /**
+     * sends the quary to the database
+     * @param s- string of the food
+     * @throws MalformedURLException
+     */
+
     public void querydata(String s) throws MalformedURLException {
         String ur="https://api.nal.usda.gov/fdc/v1/foods/search?query=";
         s=s.trim();
@@ -54,6 +68,11 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
         URL url=new URL(uri.toString());
         new Dotask().execute(url);
     }
+
+    /**
+     *
+     * @param v The view that was clicked.
+     */
 
     @Override
     public void onClick(View v) {
@@ -71,6 +90,10 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
 
     }
 
+    /**
+     * click on one of items in the recycle view
+     * @param position
+     */
     @Override
     public void OnfoodClick(int position) {
         Intent intent=new Intent(Adding_food_screen.this, Food_details.class);
@@ -79,6 +102,11 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
 
 
     }
+    /**
+     *  runs the task in the background
+     *  @param //urls
+     * @return json string
+     */
 
     class Dotask extends AsyncTask<URL,Void,String>{
 
@@ -93,6 +121,12 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
             }
             return data;
         }
+
+        /**
+         * setting the recycle view with the data
+         * @param s The result of the operation computed by {@link #doInBackground}.
+         *
+         */
         protected void onPostExecute(String s) {
             food_list = parseJson(s); //calls the function
             if (food_list == null)
@@ -102,6 +136,12 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
                 recyclerView.setAdapter(adapter);
             }
         }
+
+        /**
+         * json string to java class
+         * @param data
+         * @return list of food
+         */
 
         private List<Food> parseJson(String data) {
             Welcome food=null;

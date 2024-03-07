@@ -21,6 +21,14 @@ import java.util.ArrayList;
 public class Graphs extends AppCompatActivity {
     PieChart pieChart;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +40,9 @@ public class Graphs extends AppCompatActivity {
 
     }
 
+    /**
+     * gets the array of food from the shared prefrence and gives that information to the pie chart
+     */
     private void pieChart() {
         double br=0, l=0,d=0,s=0;
         ArrayList<Food_class_meals> arrayList;
@@ -67,7 +78,6 @@ public class Graphs extends AppCompatActivity {
            PieDataSet pieDataSet=new PieDataSet(calories,"Calories per meal");
            pieDataSet.setColors(ColorTemplate.LIBERTY_COLORS);
            pieDataSet.setValueTextColor(Color.BLACK);
-// todo:play with colors
            PieData pieData=new PieData(pieDataSet);
            pieChart.setData(pieData);
           // pieChart.getDescription().setEnabled(false);
@@ -83,11 +93,18 @@ public class Graphs extends AppCompatActivity {
 
     }
 
+    /**
+     * coonects the ui with the class
+     */
     private void setupUI() {
         pieChart=findViewById(R.id.pieChart);
 
 
     }
+
+    /**
+     * sets up a bottom menu
+     */
     private void bottom_navigation() {
         BottomNavigationView bottomNavigationView1 = findViewById(R.id.bottom_navigation);
         bottomNavigationView1.setSelectedItemId(R.id.navigation_graphs);

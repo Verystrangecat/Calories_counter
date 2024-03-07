@@ -7,10 +7,20 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class WriteUserData {
     private DatabaseReference databaseReference;
+
+    /**
+     * Initialize the Realtime Database
+     */
     public WriteUserData() {
-        // Initialize the Realtime Database
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
+
+    /**
+     *
+     * @param user
+     * adds the user to the data base
+     */
     public void addUser(User user) {
         String userId = databaseReference.child("users").push().getKey();
 

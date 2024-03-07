@@ -25,20 +25,21 @@ import java.util.ArrayList;
  * Use the {@link Fragment_lunch#newInstance} factory method to
  * create an instance of this fragment.
  */
+/**
+ * A fragment representing the lunch screen.
+ */
 public class Fragment_lunch extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
 
     private String mParam1;
     private String mParam2;
     private ArrayList<Food_class_meals> arrayList;
     private ArrayList<Food_class_meals> arraynew;
 
+    // Required empty public constructor
     public Fragment_lunch() {
-        // Required empty public constructor
     }
 
     /**
@@ -49,7 +50,6 @@ public class Fragment_lunch extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment Fragment_lunch.
      */
-
     public static Fragment_lunch newInstance(String param1, String param2) {
         Fragment_lunch fragment = new Fragment_lunch();
         Bundle args = new Bundle();
@@ -59,6 +59,12 @@ public class Fragment_lunch extends Fragment {
         return fragment;
     }
 
+    /**
+     * Called when the fragment is created.
+     *
+     * @param savedInstanceState If the fragment is being re-created from
+     *                           a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +74,17 @@ public class Fragment_lunch extends Fragment {
         }
     }
 
+    /**
+     * Called to create the view for the fragment.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate
+     *                           any views in the fragment.
+     * @param container          If non-null, this is the parent view that the fragment's
+     *                           UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     *                           from a previous saved state.
+     * @return The inflated view for the fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,53 +92,66 @@ public class Fragment_lunch extends Fragment {
         return inflater.inflate(R.layout.fragment_lunch, container, false);
     }
 
-
+    /**
+     * Called after the view is created. Deals with the logic of the fragment,
+     * such as setting up the RecyclerView and handling button clicks.
+     *
+     * @param view               The View returned by {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     *                           from a previous saved state.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerView=view.findViewById(R.id.recycle_view_lunch);
-        Button button=view.findViewById(R.id.button_add_lunch);
+        // Reference to the RecyclerView and button in the layout
+        RecyclerView recyclerView = view.findViewById(R.id.recycle_view_lunch);
+        Button button = view.findViewById(R.id.button_add_lunch);
+
+        // Set up the RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
+
+        // Button click listener
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(view==button){
-                    Intent i=new Intent(getActivity(),Adding_food_screen.class);
-                    //so the app will know from which fragment the user came
+                if (view == button) {
+                    // Handle button click (start activity for adding food)
+                    Intent i = new Intent(getActivity(), Adding_food_screen.class);
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("Meal","l");
+                    editor.putString("Meal", "l");
                     editor.apply();
                     startActivity(i);
-
-            }}
+                }
+            }
         });
 
+        // Get data from SharedPreferences and populate the RecyclerView
         getdata();
-        if(arrayList!=null){
-            Adapter_meals adapterMeals=new Adapter_meals(getContext(),arraynew);
+        if (arrayList != null) {
+            Adapter_meals adapterMeals = new Adapter_meals(getContext(), arraynew);
             recyclerView.setAdapter(adapterMeals);
-            adapterMeals.notifyDataSetChanged();}
+            adapterMeals.notifyDataSetChanged();
+        }
     }
 
+    /**
+     * Retrieves data from SharedPreferences and filters food items for lunch.
+     */
     private void getdata() {
-
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson2 = new Gson();
         String json2 = sharedPreferences.getString("MyObject", "");
         Array_class obj = gson2.fromJson(json2, Array_class.class);
-        arrayList=obj.arrayList;
-        arraynew=new ArrayList<>();
-        if(arrayList!=null){
-            for(int i=0; i<arrayList.size();i++){
-                if(arrayList.get(i).meal.equals("l"))
+        arrayList = obj.arrayList;
+        arraynew = new ArrayList<>();
+        if (arrayList != null) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                if (arrayList.get(i).meal.equals("l"))
                     arraynew.add(arrayList.get(i));
             }
         }
-        // TODO: 28/12/2023 get from shared preference an array
-
     }
-
 }

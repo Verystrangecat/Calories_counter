@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -35,6 +36,13 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
 
     Button submit, female, male;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +56,9 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
 
         }
 
+    /**
+     * saves the current date
+     */
     private void savethedate() {
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
@@ -61,8 +72,13 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         editor.apply();
     }
 
-    //counting the numbers for calories etc after getting all the data
-    //saving the results to shared preference
+
+
+    /**
+     * counting the numbers for calories etc after getting all the data
+     *     saving the results to shared preference
+     *     also writing the data to the database
+     */
     private void final_result() {
         if(isFemale) {
             user.setGender("Female");
@@ -90,6 +106,7 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         writeUserData.addUser(user);
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", user.getEmail());
         editor.putString("amount_calories",String.valueOf(calories));
         editor.putString("amount_proteins",String.valueOf(proteins));
         editor.putString("amount_carbs",String.valueOf(carbohydrates));
@@ -105,7 +122,9 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
     }
 
 
-
+    /**
+     * checks if the gender is chosen
+     */
     private void check_male_or_female(){
         if(nextscreen){
             if(!wasClicked){
@@ -117,6 +136,9 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
 
     }
 
+    /**
+     * gets the activity level
+     */
     private void checkactivity_level() {
         if (nextscreen) {
             if (ser.isChecked()) {
@@ -151,7 +173,9 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
+    /**
+     * check if pregnant and what stage
+     */
     private void check_pregnant() {
         if (nextscreen) {
             if(isFemale) {
@@ -186,7 +210,9 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
+    /**
+     * connects ui to the class
+     */
     private void setupUi() {
         txt_height = findViewById(R.id.editText_height);
         txt_weight = findViewById(R.id.edittext_weight);
@@ -213,19 +239,38 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
 
     }
 
+    /**
+     * sets up the seekbars
+     */
     private void Seekbars() {
         bar_weight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
+            /**
+             *
+             * @param seekBar The SeekBar whose progress has changed
+             * @param i The current progress level. This will be in the range min..max where min
+             *                 and max were set by {@link ProgressBar#setMin(int)} and
+             *                 , respectively. (The default values for
+             *                 min is 0 and max is 100.)
+             * @param b True if the progress change was initiated by the user.
+             */
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 txt_weight.setText(String.valueOf(i));
             }
 
+            /**
+             *
+             * @param seekBar The SeekBar in which the touch gesture began
+             */
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
 
+            /**
+             *
+             * @param seekBar The SeekBar in which the touch gesture began
+             */
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
@@ -234,7 +279,15 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         });
 
         bar_height.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
+            /**
+             *
+             * @param seekBar The SeekBar whose progress has changed
+             * @param i The current progress level. This will be in the range min..max where min
+             *                 and max were set by {@link ProgressBar#setMin(int)} and
+             *                 {@link ProgressBar#setMax(int)}, respectively. (The default values for
+             *                 min is 0 and max is 100.)
+             * @param b True if the progress change was initiated by the user.
+             */
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
 
@@ -243,11 +296,19 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
 
             }
 
+            /**
+             *
+             * @param seekBar The SeekBar in which the touch gesture began
+             */
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
 
+            /**
+             *
+             * @param seekBar The SeekBar in which the touch gesture began
+             */
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
@@ -259,7 +320,9 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
     }
 
 
-//height, weight and age of the user, does the check if they are good or not
+    /**
+     * height, weight and age of the user, does the check if they are good or not
+     */
     private void gettingnumbers() {
         String str_age, str_height, str_weight;
         str_age = txt_age.getText().toString();
@@ -297,6 +360,13 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
 
 
     }
+
+    /**
+     *
+     * @param val-double
+     * @return double number
+     * returns the double value with 1 digit after the decimal
+     */
     public double Onedigit(double val){
         String vals=String.valueOf(val);
         String n="";
@@ -310,6 +380,10 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         return val;
     }
 
+    /**
+     *
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         if (v==female){
@@ -343,6 +417,13 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         }
 
         }
+
+    /**
+     *
+     * @param time
+     * @return date-String
+     * gets the current date
+     */
     private String getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time * 1000);

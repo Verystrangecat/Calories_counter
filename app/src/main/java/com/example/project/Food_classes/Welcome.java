@@ -8,9 +8,17 @@ import java.util.List;
 public class Welcome implements Serializable {
     private List<Food> foods;
 
-
+    /**
+     *
+     * @return list of foods
+     */
     @JsonProperty("foods")
     public List<Food> getFoods() { return foods; }
+
+    /**
+     *
+     * @param value list of foods
+     */
     @JsonProperty("foods")
     public void setFoods(List<Food> value) { this.foods = value; }
 

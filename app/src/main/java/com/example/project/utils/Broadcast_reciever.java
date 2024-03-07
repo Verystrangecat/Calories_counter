@@ -21,6 +21,13 @@ import com.example.project.R;
 
 
 public class Broadcast_reciever extends BroadcastReceiver {
+    /**
+     *
+     * @param context The Context in which the receiver is running.
+     * @param intent The Intent being received.
+     *               sends the notification
+     *
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent i = new Intent(context, Main_screen.class);

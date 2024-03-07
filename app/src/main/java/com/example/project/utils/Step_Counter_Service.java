@@ -41,6 +41,10 @@ public class Step_Counter_Service extends Service implements SensorEventListener
 
     private static final String CHANNEL_ID = "StepCountingChannel";
 
+    /**
+     *tells what to do when the service is created
+     */
+
     @Override
     public void onCreate() {
         Log.e("C","Oncreate");
@@ -53,14 +57,25 @@ public class Step_Counter_Service extends Service implements SensorEventListener
     //todo think how i can update the ui
 
 
-
-
+    /**
+     *
+     * @param intent The Intent that was used to bind to this service,
+     * as given to {@link android.content.Context#bindService
+     * Context.bindService}.  Note that any extras that were included with
+     * the Intent at that point will <em>not</em> be seen here.
+     *
+     * @return
+     */
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
+    /**
+     * changes the current amount of steps
+     * @param sensorEvent the {@link android.hardware.SensorEvent SensorEvent}.
+     */
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
@@ -81,11 +96,20 @@ public class Step_Counter_Service extends Service implements SensorEventListener
 
     }
 
+    /**
+     *
+     * @param sensor
+     * @param i The new accuracy of this sensor, one of
+     *         {@code SensorManager.SENSOR_STATUS_*}
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         //nothing needed
     }
 
+    /**
+     * tells what to do when the service is destroyed
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -99,6 +123,10 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         isRunning=false;
         //todo deal with shared preference
     }
+
+    /**
+     * starts the sensor if it exists
+     */
     private void setupSensors() {
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -118,6 +146,10 @@ public class Step_Counter_Service extends Service implements SensorEventListener
 
         }
     }
+
+    /**
+     * creates notification channel
+     */
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
@@ -131,6 +163,9 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         }
     }
 
+    /**
+     * creates the notification
+     */
     private void createNotification() {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Step counter ")
@@ -141,6 +176,10 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         startForeground(NOTIFICATION_ID, notification);
     }
 
+    /**
+     * updates the notification when the step count changes
+     * @param text
+     */
     private void updateNotificationText(String text) {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("You walked today")
@@ -160,11 +199,20 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         }
         NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, notification);
     }
+
+    /**
+     * sends thw current step count to activity
+     * @param currentSteps
+     */
     private void broadcastStepCount(int currentSteps) {
         Intent intent = new Intent("StepCountUpdate");
         intent.putExtra("currentSteps", currentSteps);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+    /**
+     * sets the current steps to 0
+     */
     public static void change_the_steps(){
         previoustotalsteps=totalsteps;
         currentsteps = totalsteps - previoustotalsteps;

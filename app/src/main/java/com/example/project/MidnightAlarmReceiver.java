@@ -16,6 +16,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MidnightAlarmReceiver extends BroadcastReceiver {
+    /**
+     *
+     * @param context The Context in which the receiver is running.
+     * @param intent The Intent being received.
+     *               sets up the amount of current steps to 0
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         if(Step_Counter_Service.isRunning){
@@ -35,6 +41,12 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
 
         //todo check if the alrammanager triggered only if the sensor exsists
     }
+
+    /**
+     *
+     * @param context
+     * before setting current steps to 0 saves tge steps to the array
+     */
     public void save_steps(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

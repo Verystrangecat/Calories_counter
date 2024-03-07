@@ -62,6 +62,10 @@ public class Main_screen extends AppCompatActivity {
     ArrayList<ViewpagerItem> arrayList;
     private static final String string_permission= Manifest.permission.ACTIVITY_RECOGNITION;
     private static final int permission_code=200;
+    /**
+     * a broadcast that listens to changes in the steps and updates the progress bar
+     * or uses the values from shared prefernce
+     */
     private BroadcastReceiver stepCountReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -81,8 +85,13 @@ public class Main_screen extends AppCompatActivity {
     };
 
 
-
-
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +109,9 @@ public class Main_screen extends AppCompatActivity {
 
     }
 
+    /**
+     * checks if the day changed and changes the amount of left everything
+     */
     private void informationchanged() {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd.MM");
@@ -128,11 +140,13 @@ public class Main_screen extends AppCompatActivity {
         }
     }
 
+    /**
+     * connects the UI elements to the variables
+     */
     private void setupUI() {
         progressBar = findViewById(R.id.progressBar);
         showsteps = findViewById(R.id.txt_steps);
         barChart=findViewById(R.id.barchart);
-
 
         viewPager2 = findViewById(R.id.viewpager);
         LocalBroadcastManager.getInstance(this)
@@ -141,12 +155,19 @@ public class Main_screen extends AppCompatActivity {
 
     }
 
+    /**
+     * uregisters the receiver if the activity is destroyed
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(stepCountReceiver);
     }
 
+    /**
+     * checks the permission for activity and asking for it if it is not granted
+     * else starts the service
+     */
     //checking the permission for activity and asking for it as well as activating the sensor
     public void getpermissionforcativity(){
         if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED){
@@ -172,6 +193,17 @@ public class Main_screen extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param requestCode The request code passed in {link requestPermissions(
+     * android.app.Activity, String[], int)}
+     * @param permissions The requested permissions. Never null.
+     * @param grantResults The grant results for the corresponding permissions
+     *     which is either {@link android.content.pm.PackageManager#PERMISSION_GRANTED}
+     *     or {@link android.content.pm.PackageManager#PERMISSION_DENIED}. Never null.
+     * handles the result of a permission request, checks if the requested permission is granted,
+     *  and takes appropriate actions based on the result.
+     */
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == permission_code) {
@@ -201,11 +233,9 @@ public class Main_screen extends AppCompatActivity {
 // todo deal with the step counter
 
 
-
-
-
-
-
+    /**
+     * sets up the bottom navigation menu
+     */
 //items are in the menu
     private void bottom_navigation() {
         //find view by id gets id that is int and gives the general view
@@ -231,6 +261,9 @@ public class Main_screen extends AppCompatActivity {
         });
     }
 
+    /**
+     * builds the arraylist of viewpager items and adds it to the viewpager
+     */
     public void setViewPager2() {
         arrayList = new ArrayList<>();
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
@@ -257,6 +290,12 @@ public class Main_screen extends AppCompatActivity {
 
         //todo make everything reset at midnight if works with calories do with steps
 
+    /**
+     *
+     * @param serviceClass
+     * @return boolean
+     * checks if the service is running
+     */
     public boolean isServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -266,6 +305,10 @@ public class Main_screen extends AppCompatActivity {
         }
         return false;
     }
+
+    /**
+     * schedules the midnight alarm that puts that starts the class that puts the number of steps to 0
+     */
     private void scheduleMidnightAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent alarmIntent = new Intent(this, MidnightAlarmReceiver.class);
@@ -285,6 +328,9 @@ public class Main_screen extends AppCompatActivity {
         );
     }
 
+    /**
+     * cancel the alarm maybe will use later
+     */
     private void cancelMidnightAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent alarmIntent = new Intent(this, MidnightAlarmReceiver.class);
@@ -298,9 +344,14 @@ public class Main_screen extends AppCompatActivity {
         // Cancel the alarm
         alarmManager.cancel(pendingIntent);
     }
+    //todo check if i need this class
 
 
-
+    /**
+     *
+     * @return calendar
+     * returns the midnight for the alarm
+     */
     private Calendar getMidnight() {
         Calendar midnight = Calendar.getInstance();
         midnight.setTimeInMillis(System.currentTimeMillis());
@@ -316,9 +367,12 @@ public class Main_screen extends AppCompatActivity {
 
         return midnight;
     }
+
+    /**
+     * gets the array list of steps and gives that information to the bar chart
+     */
     public void setBar_Chart(){
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor= sharedPreferences.edit();
         Gson gson2 = new Gson();
         String json2 = sharedPreferences.getString("Array_steps", "");
         Array_class_steps obj = gson2.fromJson(json2, Array_class_steps.class);

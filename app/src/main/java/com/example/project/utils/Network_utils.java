@@ -7,10 +7,15 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class Network_utils {
+    /**
+     * connects to the online database
+     * @param url
+     * @return string (which contains all the information json string)
+     * @throws IOException
+     */
     public static String makeHttpsrequest(URL url) throws IOException {
         HttpURLConnection connection=(HttpURLConnection) url.openConnection();
         InputStream inputStream=connection.getInputStream();
-
         try {
 
         Scanner scanner=new Scanner(inputStream);

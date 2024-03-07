@@ -26,16 +26,24 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
     Animation anim_button;
     FirebaseAuth mAuth;
 
-
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_firebase);
         setupUi();
-        // ScheduleWork.scheduleAlarm(this);
-        //todo fix the schedule work
+
     }
 
+    /**
+     * connects ui to the class and sets up onclick
+     */
     private void setupUi() {
         login = findViewById(R.id.edittext_login_emailf);
         password = findViewById(R.id.edittext_login_passwordf);
@@ -48,6 +56,12 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    /**
+     *
+     * @param view The view that was clicked.
+     *       click for all the buttons
+     *             adds the email and password to authetifaction after checking that they are not empty
+     */
     @Override
     public void onClick(View view) {
         String emails, passwords;

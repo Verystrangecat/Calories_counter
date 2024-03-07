@@ -30,7 +30,13 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
     double cal_here=0,pro_here=0, carb_here=0, fat_here=0;
 
 
-
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +46,10 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
 
     }
 
-
+    /**
+     * connects ui to the class
+     * and gets the food object
+     */
     private void setup(){
         f=(Food) getIntent().getSerializableExtra("KEY_NAME");
         title=findViewById(R.id.textView_title);
@@ -59,6 +68,10 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
 
     }
 
+    /**
+     *
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         if(v==amount_portion)
@@ -111,6 +124,9 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
 
     }
 
+    /**
+     * creates the dialog that gets the new amount of portions
+     */
     private void CreateDialog() {
         d = new Dialog(this);
         d.setContentView(R.layout.custom_dialog);
@@ -123,6 +139,10 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         save.setOnClickListener(this);
         d.show();
     }
+
+    /**
+     * getting the de about the food from the object and setting it text views
+     */
     private void gettingdetails() {
         for (int i = 0; i < f.getFoodNutrients().size() ; i++) {
             if (f.getFoodNutrients().get(i).getNutrientID() == 1008) {
@@ -155,7 +175,9 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         }
 
 
-
+    /**
+     * saving the food object to the array with eaten food
+     */
 
             public void saving_object(){
                 SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
@@ -175,6 +197,12 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
 
 
             }
+
+    /**
+     * leaves only one digit in the decimal
+     * @param val
+     * @return number double
+     */
     public double Onedigit(double val){
         String vals=String.valueOf(val);
         String n="";
