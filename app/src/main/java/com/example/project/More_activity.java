@@ -3,12 +3,14 @@ package com.example.project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,7 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class More_activity extends AppCompatActivity implements View.OnClickListener {
     BottomNavigationView bottomNavigationView;
-    TextView link_to_food, name_person;
+    TextView link_to_food, name_person, agev, heightv, weightv;
+
 
     /**
      *
@@ -47,6 +50,9 @@ public class More_activity extends AppCompatActivity implements View.OnClickList
         link_to_food = findViewById(R.id.textView22);
         link_to_food.setOnClickListener(this);
         name_person = findViewById(R.id.textView_name_person);
+        agev=findViewById(R.id.textView_age);
+        weightv=findViewById(R.id.textView_weight);
+        heightv=findViewById(R.id.textView_height);
     }
 
 
@@ -111,10 +117,11 @@ public class More_activity extends AppCompatActivity implements View.OnClickList
 
                     if (user != null) {
                         // Found the user, you can access the user details
-                        String userId = snapshot.getKey();
-                        String name = user.getName();
-                        int age = user.getAge();
+
                         name_person.setText("Hello, "+user.getName());
+                        agev.setText(String.valueOf(user.getAge()));
+                        heightv.setText(String.valueOf(user.getHeight()));
+                        weightv.setText(String.valueOf(user.getWeight()));
                         // ... (access other user details)
                         break; // Assuming there's only one user with the given email
                     }
@@ -133,4 +140,7 @@ public class More_activity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-}
+
+
+    }
+

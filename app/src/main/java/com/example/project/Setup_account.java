@@ -101,8 +101,12 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         user.setName(extras.getString("Name"));
         user.setAge(num_age);
         user.setHeight(num_height);
-        user.setWeiht(num_weight);
+        user.setWeight(num_weight);
         user.setEmail(extras.getString("Email"));
+        user.setCalories((int)calories);
+        user.setProtein(proteins);
+        user.setFat(fats);
+        user.setCarbs(carbohydrates);
         writeUserData.addUser(user);
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -115,6 +119,7 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         editor.putString("amount_proteins_left",String.valueOf(proteins));
         editor.putString("amount_carbs_left",String.valueOf(carbohydrates));
         editor.putString("amount_fats_left",String.valueOf(fats));
+
         editor.putString("date", date);
 
         editor.apply();

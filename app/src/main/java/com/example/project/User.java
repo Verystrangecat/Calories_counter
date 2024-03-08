@@ -4,12 +4,16 @@ public class User {
     String name;
     private String id;
     String email;
-    int weiht;
+    int weight;
     int height;
     int age;
     String gender;
     int activity;
     int pregnant;
+    int calories;
+    double protein;
+    double carbs;
+    double fat;
 
     /**
      * constructor that i need for the firebase
@@ -41,17 +45,17 @@ public class User {
      *
      * @return An integer representing the user's weight.
      */
-    public int getWeiht() {
-        return weiht;
+    public int getWeight() {
+        return weight;
     }
 
     /**
      * Sets the weight of the user.
      *
-     * @param weiht The weight to set for the user.
+     * @param weight The weight to set for the user.
      */
-    public void setWeiht(int weiht) {
-        this.weiht = weiht;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     /**
@@ -178,5 +182,77 @@ public class User {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * Gets the calorie content of the food.
+     *
+     * @return An integer representing the calories.
+     */
+    public int getCalories() {
+        return calories;
+    }
+
+    /**
+     * Sets the calorie content of the food.
+     *
+     * @param calories The calories to set for the food.
+     */
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+    /**
+     * Gets the protein content of the food.
+     *
+     * @return A double representing the protein content.
+     */
+    public double getProtein() {
+        return protein;
+    }
+
+    /**
+     * Sets the protein content of the food.
+     *
+     * @param protein The protein content to set for the food.
+     */
+    public void setProtein(double protein) {
+        this.protein = protein;
+    }
+
+    /**
+     * Gets the carbohydrate content of the food.
+     *
+     * @return A double representing the carbohydrate content.
+     */
+    public double getCarbs() {
+        return carbs;
+    }
+
+    /**
+     * Sets the carbohydrate content of the food.
+     *
+     * @param carbs The carbohydrate content to set for the food.
+     */
+    public void setCarbs(double carbs) {
+        this.carbs = carbs;
+    }
+
+    /**
+     * Gets the fat content of the food.
+     *
+     * @return A double representing the fat content.
+     */
+    public double getFat() {
+        return fat;
+    }
+
+    /**
+     * Sets the fat content of the food.
+     *
+     * @param fat The fat content to set for the food.
+     */
+    public void setFat(double fat) {
+        this.fat = fat;
     }
 }
