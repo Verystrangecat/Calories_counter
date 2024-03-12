@@ -141,7 +141,7 @@ public class Fragment_lunch extends Fragment {
      */
     private void getdata() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         Gson gson2 = new Gson();
         String json2 = sharedPreferences.getString("MyObject", "");
         Array_class obj = gson2.fromJson(json2, Array_class.class);

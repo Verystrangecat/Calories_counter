@@ -120,6 +120,7 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         editor.putString("amount_carbs_left",String.valueOf(carbohydrates));
         editor.putString("amount_fats_left",String.valueOf(fats));
 
+
         editor.putString("date", date);
 
         editor.apply();

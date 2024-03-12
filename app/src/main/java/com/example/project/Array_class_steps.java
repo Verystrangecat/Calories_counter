@@ -6,7 +6,7 @@ public class Array_class_steps {
     ArrayList<Integer> arrayList;
 
     /**
-     * constructor of arraylist that has to values
+     * constructor of arraylist that has 2 values for now
      */
     public Array_class_steps(){
         arrayList=new ArrayList<>();

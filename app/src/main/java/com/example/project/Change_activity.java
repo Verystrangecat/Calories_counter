@@ -118,8 +118,6 @@ public class Change_activity extends AppCompatActivity implements View.OnClickLi
         editor.putString("amount_proteins_left",String.valueOf(proteins_left));
         editor.putString("amount_carbs_left",String.valueOf(carbohydrates_left));
         editor.putString("amount_fats_left",String.valueOf(fats_left));
-
-
         editor.apply();
 
     }
