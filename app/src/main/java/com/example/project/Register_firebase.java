@@ -124,10 +124,10 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 Gson gson = new Gson();
                                 String json = gson.toJson(arrayClass);
-                                editor.putString("MyObject", json);
+                                editor.putString(getString(R.string.array_meals), json);
                                 //creating an array for future use
                                 String array=gson.toJson(steps);
-                                editor.putString("Array_steps",array);
+                                editor.putString(getString(R.string.array_steps),array);
                                 editor.apply();
                                 Intent i=new Intent(Register_firebase.this, Setup_account.class);
                                 i.putExtra("Name", name.getText().toString());
@@ -249,7 +249,7 @@ public class Register_firebase extends AppCompatActivity implements View.OnClick
         channel.setDescription(description);
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
-        //Todo add the forgot password thing
+
     }
 
     /**

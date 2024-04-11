@@ -102,7 +102,6 @@ public class Main_screen extends AppCompatActivity {
         informationchanged();//changes the amount of ecerything left if the day changed
         setViewPager2();
         setBar_Chart();
-        scheduleMidnightAlarm();
 
 
 
@@ -124,18 +123,18 @@ public class Main_screen extends AppCompatActivity {
             Log.e("Reset info",dateprev);
             Log.e("Reset info",datenow);
             editor.putString("date", datenow);
-            editor.putString("amount_calories_left", sharedPreferences.getString("amount_calories","0"));
-            editor.putString("amount_proteins_left",sharedPreferences.getString("amount_proteins","0"));
-            editor.putString("amount_fats_left",sharedPreferences.getString("amount_fats","0"));
-            editor.putString("amount_carbs_left",sharedPreferences.getString("amount_carbs","0"));
+            editor.putString(getString(R.string.amount_calories_left), sharedPreferences.getString(getString(R.string.amount_calories),"0"));
+            editor.putString(getString(R.string.amount_proteins_left),sharedPreferences.getString(getString(R.string.amount_proteins),"0"));
+            editor.putString(getString(R.string.amount_fats_left),sharedPreferences.getString(getString(R.string.amount_fats),"0"));
+            editor.putString(getString(R.string.amount_carbs_left),sharedPreferences.getString(getString(R.string.amount_carbs),"0"));
             Gson gson2 = new Gson();
-            String json2 = sharedPreferences.getString("MyObject", "");
+            String json2 = sharedPreferences.getString(getString(R.string.array_meals), "");
             Array_class obj = gson2.fromJson(json2, Array_class.class);
             if(obj!=null){
             obj.arrayList.clear();
             Gson gson = new Gson();
             String json = gson.toJson(obj);
-            editor.putString("MyObject", json);}
+            editor.putString(getString(R.string.array_meals), json);}
             editor.apply();
         }
     }
@@ -173,6 +172,7 @@ public class Main_screen extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, string_permission) == PackageManager.PERMISSION_GRANTED){
             if(!isServiceRunning(Step_Counter_Service.class)){
             Intent serviceIntent = new Intent(this, Step_Counter_Service.class);
+            scheduleMidnightAlarm();
             startService(serviceIntent);}
 
         }
@@ -210,6 +210,7 @@ public class Main_screen extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if(!isServiceRunning(Step_Counter_Service.class)){
                     Intent serviceIntent = new Intent(this, Step_Counter_Service.class);
+                    scheduleMidnightAlarm();
                     startService(serviceIntent);}
             } else if (shouldShowRequestPermissionRationale(string_permission)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -230,7 +231,6 @@ public class Main_screen extends AppCompatActivity {
 
 
 
-// todo deal with the step counter
 
 
     /**
@@ -267,14 +267,14 @@ public class Main_screen extends AppCompatActivity {
     public void setViewPager2() {
         arrayList = new ArrayList<>();
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
-        arrayList.add(new ViewpagerItem("Calories", sharedPreferences.getString("amount_calories", "0"),
-                sharedPreferences.getString("amount_calories_left", sharedPreferences.getString("amount_calories", "0")), R.drawable.circle_calorie));
-        arrayList.add(new ViewpagerItem("Carbs", sharedPreferences.getString("amount_carbs", "0"),
-                sharedPreferences.getString("amount_carbs_left", sharedPreferences.getString("amount_carbs", "0")), R.drawable.circle_carbs));
-        arrayList.add(new ViewpagerItem("Fats", sharedPreferences.getString("amount_fats", "0"),
-                sharedPreferences.getString("amount_fats_left", sharedPreferences.getString("amount_fats", "0")), R.drawable.circle_fats));
-        arrayList.add(new ViewpagerItem("Proteins", sharedPreferences.getString("amount_proteins", "0"),
-                sharedPreferences.getString("amount_proteins_left", sharedPreferences.getString("amount_proteins", "0")), R.drawable.circle_proteins));
+        arrayList.add(new ViewpagerItem("Calories", sharedPreferences.getString(getString(R.string.amount_calories), "0"),
+                sharedPreferences.getString(getString(R.string.amount_calories_left), sharedPreferences.getString(getString(R.string.amount_calories), "0")), R.drawable.circle_calorie));
+        arrayList.add(new ViewpagerItem("Carbs", sharedPreferences.getString(getString(R.string.amount_carbs), "0"),
+                sharedPreferences.getString(getString(R.string.amount_carbs_left), sharedPreferences.getString(getString(R.string.amount_carbs), "0")), R.drawable.circle_carbs));
+        arrayList.add(new ViewpagerItem("Fats", sharedPreferences.getString(getString(R.string.amount_fats), "0"),
+                sharedPreferences.getString(getString(R.string.amount_fats_left), sharedPreferences.getString(getString(R.string.amount_fats), "0")), R.drawable.circle_fats));
+        arrayList.add(new ViewpagerItem("Proteins", sharedPreferences.getString(getString(R.string.amount_proteins), "0"),
+                sharedPreferences.getString(getString(R.string.amount_proteins_left), sharedPreferences.getString(getString(R.string.amount_proteins), "0")), R.drawable.circle_proteins));
         Vp_adapter vp_adapter = new Vp_adapter(arrayList);
         viewPager2.setAdapter(vp_adapter);
         viewPager2.setClipToPadding(false);
@@ -288,7 +288,7 @@ public class Main_screen extends AppCompatActivity {
 
 
 
-        //todo make everything reset at midnight if works with calories do with steps
+
 
     /**
      *
@@ -328,23 +328,8 @@ public class Main_screen extends AppCompatActivity {
         );
     }
 
-    /**
-     * cancel the alarm maybe will use later
-     */
-    private void cancelMidnightAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent alarmIntent = new Intent(this, MidnightAlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this,
-                88,
-                alarmIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        );
 
-        // Cancel the alarm
-        alarmManager.cancel(pendingIntent);
-    }
-    //todo check if i need this class
+
 
 
     /**
@@ -405,11 +390,7 @@ public class Main_screen extends AppCompatActivity {
     }
 
     }
-//Todo add the check if alarm is already set
-//todo start the alarm inside the service
-//todo circular_menu
-//Todo add the new class to tik proect and show the changes at step_counter_service
-//Todo change the splashscreen
+
 
 
 

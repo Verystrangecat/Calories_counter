@@ -39,7 +39,7 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
 
         }
 
-        //todo check if the alrammanager triggered only if the sensor exsists
+
     }
 
     /**
@@ -51,7 +51,7 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
         SharedPreferences sharedPreferences = context.getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson2 = new Gson();
-        String json2 = sharedPreferences.getString("Array_steps", "");
+        String json2 = sharedPreferences.getString(context.getString(R.string.array_steps), "");
         Array_class_steps obj = gson2.fromJson(json2, Array_class_steps.class);
 
         if (obj == null) {
@@ -60,7 +60,7 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
         // Add the current date to the date variable
         obj.addday(Step_Counter_Service.currentsteps);
         String json = gson2.toJson(obj);
-        editor.putString("Array_steps", json);
+        editor.putString(context.getString(R.string.array_steps), json);
         editor.apply();
 
     }

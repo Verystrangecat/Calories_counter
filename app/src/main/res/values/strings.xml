@@ -2,4 +2,15 @@
     <string name="app_name">NutriBalance</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="amount_calories">amount_calories</string>
+    <string name="amount_proteins">amount_proteins</string>
+    <string name="amount_fats">amount_fats</string>
+    <string name="amount_carbs">amount_carbs</string>
+    <string name="amount_calories_left">amount_calories_left</string>
+    <string name="amount_proteins_left">amount_proteins_left</string>
+    <string name="amount_fats_left">amount_fats_left</string>
+    <string name="amount_carbs_left">amount_carbs_left</string>
+    <string name="array_meals">array_meals</string>
+    <string name="array_steps">array_steps</string>
+
 </resources>

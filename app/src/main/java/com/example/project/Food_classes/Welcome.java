@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * contains the array of foods and makes it easier to access it
+ */
 public class Welcome implements Serializable {
     private List<Food> foods;
 

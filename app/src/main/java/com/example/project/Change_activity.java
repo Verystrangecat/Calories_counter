@@ -87,7 +87,6 @@ public class Change_activity extends AppCompatActivity implements View.OnClickLi
         carbohydrates=Onedigit(calories*0.55/4);
 
 
-        //todo deal with amount calories left
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         //getting all
@@ -110,14 +109,14 @@ public class Change_activity extends AppCompatActivity implements View.OnClickLi
         fats_left=fats-fat_difference;
         carbohydrates_left=carbohydrates-carbohydrate_difference;
 
-        editor.putString("amount_calories",String.valueOf(calories));
-        editor.putString("amount_proteins",String.valueOf(proteins));
-        editor.putString("amount_carbs",String.valueOf(carbohydrates));
-        editor.putString("amount_fats",String.valueOf(fats));
-        editor.putString("amount_calories_left",String.valueOf(calories_left));
-        editor.putString("amount_proteins_left",String.valueOf(proteins_left));
-        editor.putString("amount_carbs_left",String.valueOf(carbohydrates_left));
-        editor.putString("amount_fats_left",String.valueOf(fats_left));
+        editor.putString(getString(R.string.amount_calories),String.valueOf(calories));
+        editor.putString(getString(R.string.amount_proteins),String.valueOf(proteins));
+        editor.putString(getString(R.string.amount_carbs),String.valueOf(carbohydrates));
+        editor.putString(getString(R.string.amount_fats),String.valueOf(fats));
+        editor.putString(getString(R.string.amount_calories_left),String.valueOf(calories_left));
+        editor.putString(getString(R.string.amount_proteins_left),String.valueOf(proteins_left));
+        editor.putString(getString(R.string.amount_carbs_left),String.valueOf(carbohydrates_left));
+        editor.putString(getString(R.string.amount_fats_left),String.valueOf(fats_left));
         editor.apply();
 
     }

@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * food class has the information about food that user looked for
+ */
 public class Food implements Serializable {
     private long fdcID;
     private String description;

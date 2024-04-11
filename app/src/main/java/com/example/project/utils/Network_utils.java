@@ -14,21 +14,24 @@ public class Network_utils {
      * @throws IOException
      */
     public static String makeHttpsrequest(URL url) throws IOException {
-        HttpURLConnection connection=(HttpURLConnection) url.openConnection();
-        InputStream inputStream=connection.getInputStream();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET"); // Setting the request method
+        connection.setConnectTimeout(20000); // 15 seconds connection timeout
+        connection.setReadTimeout(20000); // 15 seconds read timeout
+        InputStream inputStream = connection.getInputStream();
         try {
-
-        Scanner scanner=new Scanner(inputStream);
-        scanner.useDelimiter("\\A");
-        boolean hasinput=scanner.hasNext();
-        if(hasinput){
-            return scanner.next();
-        }
-        else return null;}
-        finally {
+            Scanner scanner = new Scanner(inputStream);
+            scanner.useDelimiter("\\A");
+            boolean hasInput = scanner.hasNext();
+            if (hasInput) {
+                return scanner.next();
+            } else {
+                return null;
+            }
+        } finally {
             connection.disconnect();
         }
-
     }
+    //todo check if i really want to keep thr set connection timeout because can lead to black screen
 
 }

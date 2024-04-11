@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -26,46 +27,46 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.project.MidnightAlarmReceiver;
 import com.example.project.R;
 
 public class Step_Counter_Service extends Service implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor stepsensor;
     private static int totalsteps = 0;
-    private  static int previoustotalsteps = 0;
-    public static int currentsteps=0;
+    private static int previoustotalsteps = 0;
+    public static int currentsteps = 0;
 
 
     private static final int NOTIFICATION_ID = 987;
-    public static boolean isRunning=false;
+    public static boolean isRunning = false;
 
     private static final String CHANNEL_ID = "StepCountingChannel";
 
     /**
-     *tells what to do when the service is created
+     * tells what to do when the service is created
      */
 
     @Override
     public void onCreate() {
-        Log.e("C","Oncreate");
-        isRunning=true;
+        Log.e("C", "Oncreate");
+        isRunning = true;
         super.onCreate();
         createNotificationChannel();
         createNotification();
         setupSensors();
     }
-    //todo think how i can update the ui
 
 
     /**
-     *
      * @param intent The Intent that was used to bind to this service,
-     * as given to {@link android.content.Context#bindService
-     * Context.bindService}.  Note that any extras that were included with
-     * the Intent at that point will <em>not</em> be seen here.
-     *
+     *               as given to {@link android.content.Context#bindService
+     *               Context.bindService}.  Note that any extras that were included with
+     *               the Intent at that point will <em>not</em> be seen here.
+     *               doesnt handle bound clients
      * @return
      */
+    //todo check if i need the onbind
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -74,15 +75,16 @@ public class Step_Counter_Service extends Service implements SensorEventListener
 
     /**
      * changes the current amount of steps
+     *
      * @param sensorEvent the {@link android.hardware.SensorEvent SensorEvent}.
      */
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             totalsteps = (int) sensorEvent.values[0];
-            if(previoustotalsteps==0 || previoustotalsteps>totalsteps){
-                previoustotalsteps=totalsteps;
-                Log.e("F",Integer.toString(totalsteps));
+            if (previoustotalsteps == 0 || previoustotalsteps > totalsteps) {
+                previoustotalsteps = totalsteps;
+                Log.e("F", Integer.toString(totalsteps));
                 //solves the problem of the first run of the programm
                 //and the problem if the phone does the reboot
             }
@@ -97,10 +99,9 @@ public class Step_Counter_Service extends Service implements SensorEventListener
     }
 
     /**
-     *
      * @param sensor
-     * @param i The new accuracy of this sensor, one of
-     *         {@code SensorManager.SENSOR_STATUS_*}
+     * @param i      The new accuracy of this sensor, one of
+     *               {@code SensorManager.SENSOR_STATUS_*}
      */
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
@@ -120,7 +121,8 @@ public class Step_Counter_Service extends Service implements SensorEventListener
         editor.putString("key1", String.valueOf(previoustotalsteps));
         editor.putString("totalsteps", String.valueOf(totalsteps));
         editor.apply();
-        isRunning=false;
+
+        isRunning = false;
         //todo deal with shared preference
     }
 
@@ -134,6 +136,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
 
         if (stepsensor == null) {
             stopSelf();
+            cancelMidnightAlarm();
             Toast.makeText(getApplicationContext(), "No sensor available", Toast.LENGTH_SHORT).show();
         } else {
 
@@ -141,7 +144,6 @@ public class Step_Counter_Service extends Service implements SensorEventListener
             SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
             int savednum = Integer.parseInt(sharedPreferences.getString("totalsteps", "0"));
             previoustotalsteps = savednum;
-
 
 
         }
@@ -178,6 +180,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
 
     /**
      * updates the notification when the step count changes
+     *
      * @param text
      */
     private void updateNotificationText(String text) {
@@ -202,6 +205,7 @@ public class Step_Counter_Service extends Service implements SensorEventListener
 
     /**
      * sends thw current step count to activity
+     *
      * @param currentSteps
      */
     private void broadcastStepCount(int currentSteps) {
@@ -213,13 +217,32 @@ public class Step_Counter_Service extends Service implements SensorEventListener
     /**
      * sets the current steps to 0
      */
-    public static void change_the_steps(){
-        previoustotalsteps=totalsteps;
+    public static void change_the_steps() {
+        previoustotalsteps = totalsteps;
         currentsteps = totalsteps - previoustotalsteps;
 
 
     }
 
+    /**
+     * cancels the midnight alarm
+     */
+
+    private void cancelMidnightAlarm() {
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent alarmIntent = new Intent(this, MidnightAlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                123456,
+                alarmIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        // Cancel the alarm
+        alarmManager.cancel(pendingIntent);
+
+    }
 }
 
 

@@ -99,19 +99,19 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
         {//changes in amount of elements left
             SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            //todo get the calories left then to number - cal_here and back to sharedpreference
-            double calori = Double.parseDouble(sharedPreferences.getString("amount_calories_left", "0"));//Скорее всего неправильный стринг
-            double protein=Double.parseDouble(sharedPreferences.getString("amount_proteins_left","0"));
-            double fats=Double.parseDouble(sharedPreferences.getString("amount_fats_left","0"));
-            double carbs=Double.parseDouble(sharedPreferences.getString("amount_carbs_left","0"));
+
+            double calori = Double.parseDouble(sharedPreferences.getString(getString(R.string.amount_calories_left), "0"));//Скорее всего неправильный стринг
+            double protein=Double.parseDouble(sharedPreferences.getString(getString(R.string.amount_proteins_left),"0"));
+            double fats=Double.parseDouble(sharedPreferences.getString(getString(R.string.amount_fats_left),"0"));
+            double carbs=Double.parseDouble(sharedPreferences.getString(getString(R.string.amount_carbs_left),"0"));
             calori=calori-cal_here;
             protein=protein-pro_here;
             fats=fats-fat_here;
             carbs=carbs-carb_here;
-            editor.putString("amount_calories_left",String.valueOf(Onedigit(calori)));
-            editor.putString("amount_proteins_left",String.valueOf(Onedigit(protein)));
-            editor.putString("amount_fats_left",String.valueOf(Onedigit(fats)));
-            editor.putString("amount_carbs_left",String.valueOf(Onedigit(carbs)));
+            editor.putString(getString(R.string.amount_calories_left),String.valueOf(Onedigit(calori)));
+            editor.putString(getString(R.string.amount_proteins_left),String.valueOf(Onedigit(protein)));
+            editor.putString(getString(R.string.amount_fats_left),String.valueOf(Onedigit(fats)));
+            editor.putString(getString(R.string.amount_carbs_left),String.valueOf(Onedigit(carbs)));
             editor.apply();
             saving_object();
               startActivity(new Intent(Food_details.this,Main_screen.class));
@@ -187,12 +187,12 @@ public class Food_details extends AppCompatActivity implements Serializable, Vie
                         sharedPreferences.getString("Meal","b"));
 
                 Gson gson2 = new Gson();
-                String json2 = sharedPreferences.getString("MyObject", "");
+                String json2 = sharedPreferences.getString(getString(R.string.array_meals), "");
                     Array_class obj = gson2.fromJson(json2, Array_class.class);
                     obj.arrayList.add(food_class_meals);
                     Gson gson = new Gson();
                     String json = gson.toJson(obj);
-                    editor.putString("MyObject", json);
+                    editor.putString(getString(R.string.array_meals), json);
                     editor.apply();
 
 

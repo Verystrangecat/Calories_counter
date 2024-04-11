@@ -14,12 +14,13 @@ import com.example.project.Food_classes.Food;
 import java.util.List;
 
 /**
- * Adapter for displaying a list of Food items in a RecyclerView.
+ * Adapter for displaying a list of Food items in a RecyclerView in search results.
  */
 public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     Context context;
     List<Food> foods;
     onFoodListener monFoodListener;
+    private static final long CALORIE_NUTRIENT_ID = 1008;
 
     /**
      * Constructor for the Adapter class.
@@ -64,7 +65,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
         // Retrieve and display calorie information
         for (int i = 0; i < food.getFoodNutrients().size() && !got; i++) {
-            if (food.getFoodNutrients().get(i).getNutrientID() == 1008) {
+            if (food.getFoodNutrients().get(i).getNutrientID() == CALORIE_NUTRIENT_ID) {
                 holder.calorie.setText(String.valueOf(food.getFoodNutrients().get(i).getValue()));
                 got = true;
             }

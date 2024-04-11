@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 
 public class Adding_food_screen extends AppCompatActivity implements View.OnClickListener, Adapter.onFoodListener, Serializable {
     RecyclerView recyclerView;
@@ -83,7 +84,8 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
             try {
                 querydata(s);
             } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
+                Log.e("error", Objects.requireNonNull(e.getMessage()));
+                Toast.makeText(this, "There was a problem", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -117,7 +119,8 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
             try {
                  data= Network_utils.makeHttpsrequest(url);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                Log.e("error", Objects.requireNonNull(e.getMessage()));
+                Toast.makeText(Adding_food_screen.this, "There was a problem getting the data", Toast.LENGTH_SHORT).show();
             }
             return data;
         }
@@ -156,5 +159,5 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
         }
         }
     }
-    //todo fix the gvulot of recycler view
-    //Todo add finish to activities like login and dign up and so on
+    
+//todo think about getting rid of async task

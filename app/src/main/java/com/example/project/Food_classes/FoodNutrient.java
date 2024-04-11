@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
+/**
+ * foodnutrient class has information about nutrients
+ */
 public class FoodNutrient implements Serializable {
     private long nutrientID;
     private String nutrientName;

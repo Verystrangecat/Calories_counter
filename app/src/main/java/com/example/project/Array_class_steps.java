@@ -12,7 +12,7 @@ public class Array_class_steps {
         arrayList=new ArrayList<>();
         arrayList.add(1000);
         arrayList.add(2000);
-        //todo do not forget to delete the line above
+        //todo do not forget to delete the line above or maybe leave
     }
 
     /**
@@ -36,5 +36,3 @@ public class Array_class_steps {
         return arrayList;
     }
 }
-//todo the use case diagram (link in the moodle)
-//todo new classes to tik project

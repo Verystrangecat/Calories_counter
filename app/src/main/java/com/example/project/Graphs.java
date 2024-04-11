@@ -49,7 +49,7 @@ public class Graphs extends AppCompatActivity {
         ArrayList<PieEntry> calories=new ArrayList<>();
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         Gson gson2 = new Gson();
-        String json2 = sharedPreferences.getString("MyObject", "");
+        String json2 = sharedPreferences.getString(getString(R.string.array_meals), "");
         Array_class obj = gson2.fromJson(json2, Array_class.class);
        if(obj!=null){
            arrayList=obj.arrayList;

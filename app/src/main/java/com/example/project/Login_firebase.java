@@ -149,7 +149,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
             editor.putString("email",login.getText().toString());
             editor.apply();
             savethedate();
-            cleanarryas();
+            cleanarryas(); //if user is different it clears the arrays
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
             Query query = databaseReference.child("users").orderByChild("email").equalTo(login.getText().toString());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -172,14 +172,14 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
                             SharedPreferences sharedPreferences= getSharedPreferences("my pref", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor=sharedPreferences.edit();
                             Log.e("Shared preferences", user.getName());
-                            editor.putString("amount_calories",String.valueOf(user.getCalories()));
-                            editor.putString("amount_proteins",String.valueOf(user.getProtein()));
-                            editor.putString("amount_carbs",String.valueOf(user.getCarbs()));
-                            editor.putString("amount_fats",String.valueOf(user.getFat()));
-                            editor.putString("amount_calories_left",String.valueOf(user.getCalories()));
-                            editor.putString("amount_proteins_left",String.valueOf(user.getProtein()));
-                            editor.putString("amount_carbs_left",String.valueOf(user.getCarbs()));
-                            editor.putString("amount_fats_left",String.valueOf(user.getFat()));
+                            editor.putString(getString(R.string.amount_calories),String.valueOf(user.getCalories()));
+                            editor.putString(getString(R.string.amount_proteins),String.valueOf(user.getProtein()));
+                            editor.putString(getString(R.string.amount_carbs),String.valueOf(user.getCarbs()));
+                            editor.putString(getString(R.string.amount_fats),String.valueOf(user.getFat()));
+                            editor.putString(getString(R.string.amount_calories_left),String.valueOf(user.getCalories()));
+                            editor.putString(getString(R.string.amount_proteins_left),String.valueOf(user.getProtein()));
+                            editor.putString(getString(R.string.amount_carbs_left),String.valueOf(user.getCarbs()));
+                            editor.putString(getString(R.string.amount_fats_left),String.valueOf(user.getFat()));
                             //todo get the current date and change the food array not the steps though but the steps array
                             editor.apply();
                             break; // Assuming there's only one user with the given email
@@ -225,12 +225,12 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         Array_class obj=new Array_class();
         Gson gson = new Gson();
         String json = gson.toJson(obj);
-        editor.putString("MyObject", json);
+        editor.putString(getString(R.string.array_meals), json);
 
         Gson gson2 = new Gson();
         Array_class_steps steps = new Array_class_steps();
         String json2 = gson2.toJson(steps);
-        editor.putString("Array_steps",json2);
+        editor.putString(getString(R.string.array_steps),json2);
 
         editor.apply();
         //todo add the second array
@@ -353,7 +353,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         channel.setDescription(description);
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
-        //Todo add the forgot password thing
+
     }
     }
 

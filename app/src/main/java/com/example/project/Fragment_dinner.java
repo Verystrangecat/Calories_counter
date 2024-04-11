@@ -142,7 +142,7 @@ public class Fragment_dinner extends Fragment {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("my pref", Context.MODE_PRIVATE);
 
         Gson gson2 = new Gson();
-        String json2 = sharedPreferences.getString("MyObject", "");
+        String json2 = sharedPreferences.getString(getString(R.string.array_meals), "");
         Array_class obj = gson2.fromJson(json2, Array_class.class);
         arrayList = obj.arrayList;
         arraynew = new ArrayList<>();

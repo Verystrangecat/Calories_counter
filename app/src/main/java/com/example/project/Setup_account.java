@@ -111,19 +111,21 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("email", user.getEmail());
-        editor.putString("amount_calories",String.valueOf(calories));
-        editor.putString("amount_proteins",String.valueOf(proteins));
-        editor.putString("amount_carbs",String.valueOf(carbohydrates));
-        editor.putString("amount_fats",String.valueOf(fats));
-        editor.putString("amount_calories_left",String.valueOf(calories));
-        editor.putString("amount_proteins_left",String.valueOf(proteins));
-        editor.putString("amount_carbs_left",String.valueOf(carbohydrates));
-        editor.putString("amount_fats_left",String.valueOf(fats));
+        editor.putString(getString(R.string.amount_calories),String.valueOf(calories));
+        editor.putString(getString(R.string.amount_proteins),String.valueOf(proteins));
+        editor.putString(getString(R.string.amount_carbs),String.valueOf(carbohydrates));
+        editor.putString(getString(R.string.amount_fats),String.valueOf(fats));
+        editor.putString(getString(R.string.amount_calories_left),String.valueOf(calories));
+        editor.putString(getString(R.string.amount_proteins_left),String.valueOf(proteins));
+        editor.putString(getString(R.string.amount_carbs_left),String.valueOf(carbohydrates));
+        editor.putString(getString(R.string.amount_fats_left),String.valueOf(fats));
 
 
         editor.putString("date", date);
 
         editor.apply();
+        //todo write in tic proekt that i would use the value of strings from the start and write documenatatio
+
 
     }
 
