@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.project.Food_classes.Converter;
@@ -35,7 +37,8 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
     Button search;
     EditText query;
     List<Food> food_list=null;
-    String meal;
+
+    private ProgressBar progressBar;
 
     /**
      *
@@ -54,6 +57,8 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
         query=findViewById(R.id.editText_query);
         search.setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        progressBar=findViewById(R.id.progressBar);
+
 
 
     }
@@ -61,14 +66,15 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
     /**
      * sends the quary to the database
      * @param s- string of the food
-     * @throws MalformedURLException
+     * n
      */
 
-    public void querydata(String s) throws MalformedURLException {
+    public void buildstring(String s)  {
         String ur="https://api.nal.usda.gov/fdc/v1/foods/search?query=";
         s=s.trim();
         s=s.replace(" ","%20");
         s=ur+s+"&dataType=&pageSize=25&pageNumber=1&requireAllWords=true&api_key=IDReNNKpRHGD1el7mIQXJkqklYtzVV0ZaWOJCAuf";
+        showLoadingDialog();
         Perform_search(s);
     }
 
@@ -83,12 +89,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
         if (s.equals(""))
             Toast.makeText(this, "Can't search for the product", Toast.LENGTH_SHORT).show();
         else
-            try {
-                querydata(s);
-            } catch (MalformedURLException e) {
-                Log.e("error", Objects.requireNonNull(e.getMessage()));
-                Toast.makeText(this, "There was a problem", Toast.LENGTH_SHORT).show();
-            }
+            buildstring(s);
 
 
 
@@ -133,6 +134,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
             Log.e("String result","the result is"+result);
             onDataLoaded(result);
         } catch (Exception e) {
+            hideLoadingDialog();
             Log.e("Error", e.getMessage(), e);
             Toast.makeText(this, "There was a problem getting the data", Toast.LENGTH_SHORT).show();
         }
@@ -156,6 +158,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
                 Log.e("Error", e.getMessage(), e);
                 Toast.makeText(this, "There was a problem", Toast.LENGTH_SHORT).show();
             }
+            hideLoadingDialog();
             return food.getFoods();
 
 
@@ -176,7 +179,23 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
             recyclerView.setAdapter(adapter);
         }
     }
-        }
+
+    /**
+     * Show the progress bar
+     */
+    private void showLoadingDialog() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Hide the progress bar
+     */
+    private void hideLoadingDialog() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+}
+        //todo fix tha tik acorrding to the changes
 
 
     
