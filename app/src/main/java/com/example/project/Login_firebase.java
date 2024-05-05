@@ -180,7 +180,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
                             editor.putString(getString(R.string.amount_proteins_left),String.valueOf(user.getProtein()));
                             editor.putString(getString(R.string.amount_carbs_left),String.valueOf(user.getCarbs()));
                             editor.putString(getString(R.string.amount_fats_left),String.valueOf(user.getFat()));
-                            //todo get the current date and change the food array not the steps though but the steps array
+
                             editor.apply();
                             break; // Assuming there's only one user with the given email
                         }
@@ -233,7 +233,7 @@ public class Login_firebase extends AppCompatActivity implements View.OnClickLis
         editor.putString(getString(R.string.array_steps),json2);
 
         editor.apply();
-        //todo add the second array
+
     }
 
     /**

@@ -367,7 +367,7 @@ public class Main_screen extends AppCompatActivity {
             ArrayList<BarEntry> steps_per_day=new ArrayList<>();
             for(int i=0; i<steps.size(); i++){
                 steps_per_day.add(new BarEntry((float) i+1,steps.get(i)));
-//todo remember that i use not the date here
+//not the date is used
             }
 
 

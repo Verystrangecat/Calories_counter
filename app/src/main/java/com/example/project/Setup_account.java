@@ -124,7 +124,7 @@ public class Setup_account extends AppCompatActivity implements View.OnClickList
         editor.putString("date", date);
 
         editor.apply();
-        //todo write in tic proekt that i would use the value of strings from the start and write documenatatio
+
 
 
     }

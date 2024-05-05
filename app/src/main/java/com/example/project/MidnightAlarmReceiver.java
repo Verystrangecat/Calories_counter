@@ -65,5 +65,4 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
 
     }
     //the date from shared preference
-    //todo check that the date is right
 }//String datenow = DateFormat.format("dd-MM-yyyy", cal).toString();

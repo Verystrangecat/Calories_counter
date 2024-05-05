@@ -495,7 +495,7 @@ public class Change_activity extends AppCompatActivity implements View.OnClickLi
     }
 
     }
-//todo think about changing the user
+
 
 
 
