@@ -80,10 +80,11 @@ public class Graphs extends AppCompatActivity {
            pieDataSet.setValueTextColor(Color.BLACK);
            PieData pieData=new PieData(pieDataSet);
            pieChart.setData(pieData);
-          // pieChart.getDescription().setEnabled(false);
+           pieChart.setDrawEntryLabels(false);
            pieChart.setCenterText("Calories per meal");
            pieChart.setCenterTextColor(Color.BLACK);
            pieChart.setEntryLabelColor(Color.BLACK);
+
            pieChart.animate();
 
 

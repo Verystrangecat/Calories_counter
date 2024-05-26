@@ -4,10 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
+
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,10 +22,10 @@ import com.example.project.utils.Network_utils;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.util.List;
-import java.util.Objects;
+;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -185,6 +184,7 @@ public class Adding_food_screen extends AppCompatActivity implements View.OnClic
      */
     private void showLoadingDialog() {
         progressBar.setVisibility(View.VISIBLE);
+        Log.e("Dialog","dialog is shown");
     }
 
     /**

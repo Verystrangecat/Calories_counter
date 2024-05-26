@@ -15,6 +15,8 @@ import android.graphics.Color;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 
 import android.util.Log;
@@ -103,9 +105,15 @@ public class Main_screen extends AppCompatActivity {
         setViewPager2();
         setBar_Chart();
 
-
-
-
+    }
+    public void performAction() {
+        Intent alarmIntent = new Intent(this, MidnightAlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                123466,
+                alarmIntent,
+                PendingIntent.FLAG_IMMUTABLE
+        );
     }
 
     /**
@@ -359,7 +367,7 @@ public class Main_screen extends AppCompatActivity {
     public void setBar_Chart(){
         SharedPreferences sharedPreferences = getSharedPreferences("my pref", Context.MODE_PRIVATE);
         Gson gson2 = new Gson();
-        String json2 = sharedPreferences.getString("Array_steps", "");
+        String json2 = sharedPreferences.getString(getString(R.string.array_steps), "");
         Array_class_steps obj = gson2.fromJson(json2, Array_class_steps.class);
 
         if(obj!=null){
@@ -385,6 +393,7 @@ public class Main_screen extends AppCompatActivity {
             barChart.animateY(2000);
 
         }
+
 
 
     }

@@ -58,9 +58,11 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
             obj = new Array_class_steps(); // Create a new object if it doesn't exist
         }
         // Add the current date to the date variable
+
         obj.addday(Step_Counter_Service.currentsteps);
         String json = gson2.toJson(obj);
         editor.putString(context.getString(R.string.array_steps), json);
+        Log.e("S","saved steps");
         editor.apply();
 
     }
